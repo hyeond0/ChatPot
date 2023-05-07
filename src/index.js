@@ -10,13 +10,16 @@ import { BrowserRouter } from "react-router-dom";
 
 // Redux 라이브러리
 import { Provider } from "react-redux";
+import store from "./store.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 
