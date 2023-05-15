@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // 1. f2f0ef
 // 2. e5dcd5
 // 3. bcb1a2
-// 4. 443a37
+// 4. d3d1d0
 // 5. 352e29
 
 // 라우터 라이브러리
@@ -16,11 +16,16 @@ import { Container, Nav } from "react-bootstrap";
 import logoBM from "./img/logoBM.png";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectFalse, setSelectTrue } from "./store.js";
+import { setSelectFalse, setSelectTrue, setToggle } from "./store.js";
+
+import styled from "styled-components";
+
+import { BiX, BiListPlus } from "react-icons/bi";
+// https://react-icons.github.io/react-icons/icons?name=fa
+// https://react-icons.github.io/react-icons/icons?name=bi
 
 function App() {
   // let Navigate = useNavigate();
-
   let State = useSelector((state) => {
     return state;
   });
@@ -35,6 +40,7 @@ function App() {
             <>
               <SelectList select={State.select}></SelectList>
               <SelectedList selected={State.selected}></SelectedList>
+              <OptionList input={State.inputClick} option={State.option}></OptionList>
               <div className="make">제작</div>
             </>
           }
@@ -90,13 +96,71 @@ function SelectedList(props) {
   return (
     <>
       <div className="selectedContainer">
+        <div className="cardTitle">Added Ingredients</div>
         {props.selected.map(function (item, i) {
           return (
             <>
-              <div>{item}</div>
+              <div className="selectedList">
+                {item}
+                <div className="btnBackground">
+                  <BiX
+                    style={{
+                      color: "352e29",
+                      fontSize: "20px",
+                      flexShrink: "0",
+                      borderRadius: "50%",
+                    }}
+                  />
+                </div>
+              </div>
             </>
           );
         })}
+      </div>
+    </>
+  );
+}
+
+function OptionList(props) {
+  const CustomInput = styled.input`
+    background: none;
+    border: none;
+    outline: none;
+    color: #f2f0ef;
+  `;
+
+  return (
+    <>
+      <div className="optionContainer">
+        <div className="cardTitle">Option</div>
+        {props.option.map(function (item, i) {
+          return (
+            <>
+              <div className="optionList">{item}</div>
+            </>
+          );
+        })}
+        <div className="optionWrite">
+          <CustomInput
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            placeholder="옵션을 직접 작성해주세요"
+            onSubmit={(e) => {
+              e.preventDefault();
+              console.log(e.target.value);
+            }}
+          ></CustomInput>{" "}
+          <BiListPlus
+            style={{
+              color: "f2f0ef",
+              fontSize: "20px",
+              flexShrink: "0",
+              borderRadius: "50%",
+              marginLeft: "20px",
+            }}
+          />
+        </div>
       </div>
     </>
   );
