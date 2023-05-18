@@ -1,8 +1,9 @@
 import express from "express";
-
+import dotenv from "dotenv";
 const path = require("path");
 const app = express();
 
+dotenv.config();
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
