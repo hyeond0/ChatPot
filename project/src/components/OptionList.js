@@ -9,18 +9,80 @@ function OptionList(props) {
     color: #f2f0ef;
   `;
 
+  const OptionContainer = styled.div`
+    max-width: 100%;
+    margin-top: 40px;
+    padding-bottom: 35px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+    gap: 5px;
+
+    border-radius: 45px;
+  `;
+
+  const CardTitle = styled.div`
+    width: 100%;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #352e29;
+
+    font-size: x-large;
+    font-weight: 700;
+  `;
+
+  const OptionList = styled.div`
+    min-width: 100px;
+    height: 50px;
+    padding: 18px 30px;
+    text-align: start;
+    background-color: #f2f0ef;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 100px;
+    box-shadow: 0 0 0 2px #d3d1d0 inset;
+
+    &:hover {
+      color: #f2f0ef;
+      background-color: #352e29;
+
+      box-shadow: none;
+      transition: background-color 2s;
+    }
+  `;
+
+  const OptionWrite = styled.div`
+    padding: 18px 30px;
+    text-align: start;
+    background-color: #352e29;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 100px;
+  `;
+
   return (
     <>
-      <div className="optionContainer">
-        <div className="cardTitle">Option</div>
+      <OptionContainer>
+        <CardTitle>Option</CardTitle>
         {props.option.map(function (item, i) {
           return (
             <>
-              <div className="optionList">{item}</div>
+              <OptionList>{item}</OptionList>
             </>
           );
         })}
-        <div className="optionWrite">
+        <OptionWrite>
           <CustomInput
             onClick={(e) => {
               e.stopPropagation();
@@ -40,8 +102,8 @@ function OptionList(props) {
               marginLeft: "20px",
             }}
           />
-        </div>
-      </div>
+        </OptionWrite>
+      </OptionContainer>
     </>
   );
 }

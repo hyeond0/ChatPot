@@ -1,8 +1,9 @@
 import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import styled from "styled-components";
 
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { NavBar, SelectList, SelectedList, OptionList, MakeRequest } from "./Components";
 
@@ -11,8 +12,23 @@ function App() {
     return state;
   });
 
+  const App = styled.div`
+    width: 100%;
+    height: 200vh;
+    padding: 0px 20px;
+    background-color: #f2f0ef;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    text-align: center;
+
+    overflow-x: hidden;
+  `;
+
   return (
-    <div className="App">
+    <App>
       <NavBar></NavBar>
       <Routes>
         <Route
@@ -27,7 +43,7 @@ function App() {
           }
         />
       </Routes>
-    </div>
+    </App>
   );
 }
 
