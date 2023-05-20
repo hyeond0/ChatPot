@@ -4,16 +4,16 @@ const path = require("path");
 const app = express();
 
 dotenv.config();
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// const configuration = new Configuration({
+//   apiKey: process.env.OPENAI_API_KEY,
+// });
 
-const openai = new OpenAIApi(configuration);
+// const openai = new OpenAIApi(configuration);
 
-const completion = await openai.createChatCompletion({
-  model: "gpt-3.5-turbo",
-  messages: messages,
-});
+// const completion = await openai.createChatCompletion({
+//   model: "gpt-3.5-turbo",
+//   messages: messages,
+// });
 
 // react와 nodejs 서버간 ajax 요청, cors 처리
 app.use(express.json());
@@ -27,6 +27,11 @@ const getReact = (req, res) => {
   res.sendFile(path.join(__dirname, "/project/build/index.html"));
 };
 
+const postReact = async (req, res) => {
+  let { ingredients, option } = req.body;
+  
+};
 app.get("/", getReact);
+app.post("/", postReact);
 
 export default app;
