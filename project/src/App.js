@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import axios from "axios";
 // color
 // 1. f2f0ef
 // 2. e5dcd5
@@ -16,12 +16,11 @@ import { Container, Nav } from "react-bootstrap";
 import logoBM from "./img/logoBM.png";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectFalse, setSelectTrue, setToggle } from "./store.js";
+import { setSelectFalse, setSelectTrue, setToggle, pushSelected, removeSelected } from "./store.js";
 
 import styled from "styled-components";
 
 import { BiX, BiListPlus } from "react-icons/bi";
-// https://react-icons.github.io/react-icons/icons?name=fa
 // https://react-icons.github.io/react-icons/icons?name=bi
 
 function App() {
@@ -38,10 +37,10 @@ function App() {
           path="/"
           element={
             <>
-              <SelectList select={State.select}></SelectList>
+              <SelectList select={State.select} selected={State.selected}></SelectList>
               <SelectedList selected={State.selected}></SelectedList>
               <OptionList input={State.inputClick} option={State.option}></OptionList>
-              <div className="make">제작</div>
+              <MakeRequest selected={State.selected}></MakeRequest>
             </>
           }
         />
@@ -52,31 +51,27 @@ function App() {
 
 function SelectList(props) {
   let dispatch = useDispatch();
+
   return (
     <>
       <container className="selectContainer">
         {props.select.map(function (item, i) {
           return (
             <>
-              {/* 아래 DIV 클릭하여 활성화 시 item의 type을 Selected State로 Push */}
-              {/* 한 번 더 클릭해서 활성화가 풀렸다면 Selected List에서 해당 type 찾아 삭제 */}
-
-              {/* 일단 먼저 아이템 클릭 시 CSS 변경, State choiced -> true */}
+              {/* 20230520 */}
+              {/* 아이템 클릭했을 때, Selected List에 해당 아이템 추가 */}
+              {/* 이미 들어가있는 상태였다면, 해당 아이템을 찾아 제거 */}
               <div
-                onClick={() => {
-                  // dispatch(setSelectTrue(i));
-                  // item.choiced === false ? dispatch(setSelectTrue(i)) : dispatch(setSelectFalse(i));
-                  item.choiced === true ? dispatch(setSelectFalse(i)) : dispatch(setSelectTrue(i));
-                  // if (item.choiced === false) {
-                  //   dispatch(setSelectTrue(i));
-                  //   console.log(item.choiced);
-                  // } else {
-                  //   dispatch(setSelectFalse(i));
-                  //   console.log(item.choiced);
-                  // }
-                  console.log(item.choiced);
-                }}
                 className="selectItem"
+                onClick={(e) => {
+                  const selectedValue = e.currentTarget.innerText;
+
+                  if (props.selected.includes(selectedValue)) {
+                    dispatch(removeSelected(selectedValue));
+                  } else {
+                    dispatch(pushSelected(selectedValue));
+                  }
+                }}
               >
                 {item.type}
               </div>
@@ -89,10 +84,8 @@ function SelectList(props) {
 }
 
 function SelectedList(props) {
-  // SelecList 컴포넌트의 아이템이 선택되어 활성화된 상태라면,
-  // 해당 컴포넌트 리스트에 들어가며 순서대로 출력됨
+  let dispatch = useDispatch();
 
-  // 리스트 길이가 0일 때는 아무것도 안보이게 하는 것도 좋겠다
   return (
     <>
       <div className="selectedContainer">
@@ -100,9 +93,15 @@ function SelectedList(props) {
         {props.selected.map(function (item, i) {
           return (
             <>
-              <div className="selectedList">
+              <div className="selectedList" id="selectedList">
                 {item}
-                <div className="btnBackground">
+                <div
+                  className="btnBackground"
+                  onClick={(e) => {
+                    const selectedValue = e.currentTarget.closest(".selectedList").innerText;
+                    dispatch(removeSelected(selectedValue));
+                  }}
+                >
                   <BiX
                     style={{
                       color: "352e29",
@@ -161,6 +160,21 @@ function OptionList(props) {
             }}
           />
         </div>
+      </div>
+    </>
+  );
+}
+
+function MakeRequest(props) {
+  return (
+    <>
+      <div
+        onClick={() => {
+          axios.get("/URL", { ...props.selected, message: `${props.selected}을(를) 활용한 레시피 추천해줘` });
+        }}
+        className="make"
+      >
+        제작
       </div>
     </>
   );
