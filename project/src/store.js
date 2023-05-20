@@ -20,7 +20,19 @@ let select = createSlice({
 
 let selected = createSlice({
   name: "selected",
-  initialState: ["대파", "양파", "저민 돼지고기", "대파"],
+  // initialState: ["대파", "양파", "저민 돼지고기", "대파"],
+  initialState: [],
+  reducers: {
+    pushSelected(state, item) {
+      state.push(item.payload);
+    },
+    removeSelected(state, item) {
+      let filtered = state.filter((element) => element !== item.payload);
+      state = filtered;
+
+      return state;
+    },
+  },
 });
 
 let option = createSlice({
@@ -47,3 +59,4 @@ export default configureStore({
 
 export let { setSelectFalse, setSelectTrue } = select.actions;
 export let { setToggle } = inputClick.actions;
+export let { pushSelected, removeSelected } = selected.actions;
