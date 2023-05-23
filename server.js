@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+const { Configuration, OpenAIApi } = require("openai");
 const path = require("path");
 const app = express();
 var cors = require("cors");
@@ -47,10 +48,8 @@ const postReact = async (req, res) => {
       content:
         "안녕하세요! 저는 챗팟입니다. 어떤 요리를 만들어보고 싶으신가요? 제가 도와드릴게요.",
     },
-    {
-      role: "user",
-      content: `${ingredients}를 이용한 ${option} 요리를 만들고 싶어. `,
-    },
+
+    { role: "user", content: "$}" },
   ];
 
   // user 메시지와 chatgpt 메시지를 shift, pop 등으로 뽑아온 후 백엔드에 저장
@@ -85,7 +84,6 @@ const postReact = async (req, res) => {
 
   // chatGPT의 레시피 출력 결과를 프론트엔드로 전송
   let recipe = completion.data.choices[0].message["content"];
-  console.log(recipe);
   res.send(recipe);
   // res.json({ "assistant": recipe}); json으로 전송해야 한다면 이렇게 전송
 };
