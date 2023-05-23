@@ -30,7 +30,10 @@ const getReact = (req, res) => {
 // Post 요청
 const postReact = async (req, res) => {
   // 프론트에서 받아온 정보 저장.
-  let { ingredients, option, userMessages, assistantMessages } = req.body;
+  // console.log(req.body.postData);
+  let { ingredients, option, userMessages, assistantMessages } =
+    req.body.postData;
+  // console.log(ingredients);
   let messages = [
     // 레시피 기본 가스라이팅
     {
@@ -49,7 +52,7 @@ const postReact = async (req, res) => {
         "안녕하세요! 저는 챗팟입니다. 어떤 요리를 만들어보고 싶으신가요? 제가 도와드릴게요.",
     },
 
-    { role: "user", content: "$}" },
+    { role: "user", content: `${ingredients}를 이용한 요리를 추천해 줘.` },
   ];
 
   // user 메시지와 chatgpt 메시지를 shift, pop 등으로 뽑아온 후 백엔드에 저장
@@ -82,9 +85,10 @@ const postReact = async (req, res) => {
     messages: messages,
   });
 
-  // chatGPT의 레시피 출력 결과를 프론트엔드로 전송
+  // // chatGPT의 레시피 출력 결과를 프론트엔드로 전송
   let recipe = completion.data.choices[0].message["content"];
-  res.send(recipe);
+  console.log(recipe);
+  // res.send(recipe);
   // res.json({ "assistant": recipe}); json으로 전송해야 한다면 이렇게 전송
 };
 
