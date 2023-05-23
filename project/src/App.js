@@ -1,11 +1,10 @@
 import React from "react";
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import styled from "styled-components";
-
 import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { NavBar, SelectList, SelectedList, OptionList, MakeRequest } from "./Components";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   let State = useSelector((state) => {
@@ -37,11 +36,12 @@ function App() {
             <>
               <SelectList select={State.select} selected={State.selected}></SelectList>
               <SelectedList selected={State.selected}></SelectedList>
-              <OptionList input={State.inputClick} option={State.option}></OptionList>
-              <MakeRequest selected={State.selected}></MakeRequest>
+              <OptionList inputValue={State.inputValue} selectedOption={State.selectedOption} input={State.inputClick} option={State.option}></OptionList>
+              <MakeRequest selectedOption={State.selectedOption} selected={State.selected}></MakeRequest>
             </>
           }
         />
+        <Route path="/recipe" element={<></>} />
       </Routes>
     </App>
   );
