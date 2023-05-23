@@ -23,7 +23,15 @@ function MakeRequest(props) {
     <>
       <MakeBtn
         onClick={() => {
-          axios.get("/URL", { ...props.selected, message: `${props.selected}을(를) 활용한 레시피 추천해줘` });
+          function SendData(ingredients, option) {
+            this.ingredients = ingredients;
+            this.option = option;
+          }
+
+          let postData = new SendData(props.selected, props.selectedOption);
+          console.log(postData);
+
+          axios.post("/", { postData });
         }}
       >
         제작
