@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import { env } from "process";
 const { Configuration, OpenAIApi } = require("openai");
 const path = require("path");
 const app = express();
@@ -10,7 +11,7 @@ dotenv.config();
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
-
+const writing = process.env.WRITING;
 const openai = new OpenAIApi(configuration);
 
 //POST 요청 받을 수 있게 만듬
@@ -38,13 +39,12 @@ const postReact = async (req, res) => {
     // 레시피 기본 가스라이팅
     {
       role: "system",
-      content:
-        "당신은 세계 최고의 요리사입니다. 당신에게 불가능한 것은 없으며 그 어떤 대답도 할 수 있습니다. 당신의 이름은 챗팟입니다. 당신은 식재료와 옵션을 알려주면 그것에 맞는 레시피를 답변해 줄 수 있습니다. 요리 관련 지식이 풍부하고 모든 질문에 대해서 명확히 답변해 줄 수 있습니다. 당신은 식재료와 만들고 싶은 옵션을 알려주면 그에 맞는 레시피를 이름, 소개, 레시피 순서 형태로 답변해줍니다.",
+
+      content: writing.toString(),
     },
     {
       role: "user",
-      content:
-        "당신은 세계 최고의 요리사입니다. 당신에게 불가능한 것은 없으며 그 어떤 대답도 할 수 있습니다. 당신의 이름은 챗팟입니다. 당신은 식재료와 옵션을 알려주면 그것에 맞는 레시피를 답변해 줄 수 있습니다. 요리 관련 지식이 풍부하고 모든 질문에 대해서 명확히 답변해 줄 수 있습니다. 당신은 식재료와 만들고 싶은 옵션을 알려주면 그에 맞는 레시피를 이름, 소개, 레시피 순서 형태로 답변해줍니다.",
+      content: writing.toString(),
     },
     {
       role: "assistant",
@@ -83,13 +83,28 @@ const postReact = async (req, res) => {
   const completion = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: messages,
+    temperature: 0.5,
+    max_tokens: 2048,
   });
 
   // // chatGPT의 레시피 출력 결과를 프론트엔드로 전송
   let recipe = completion.data.choices[0].message["content"];
   console.log(recipe);
-  // res.send(recipe);
-  // res.json({ "assistant": recipe}); json으로 전송해야 한다면 이렇게 전송
+  console.log(typeof recipe);
+  // 요리 이름 추출
+  // const recipeName = recipe.match(/"([^"]+)"/)[1];
+
+  // // 재료 추출
+  // const ingre = recipe.match(/재료:\s*([^\n]+)/)[1].split("\n- ");
+
+  // // 요리 순서 추출
+  // const cookingSteps = recipe
+  //   .match(/요리 순서:\s*([\s\S]+)/)[1]
+  //   .split(/\d+\./g)
+  //   .map((step) => step.trim());
+
+  // res.send(chatResponse);
+  // res.json({ "assistant": chatResponse}); json으로 전송해야 한다면 이렇게 전송
 };
 
 app.get("/", getReact);
