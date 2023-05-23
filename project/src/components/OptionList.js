@@ -1,13 +1,15 @@
+import { useEffect, useState } from "react";
 import { BiListPlus } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { pushOption, removeOption, AddOption } from "../store.js";
 import styled from "styled-components";
-
 function OptionList(props) {
-  const CustomInput = styled.input`
-    background: none;
-    border: none;
-    outline: none;
-    color: #f2f0ef;
-  `;
+  let dispatch = useDispatch();
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    console.log(props.selectedOption);
+  }, [props.selectedOption]);
 
   const OptionContainer = styled.div`
     max-width: 100%;
@@ -36,8 +38,8 @@ function OptionList(props) {
 
   const OptionList = styled.div`
     min-width: 100px;
-    height: 50px;
-    padding: 18px 30px;
+    height: 30px;
+    padding: 25px 20px;
     text-align: start;
     background-color: #f2f0ef;
 
@@ -47,7 +49,7 @@ function OptionList(props) {
     align-items: center;
 
     border-radius: 100px;
-    box-shadow: 0 0 0 2px #d3d1d0 inset;
+    box-shadow: 0 0 0 1px #d3d1d0 inset;
 
     &:hover {
       color: #f2f0ef;
@@ -56,10 +58,20 @@ function OptionList(props) {
       box-shadow: none;
       transition: background-color 2s;
     }
+
+    ${({ clicked }) =>
+      clicked &&
+      `
+      color: #f2f0ef;
+      background-color: #352e29;
+
+      box-shadow: none;
+  `}
   `;
 
-  const OptionWrite = styled.div`
-    padding: 18px 30px;
+  const OptionWrite = styled.form`
+    height: 30px;
+    padding: 25px 30px;
     text-align: start;
     background-color: #352e29;
 
@@ -71,6 +83,31 @@ function OptionList(props) {
     border-radius: 100px;
   `;
 
+  const StyledBiListPlus = styled(BiListPlus)`
+    color: #f2f0ef;
+    font-size: 23px;
+    flex-shrink: 0;
+    border: none;
+  `;
+
+  const BtnSubmit = styled.button`
+    background-color: #352e29;
+    color: none;
+    border: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+  `;
+
+  const CustomInput = styled.input`
+    background: none;
+    border: none;
+    outline: none;
+    color: #f2f0ef;
+  `;
+
   return (
     <>
       <OptionContainer>
@@ -78,30 +115,31 @@ function OptionList(props) {
         {props.option.map(function (item, i) {
           return (
             <>
-              <OptionList>{item}</OptionList>
+              <OptionList
+                clicked={props.selectedOption.includes(item)}
+                onClick={(e) => {
+                  const selectedValue = e.currentTarget.innerText;
+                  if (props.selectedOption.includes(selectedValue)) {
+                    dispatch(removeOption(selectedValue));
+                  } else {
+                    dispatch(pushOption(selectedValue));
+                  }
+                }}
+              >
+                {item}
+              </OptionList>
             </>
           );
         })}
-        <OptionWrite>
-          <CustomInput
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            placeholder="옵션을 직접 작성해주세요"
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log(e.target.value);
-            }}
-          ></CustomInput>{" "}
-          <BiListPlus
-            style={{
-              color: "f2f0ef",
-              fontSize: "20px",
-              flexShrink: "0",
-              borderRadius: "50%",
-              marginLeft: "20px",
-            }}
-          />
+        <OptionWrite
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <CustomInput type="text" placeholder="옵션을 직접 작성해주세요" />
+          <BtnSubmit type="submit">
+            <StyledBiListPlus />
+          </BtnSubmit>
         </OptionWrite>
       </OptionContainer>
     </>
