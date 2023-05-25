@@ -5,7 +5,6 @@ import { pushOption, removeOption, AddOption } from "../store.js";
 import styled from "styled-components";
 function OptionList(props) {
   let dispatch = useDispatch();
-  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     console.log(props.selectedOption);
