@@ -1,7 +1,9 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
 function MakeRequest(props) {
+  let Navigate = useNavigate();
+
   const MakeBtn = styled.div`
     width: 80%;
     height: 7%;
@@ -17,6 +19,8 @@ function MakeRequest(props) {
 
     border-radius: 10px;
     box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.78);
+
+    cursor: pointer;
   `;
 
   return (
@@ -32,6 +36,7 @@ function MakeRequest(props) {
           console.log(postData);
 
           axios.post("/", { postData });
+          Navigate("/recipe");
         }}
       >
         제작

@@ -25,7 +25,7 @@ let selected = createSlice({
 
 let option = createSlice({
   name: "option",
-  initialState: ["저염식", "최고비건식", "주펄찜", "손님들 접대용 파티음식", "치팅데이"],
+  initialState: ["면요리", "찜요리", "국물류 / 탕류", "볶음류", "건강식", "추운 날 먹기 좋은", "비 오는 날 먹기 좋은"],
   reducers: {
     AddOption(state, item) {
       state.push(item.payload);

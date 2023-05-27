@@ -30,6 +30,7 @@ function SelectList(props) {
 
     border-radius: 50%;
     box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.2);
+    cursor: pointer;
   `;
 
   return (
