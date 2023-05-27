@@ -3,9 +3,11 @@ import { BiListPlus } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { pushOption, removeOption, AddOption } from "../store.js";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
+
 function OptionList(props) {
   let dispatch = useDispatch();
-  const [inputValue, setInputValue] = useState("");
+  const { register, handleSubmit } = useForm();
 
   useEffect(() => {
     console.log(props.selectedOption);
@@ -132,11 +134,11 @@ function OptionList(props) {
           );
         })}
         <OptionWrite
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
+          onSubmit={handleSubmit((data) => {
+            dispatch(AddOption(data.option));
+          })}
         >
-          <CustomInput type="text" placeholder="옵션을 직접 작성해주세요" />
+          <CustomInput type="text" placeholder="옵션을 직접 작성해주세요" {...register("option")} />
           <BtnSubmit type="submit">
             <StyledBiListPlus />
           </BtnSubmit>
