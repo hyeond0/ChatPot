@@ -104,9 +104,7 @@ const postReact = async (req, res) => {
   // 레시피 순서 추출
   const instructionsRegex = /\[레시피 순서\]\n([\s\S]*)/;
   const instructionsMatch = recipeString.match(instructionsRegex);
-  const instructions = instructionsMatch
-    ? instructionsMatch[1].split("\n")
-    : [];
+  const instructions = instructionsMatch ? instructionsMatch[1].split("\n") : [];
 
   // chatGPT의 레시피 추천 정보에서 따온 정보 object로 저장.
   let information = [
