@@ -1,10 +1,12 @@
 import { useDispatch } from "react-redux";
-import { removeSelected } from "../store.js";
-import { BiX } from "react-icons/bi";
+import { removeSelected, pushSelected } from "../store.js";
+import { BiX, BiListPlus } from "react-icons/bi";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
 
 function SelectedList(props) {
   let dispatch = useDispatch();
+  const { register, handleSubmit } = useForm();
 
   const SelectedContainer = styled.div`
     width: 100%;
@@ -46,6 +48,21 @@ function SelectedList(props) {
     border-radius: 10px;
   `;
 
+  const SelectedWrite = styled.form`
+    width: 100%;
+    padding: 18px 20px;
+    background-color: #352e29;
+    text-align: start;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.2);
+    border-radius: 10px;
+  `;
+
   const BtnBackground = styled.div`
     width: 25px;
     height: 25px;
@@ -65,6 +82,33 @@ function SelectedList(props) {
     font-size: 20px;
     flex-shrink: 0;
     border-radius: 50%;
+  `;
+
+  const StyledBiListPlus = styled(BiListPlus)`
+    color: #f2f0ef;
+    font-size: 23px;
+    flex-shrink: 0;
+    border: none;
+  `;
+
+  const BtnSubmit = styled.button`
+    background-color: #352e29;
+    color: none;
+    border: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+  `;
+
+  const CustomInput = styled.input`
+    background: none;
+    border: none;
+    outline: none;
+    color: #f2f0ef;
+
+    width: 100%;
   `;
 
   return (
@@ -88,6 +132,16 @@ function SelectedList(props) {
             </>
           );
         })}
+        <SelectedWrite
+          onSubmit={handleSubmit((data) => {
+            dispatch(pushSelected(data.ingredients));
+          })}
+        >
+          <CustomInput type="text" placeholder="추가할 식재료를 직접 작성해주세요" {...register("ingredients")} />
+          <BtnSubmit type="submit">
+            <StyledBiListPlus />
+          </BtnSubmit>
+        </SelectedWrite>
       </SelectedContainer>
     </>
   );
