@@ -54,7 +54,12 @@ function App() {
                   input={State.inputClick}
                   option={State.option}
                 ></OptionList>
-                <MakeRequest selectedOption={State.selectedOption} selected={State.selected}></MakeRequest>
+                <MakeRequest
+                  sendData={State.sendData}
+                  recieveData={State.recieveData}
+                  selectedOption={State.selectedOption}
+                  selected={State.selected}
+                ></MakeRequest>
               </Container>
             </>
           }
@@ -67,7 +72,7 @@ function App() {
                 <StyledRow>
                   <Col md={8}>
                     <StyledRow>
-                      <RecipeContext></RecipeContext>
+                      <RecipeContext sendData={State.sendData} recieveData={State.recieveData}></RecipeContext>
                     </StyledRow>
                   </Col>
                   <Col md={4}>
