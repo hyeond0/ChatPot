@@ -17,6 +17,7 @@ function RecipeContext() {
     justify-content: center;
     align-items: center;
   `;
+
   return (
     <>
       <RecipeContainer>

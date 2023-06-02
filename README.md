@@ -11,6 +11,25 @@
 # 📝 <b>개발로그</b>
 
 <details>
+<summary><b>2023/06/03 (재웅,FE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- MakeRequest
+  - Post / Get 구현
+  - Get 요청 완료 시 까지 로딩 출력 로직 구현
+  - 데이터 정상적으로 넘겨받으면 페이지 이동
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- GPT API에서 요청받아온 실제 데이터 출력 테스트
+- /recipe 레이아웃 리팩토링 ..
+
+<br>
+</details>
+
+<details>
 <summary><b>2023/06/02 (재웅,FE)</b></summary>
 
 <h2><b>✅ Done</b></h2>

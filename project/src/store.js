@@ -57,6 +57,30 @@ let inputClick = createSlice({
   },
 });
 
+let sendData = createSlice({
+  name: "sendData",
+  initialState: {
+    ingredients: null,
+    option: null,
+  },
+  reducers: {
+    setSendData: (state, action) => {
+      state.ingredients = action.payload.ingredients;
+      state.option = action.payload.option;
+    },
+  },
+});
+
+let recieveData = createSlice({
+  name: "recieveData",
+  initialState: null,
+  reducers: {
+    setRecieveData: (state, action) => {
+      state = action.payload;
+    },
+  },
+});
+
 export default configureStore({
   reducer: {
     select: select.reducer,
@@ -64,6 +88,8 @@ export default configureStore({
     option: option.reducer,
     inputClick: inputClick.reducer,
     selectedOption: selectedOption.reducer,
+    sendData: sendData.reducer,
+    recieveData: recieveData.reducer,
   },
 });
 
@@ -71,3 +97,5 @@ export let { setToggle } = inputClick.actions;
 export let { pushSelected, removeSelected } = selected.actions;
 export let { pushOption, removeOption } = selectedOption.actions;
 export let { AddOption } = option.actions;
+export let { setRecieveData } = recieveData.actions;
+export let { setSendData } = sendData.actions;
