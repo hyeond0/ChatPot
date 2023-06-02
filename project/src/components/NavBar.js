@@ -1,9 +1,24 @@
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logoBM from "../img/logoBM.png";
 import styled from "styled-components";
+import { BsPerson, BsPersonFill } from "react-icons/bs";
 
 function NavBar() {
   let Navigate = useNavigate();
+
+  // Hover Event State
+  const [isHovered, setIsHovered] = useState(false);
+
+  const addHover = () => {
+    setIsHovered(true);
+  };
+
+  const removeHover = () => {
+    setIsHovered(false);
+  };
+
+  // Element Style
   const NavBar = styled.div`
     width: 100vw;
     height: 100px;
@@ -15,17 +30,30 @@ function NavBar() {
     align-items: center;
   `;
 
+  const StyledIcon = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #352e29;
+    font-size: 20px;
+    min-width: 30px;
+  `;
+
   return (
     <NavBar>
-      <p style={{ verticalAlign: "center", minWidth: "30px" }}>Left</p>
+      <p style={{ verticalAlign: "center", minWidth: "30px" }}> </p>
       <img
-        style={{ height: "40px" }}
+        alt="logo"
+        style={{ height: "40px", cursor: "pointer" }}
         src={logoBM}
         onClick={() => {
           Navigate("/");
         }}
       ></img>
-      <p style={{ verticalAlign: "center", minWidth: "30px" }}>right</p>
+      <StyledIcon onMouseEnter={addHover} onMouseLeave={removeHover}>
+        {isHovered ? <BsPersonFill /> : <BsPerson />}
+      </StyledIcon>
     </NavBar>
   );
 }
