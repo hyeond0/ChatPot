@@ -5,8 +5,9 @@ function MakeRequest(props) {
   let Navigate = useNavigate();
 
   const MakeBtn = styled.div`
-    width: 80%;
+    width: 70%;
     height: 7%;
+    min-height: 40px;
     color: #f2f0ef;
     background-color: #352e29;
 
@@ -16,6 +17,9 @@ function MakeRequest(props) {
 
     position: fixed;
     bottom: 5%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
 
     border-radius: 10px;
     box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.78);

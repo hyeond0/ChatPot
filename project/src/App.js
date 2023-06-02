@@ -48,7 +48,12 @@ function App() {
               <Container>
                 <SelectList select={State.select} selected={State.selected}></SelectList>
                 <SelectedList selected={State.selected}></SelectedList>
-                <OptionList inputValue={State.inputValue} selectedOption={State.selectedOption} input={State.inputClick} option={State.option}></OptionList>
+                <OptionList
+                  inputValue={State.inputValue}
+                  selectedOption={State.selectedOption}
+                  input={State.inputClick}
+                  option={State.option}
+                ></OptionList>
                 <MakeRequest selectedOption={State.selectedOption} selected={State.selected}></MakeRequest>
               </Container>
             </>

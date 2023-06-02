@@ -135,7 +135,9 @@ function OptionList(props) {
         })}
         <OptionWrite
           onSubmit={handleSubmit((data) => {
-            dispatch(AddOption(data.option));
+            if (data.option.length) {
+              dispatch(AddOption(data.option));
+            }
           })}
         >
           <CustomInput type="text" placeholder="옵션을 직접 작성해주세요" {...register("option")} />

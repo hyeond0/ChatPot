@@ -134,7 +134,9 @@ function SelectedList(props) {
         })}
         <SelectedWrite
           onSubmit={handleSubmit((data) => {
-            dispatch(pushSelected(data.ingredients));
+            if (data.ingredients.length) {
+              dispatch(pushSelected(data.ingredients));
+            }
           })}
         >
           <CustomInput type="text" placeholder="추가할 식재료를 직접 작성해주세요" {...register("ingredients")} />
