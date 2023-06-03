@@ -15,7 +15,7 @@ function RecipeButton() {
   const Button = styled.button`
     width: 100%;
     max-width: 300px;
-    height: 30px;
+    height: 60px;
     padding: 25px 30px;
     text-align: start;
     background-color: #352e29;
