@@ -40,7 +40,9 @@ function App() {
   `;
 
   const StyledContainer = styled(Container)`
-    padding: 0px;
+    width: 100%;
+    height: 100vh;
+    padding-top: 100px;
     margin: 0px;
   `;
 
@@ -75,7 +77,7 @@ function App() {
           path="/recipe"
           element={
             <>
-              <Container>
+              <StyledContainer>
                 <StyledRow>
                   <Col md={8}>
                     <StyledRow>
@@ -92,7 +94,7 @@ function App() {
                     </StyledRow>
                   </Col>
                 </StyledRow>
-              </Container>
+              </StyledContainer>
             </>
           }
         />
