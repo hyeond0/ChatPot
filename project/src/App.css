@@ -12,3 +12,8 @@
 
   overflow-x: hidden;
 }
+
+body {
+  margin: 0;
+  overflow-y: hidden;
+}

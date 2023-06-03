@@ -22,14 +22,15 @@ function MakeRequest(props) {
 
     axios
       // endpoint 주소 변경 필요
-      .post("/endpoint", props.sendData)
+      .post("/", props.sendData)
       .then((response) => {
         axios
-          .get("/endpoint")
+          .get("/")
           .then((response) => {
             // 파싱 및 GET 테스트 필요 !
             dispatch(setRecieveData(response.data));
             setLoading(false);
+            console.log(response.data);
 
             Navigate("/recipe");
           })
