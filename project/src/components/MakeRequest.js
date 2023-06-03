@@ -30,7 +30,6 @@ function MakeRequest(props) {
             // 파싱 및 GET 테스트 필요 !
             dispatch(setRecieveData(response.data));
             setLoading(false);
-            console.log(response.data);
 
             Navigate("/recipe");
           })
@@ -85,7 +84,15 @@ function MakeRequest(props) {
     align-items: center;
   `;
 
-  return <>{loading ? <Loading>loadingding..</Loading> : <MakeBtn onClick={handleClick}>제작</MakeBtn>}</>;
+  return (
+    <>
+      {loading ? (
+        <Loading>loadingding..</Loading>
+      ) : (
+        <MakeBtn onClick={handleClick}>제작</MakeBtn>
+      )}
+    </>
+  );
 }
 
 export default MakeRequest;
