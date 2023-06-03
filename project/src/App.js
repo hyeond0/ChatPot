@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { NavBar, SelectList, SelectedList, OptionList, MakeRequest } from "./Components";
 import { RecipeContext, RecipeButton, RecipeChat } from "./Components";
+import { TestPage, ScrollTranslate } from "./Components";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
@@ -15,8 +16,8 @@ function App() {
 
   const App = styled.div`
     width: 100%;
-    height: 200vh;
-    padding: 0px 20px;
+    /* height: 100vh; */
+    padding: 0px 0px;
     background-color: #f2f0ef;
 
     display: flex;
@@ -26,6 +27,7 @@ function App() {
     text-align: center;
 
     overflow-x: hidden;
+    overflow-y: hidden;
   `;
 
   const StyledRow = styled(Row)`
@@ -35,6 +37,11 @@ function App() {
     /* background-color: #d3d1d0; */
 
     padding: 10px;
+  `;
+
+  const StyledContainer = styled(Container)`
+    padding: 0px;
+    margin: 0px;
   `;
 
   return (
@@ -86,6 +93,17 @@ function App() {
                   </Col>
                 </StyledRow>
               </Container>
+            </>
+          }
+        />
+        <Route
+          path="/test"
+          element={
+            <>
+              {/* <StyledContainer> */}
+              {/* <ScrollTranslate></ScrollTranslate> */}
+              <TestPage></TestPage>
+              {/* </StyledContainer> */}
             </>
           }
         />

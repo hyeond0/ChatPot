@@ -28,6 +28,12 @@ function NavBar() {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    position: fixed;
+    top: 0%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
   `;
 
   const StyledIcon = styled.div`
@@ -42,7 +48,7 @@ function NavBar() {
 
   return (
     <NavBar>
-      <p style={{ verticalAlign: "center", minWidth: "30px" }}> </p>
+      <p style={{ verticalAlign: "center", minWidth: "30px" }}>0603(23:30)</p>
       <img
         alt="logo"
         style={{ height: "40px", cursor: "pointer" }}
@@ -52,7 +58,15 @@ function NavBar() {
         }}
       ></img>
       <StyledIcon onMouseEnter={addHover} onMouseLeave={removeHover}>
-        {isHovered ? <BsPersonFill /> : <BsPerson />}
+        {isHovered ? (
+          <BsPersonFill
+            onClick={() => {
+              Navigate("/test");
+            }}
+          />
+        ) : (
+          <BsPerson />
+        )}
       </StyledIcon>
     </NavBar>
   );
