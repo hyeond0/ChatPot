@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { setSendData, setRecieveData } from "../store.js";
+import { setRecieveData } from "../store.js";
 import { useDispatch } from "react-redux";
 
 function MakeRequest(props) {
@@ -18,17 +18,22 @@ function MakeRequest(props) {
 
     const ingredients = props.selected;
     const option = props.selectedOption;
-    dispatch(setSendData({ ingredients, option }));
+    const sendData = { ingredients, option };
 
+    console.log(sendData);
     axios
-      // endpoint 주소 변경 필요
-      .post("/", props.sendData)
+      .post("/", sendData)
       .then((response) => {
         axios
           .get("/")
           .then((response) => {
-            // 파싱 및 GET 테스트 필요 !
-            dispatch(setRecieveData(response.data));
+            const recieveData = response.data;
+            const name = recieveData[0].name;
+            const element = recieveData[0].element;
+            const instructions = recieveData[0].instructions;
+
+            // dispatch(setRecieveData(name, element, instructions));
+            console.log(recieveData);
             setLoading(false);
 
             Navigate("/recipe");
@@ -84,15 +89,7 @@ function MakeRequest(props) {
     align-items: center;
   `;
 
-  return (
-    <>
-      {loading ? (
-        <Loading>loadingding..</Loading>
-      ) : (
-        <MakeBtn onClick={handleClick}>제작</MakeBtn>
-      )}
-    </>
-  );
+  return <>{loading ? <Loading>loadingding..</Loading> : <MakeBtn onClick={handleClick}>제작</MakeBtn>}</>;
 }
 
 export default MakeRequest;
