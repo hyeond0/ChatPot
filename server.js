@@ -33,8 +33,7 @@ let writing =
 const postReact = async (req, res) => {
   // console.log(req.body);
   let { ingredients, option } = req.body;
-  if (ingredients && option) {
-    console.log(req.body);
+  if (ingredients) {
     let messages = [
       // 레시피 기본 가스라이팅
       {
@@ -47,40 +46,14 @@ const postReact = async (req, res) => {
       },
       {
         role: "assistant",
-        content:
-          "안녕하세요! 어떤 요리를 만들고 싶으신가요? 제가 도와드릴게요.",
+        content: "안녕하세요! 어떤 요리를 만들고 싶으신가요? 제가 도와드릴게요.",
       },
 
       {
         role: "user",
-        content: `${ingredients}를 이용한  ${option}요리를 요리 이름, 재료, 레시피 순서로 추천해 줘.`,
+        content: `${ingredients}를 이용한  ${option}요리를 요리 이름, 재료, 레시피 순서로 하나의 요리만 추천해 줘. 답변은 요리 이름, 재료, 레시피 순서로 각각 중괄호, []로 감싸서 답변해줘.`,
       },
     ];
-
-    // user 메시지와 chatgpt 메시지를 shift, pop 등으로 뽑아온 후 백엔드에 저장
-    // while (userMessages.length != 0 || assistantMessages.length != 0) {
-    //   if (userMessages.length != 0) {
-    //     messages.push(
-    //       JSON.parse(
-    //         '{"role": "user", "content": "' +
-    //           // userMessage의 맨 앞부터 문장 정리 후 저장
-    //           String(userMessages.shift()).replace(/\n/g, "") +
-    //           '"}'
-    //       )
-    //     );
-    //   }
-    //   if (assistantMessages.length != 0) {
-    //     messages.push(
-    //       // string을 JSON 형태로 parsing
-    //       JSON.parse(
-    //         '{"role": "assistant", "content": "' +
-    //           // assistantMessage의 맨 앞부터 문장 정리 후 저장
-    //           String(assistantMessages.shift()).replace(/\n/g, "") +
-    //           '"}'
-    //       )
-    //     );
-    //   }
-    // }
 
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
@@ -91,7 +64,6 @@ const postReact = async (req, res) => {
     });
 
     // // chatGPT의 레시피 출력 결과를 프론트엔드로 전송
-    // console.log(completion.messages);
     let recipeString = completion.data.choices[0].message["content"];
     console.log(recipeString);
 
@@ -108,28 +80,19 @@ const postReact = async (req, res) => {
     // 레시피 순서 추출
     const instructionsRegex = /\[레시피 순서\]\n([\s\S]*)/;
     const instructionsMatch = recipeString.match(instructionsRegex);
-    const instructions = instructionsMatch
-      ? instructionsMatch[1].split("\n")
-      : [];
+    const instructions = instructionsMatch ? instructionsMatch[1].split("\n") : [];
 
     // chatGPT의 레시피 추천 정보에서 따온 정보 object로 저장.
-    let information = [
-      {
-        name: name,
-        element: element,
-        instructions: instructions,
-      },
-    ];
-
-    console.log(information);
     // 요리 정보 react로 전송
-    res.send(information);
+    res.json({
+      name: name,
+      element: element,
+      instructions: instructions,
+    });
   }
-
-  // res.json(information); json으로 전송해야 한다면 이렇게 전송
 };
 
-app.get("/", getReact);
+app.get("*", getReact);
 app.post("/", postReact);
 
 export default app;
