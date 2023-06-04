@@ -11,57 +11,31 @@
 # 📝 <b>개발로그</b>
 
 <details>
-<summary><b>2023/06/04 (2) (재웅,FE)</b></summary>
+<summary><b>2023/06/04 (현도,BE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
 
-- /test 풀페이지 스크롤 애니메이션 구현
-- lottie-react 라이브러리 설치
+- 정규 표현식을 이용해 chatGPT에게 받은 추천 레시피를 parsing
+- React로 추천받은 레시피 parsing 결과를 전송
+  - (에러) axios를 이용해 통신하는데 res.send로 보낸 값을 React에서 제대로 받아오지 못함.
+    - axios.get()으로 한번 더 받아오는 것이 아니라 post 요청 후 then을 이용해 결과값을 받아오도록 수정
+    - React에서 json 형태로 변환하지 않고 res.json을 이용해 서버에서 json 형태로 전송
+- POST 요청받은 식재료, 옵션 값이 null 일때 예외 처리
+- <br>
+  <h2><b>⚙️ in Progess</b></h2>
 
-<br>
-<h2><b>⚙️ in Progess</b></h2>
-
-- GET으로 받아온 데이터 바인딩하여, /recipe에 출력 구현 중
-  - 데이터 받아오는 것 이외에도 바인딩 과정에서 문제 발생하여 해결 중
+- 구현 중인 내용
+  - 좀 더 정확한 chatGPT 답변을 위한 역할 부여 메시지, 파라미터 수정
 
 <br>
 <h2><b>📚 Next</b></h2>
 
-- /recipe 실제 데이터 받아와지면 바인딩 마무리 + 버튼 기능 구현
-- /recipe 페이지 레이아웃 및 컴포넌트 재구성
-- / 페이지 레이아웃 및 컴포넌트 구조 변경
-  - 변경 후 식재료 선택 시 활성화 CSS 구현 + 식재료별 아이콘 삽입 예정
+- 구현 예정
+  - aws, heroku 등을 이용한 서버 배포
+  - 배포 후 테스트 및 버그 수정
 
 <br>
 </details>
-
-<details>
-<summary><b>2023/06/04 (재웅,FE)</b></summary>
-
-<h2><b>✅ Done</b></h2>
-
-- /test 풀페이지 스크롤 애니메이션 구현
-
-<br>
-<h2><b>⚙️ in Progess</b></h2>
-
-- /recipe 페이지 레이아웃 재구성 중
-  - 그에 따른 App.js 컴포넌트 구조도 바꿀 예정
-- GET으로 받아온 데이터 바인딩하여, /recipe에 출력 구현 예정
-  - 데이터 받아오는 과정에서 오류가 발생
-  - 오류1. response 변수에 담기지 않음
-  - 오류2. Parsing 과정에서, GPT가 규칙을 지키지 않아 null로 담기게 됨
-
-<br>
-<h2><b>📚 Next</b></h2>
-
-- /recipe 실제 데이터 받아와지면 바인딩 마무리 + 버튼 기능 구현
-- / 페이지 레이아웃 및 컴포넌트 구조 변경
-  - 변경 후 식재료 선택 시 활성화 CSS 구현 + 식재료별 아이콘 삽입 예정
-
-<br>
-</details>
-
 <details>
 <summary><b>2023/06/03 (재웅,FE)</b></summary>
 
@@ -93,6 +67,21 @@
 </details>
 
 <details>
+<summary><b>2023/05/25 (현도,BE)</b></summary>
+<br>
+<h2><b>⚙️ in Progess</b></h2>
+
+- 구현 중인 내용
+  - chatGPT 답변을 match, split을 이용해 요리 이름, 식재료, 레시피 순서로 구분
+    - (에러) 답변이 원하는 대로 돌아오지 않음.
+      - 정확한 답변을 위해 temperature, top_p 등 chatGPT 파라미터 조정
+      - 역할 부여 및 user 메시지를 좀 더 구체적으로 수정
+  - parsing한 레시피 추천 정보를 res.send를 이용해 React로 전송
+    <br>
+
+<br>
+</details>
+<details>
 <summary><b>2023/05/24 (재웅,FE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
@@ -113,6 +102,31 @@
 <br>
 </details>
 
+<details>
+<summary><b>2023/05/23 (현도,BE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- 이용자가 선택한 옵션, 식재료를 POST 요청으로 받아와 request 값들 저장
+- 받아온 request 값들을 이용해 역할이 부여된 chatGPT에게 레시피 추천 요청
+- chatGPT가 답변해준 레시피를 서버에 저장
+
+<br>
+<h2><b>⚙️ in Progess</b></h2>
+
+- 구현 중인 내용
+  - chatGPT가 답변해준 레시피를 요리 이름, 식재료, 레시피 순서로 parsing
+  - 좀 더 정확한 chatGPT 답변을 위한 역할 부여 메시지 수정
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- 구현 예정
+  - React에서 POST 요청에 대한 chatGPT 답변이 잘 받아지는지 확인
+  - 답변이 받아진 상태로 recipe 페이지로 라우팅 되는지 확인
+
+<br>
+</details>
 <details>
 <summary><b>2023/05/23 (재웅,FE)</b></summary>
 
@@ -162,6 +176,39 @@
 </details>
 
 <details>
+<summary><b>2023/05/20 (현도,BE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- POST 요청 구현
+  ```javascript
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  ```
+- chatGPT 역할 부여
+  - 세계 최고의 요리사이고, 요리 관련 지식이 풍부해 어떤 식재료와 옵션이든 대답해줄 수 있음.
+  - 추천은 하나의 요리만 추천해 줌.
+  - 답변 순서는 요리 이름, 식재료, 레시피 순서 형태로 답변해줌.
+  - Temperature(무작위성, 자유도)를 낮춰 답변에서 일어나는 버그 제어
+
+<br>
+<h2><b>⚙️ in Progess</b></h2>
+
+- 구현 중인 내용
+  - chatGPT의 답변을 javascript 변수로 parsing
+  - parsing된 값들을 React로 전송
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- 구현 예정
+  - 요청받은 POST에 대한 response 값을 React에 잘 전송되는지 확인.
+  - res.send로 잘 안보내진다면 json 형태로 변환 후 전송.
+
+<br>
+</details>
+
+<details>
 <summary><b>2023/05/20 (재웅,FE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
@@ -183,6 +230,48 @@
 
 - 폼 입력 이슈 해결
 - 컴포넌트 분리와 개별 스타일링
+
+<br>
+</details>
+<details>
+<summary><b>2023/05/18 (현도,BE)</b></summary>
+<h2><b>✅ Done</b></h2>
+
+- Node.js 서버와 chatGPT API 연동
+- cors 예외 처리
+  ```javascript
+  var cors = require("cors");
+  app.use(cors());
+  ```
+- API_KEY 환경변수 처리
+  <br>
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- 구현 예정
+  - React에서 받아온 식재료, 옵션을 chatGPT에게 전송
+  - chatGPT의 레시피 추천 결과를 이름, 식재료, 레시피 순서로 Parsing
+  - parsing된 정보를 React로 전송
+
+<br>
+</details>
+<details>
+<summary><b>2023/05/16 (현도,BE)</b></summary>
+<h2><b>✅ Done</b></h2>
+
+- Express 웹 서버 생성
+- React로 만든 HTML을 Node.js로 전송
+- Node.js 서버와 React 연동
+
+<br>
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- 구현 예정
+  - chatGPT API 연동
+  - React와 Node.js 사이의 데이터 요청
 
 <br>
 </details>
