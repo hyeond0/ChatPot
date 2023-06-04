@@ -48,7 +48,7 @@ function NavBar() {
 
   return (
     <NavBar>
-      <p style={{ verticalAlign: "center", minWidth: "30px" }}>0604(05:30)</p>
+      <p style={{ verticalAlign: "center", minWidth: "30px" }}>0604(18:00)</p>
       <img
         alt="logo"
         style={{ height: "40px", cursor: "pointer" }}

@@ -16,7 +16,7 @@ function App() {
 
   const App = styled.div`
     width: 100%;
-    /* height: 100vh; */
+    /* height: 100%; */
     padding: 0px 0px;
     background-color: #f2f0ef;
 
@@ -27,7 +27,7 @@ function App() {
     text-align: center;
 
     overflow-x: hidden;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
   `;
 
   const StyledRow = styled(Row)`
@@ -41,7 +41,7 @@ function App() {
 
   const StyledContainer = styled(Container)`
     width: 100%;
-    height: 100vh;
+    /* height: 100vh; */
     padding-top: 100px;
     margin: 0px;
   `;
@@ -54,7 +54,7 @@ function App() {
           path="/"
           element={
             <>
-              <Container>
+              <StyledContainer>
                 <SelectList select={State.select} selected={State.selected}></SelectList>
                 <SelectedList selected={State.selected}></SelectedList>
                 <OptionList
@@ -69,7 +69,7 @@ function App() {
                   selectedOption={State.selectedOption}
                   selected={State.selected}
                 ></MakeRequest>
-              </Container>
+              </StyledContainer>
             </>
           }
         />
@@ -81,7 +81,7 @@ function App() {
                 <StyledRow>
                   <Col md={8}>
                     <StyledRow>
-                      <RecipeContext sendData={State.sendData} recieveData={State.recieveData}></RecipeContext>
+                      <RecipeContext recieveData={State.recieveData}></RecipeContext>
                     </StyledRow>
                   </Col>
                   <Col md={4}>

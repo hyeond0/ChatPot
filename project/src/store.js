@@ -60,9 +60,9 @@ let inputClick = createSlice({
 let recieveData = createSlice({
   name: "recieveData",
   initialState: {
-    name: null,
-    element: null,
-    instructions: null,
+    name: "",
+    element: [],
+    instructions: [],
   },
   reducers: {
     setRecieveData: (state, action) => {

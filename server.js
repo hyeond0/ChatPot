@@ -46,13 +46,12 @@ const postReact = async (req, res) => {
       },
       {
         role: "assistant",
-        content:
-          "안녕하세요! 어떤 요리를 만들고 싶으신가요? 제가 도와드릴게요.",
+        content: "안녕하세요! 어떤 요리를 만들고 싶으신가요? 제가 도와드릴게요.",
       },
 
       {
         role: "user",
-        content: `${ingredients}를 이용한  ${option}요리를 요리 이름, 재료, 레시피 순서로 추천해 줘.`,
+        content: `${ingredients}를 이용한  ${option}요리를 요리 이름, 재료, 레시피 순서로 하나의 요리만 추천해 줘. 답변은 요리 이름, 재료, 레시피 순서로 각각 중괄호, []로 감싸서 답변해줘.`,
       },
     ];
 
@@ -81,9 +80,7 @@ const postReact = async (req, res) => {
     // 레시피 순서 추출
     const instructionsRegex = /\[레시피 순서\]\n([\s\S]*)/;
     const instructionsMatch = recipeString.match(instructionsRegex);
-    const instructions = instructionsMatch
-      ? instructionsMatch[1].split("\n")
-      : [];
+    const instructions = instructionsMatch ? instructionsMatch[1].split("\n") : [];
 
     // chatGPT의 레시피 추천 정보에서 따온 정보 object로 저장.
     // 요리 정보 react로 전송
@@ -95,7 +92,7 @@ const postReact = async (req, res) => {
   }
 };
 
-app.get("/", getReact);
+app.get("*", getReact);
 app.post("/", postReact);
 
 export default app;

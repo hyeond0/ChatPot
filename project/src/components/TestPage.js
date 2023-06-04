@@ -5,10 +5,6 @@ const OuterDiv = styled.div`
   height: 100vh;
   width: 100%;
   overflow-y: auto;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 const InnerDiv = styled.div`
   height: 100vh;
