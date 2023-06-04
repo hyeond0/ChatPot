@@ -64,7 +64,6 @@ function App() {
                   option={State.option}
                 ></OptionList>
                 <MakeRequest
-                  sendData={State.sendData}
                   recieveData={State.recieveData}
                   selectedOption={State.selectedOption}
                   selected={State.selected}

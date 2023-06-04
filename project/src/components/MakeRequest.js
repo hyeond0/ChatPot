@@ -13,13 +13,11 @@ function MakeRequest(props) {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
-  const loadingAnimation = {
+  const LoadingAnimation = {
     loop: true,
     autoplay: true,
     animationData: LoadingAnimation,
-    rendererSettings: {
-      preserveAspectRatio: `xMidyMid slice`,
-    },
+    rendererSettings: {},
   };
   // 버튼 클릭 시 Loading -> Post -> Get -> Navigate 처리
   // 해당 과정은 이전 단계가 성공해야 연쇄적으로 처리가 가능함
@@ -33,13 +31,12 @@ function MakeRequest(props) {
     axios
       .post("/", sendData)
       .then((res) => {
-        const receiveData = res.data;
-        const name = receiveData.name;
-        const element = receiveData.element;
-        const instructions = receiveData.instructions;
-        console.log(receiveData);
+        const respond = res.data;
+        console.log(respond);
 
-        dispatch(setRecieveData(name, element, instructions));
+        dispatch(setRecieveData(respond));
+
+        console.log(props.receiveData);
         setLoading(false);
         Navigate("/recipe");
       })
@@ -122,7 +119,7 @@ function MakeRequest(props) {
       {loading ? (
         <Loading>
           <Lottie
-            options={loadingAnimation}
+            options={LoadingAnimation}
             height={400}
             width={400}
             isPaused={false}

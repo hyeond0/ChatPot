@@ -6,6 +6,8 @@ import logo from "../img/chatpotLogo.png";
 
 import Lottie from "react-lottie";
 import * as loading from "../lottie/result1.json";
+import { useDispatch } from "react-redux";
+import { setRecieveData } from "../store";
 
 const StyledRow = styled(Row)`
   display: flex;
@@ -61,13 +63,12 @@ const Title = styled.h3`
 `;
 
 function RecipeContext(props) {
+  let dispatch = useDispatch();
   const testLottie = {
     loop: true,
     autoplay: true,
     animationData: loading,
-    rendererSettings: {
-      preserveAspectRatio: `xMidyMid slice`,
-    },
+    rendererSettings: {},
   };
 
   return (
@@ -93,7 +94,6 @@ function RecipeContext(props) {
           </StyledCol>
         </StyledRow>
         <StyledRow>
-          {console.log(props.recieveData)}
           {props.recieveData.element !== undefined &&
             props.recieveData.element.map(function (item, i) {
               return <div key={i}>{item}</div>;
@@ -104,6 +104,19 @@ function RecipeContext(props) {
             props.recieveData.instructions.map(function (item, i) {
               return <div key={i}>{item}</div>;
             })}
+          <button
+            onClick={() => {
+              const testData = {
+                name: "메뉴명",
+                element: ["11", "22"],
+                instructions: ["111", "222"],
+              };
+
+              dispatch(setRecieveData(testData));
+            }}
+          >
+            ds
+          </button>
         </StyledRow>
       </RecipeContainer>
     </>
