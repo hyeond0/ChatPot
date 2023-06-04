@@ -6,7 +6,7 @@ import { setRecieveData } from "../store.js";
 import { useDispatch } from "react-redux";
 
 import Lottie from "react-lottie";
-import * as LoadingAnimation from "../lottie/loading.json";
+import loadingAnimation from "../lottie/loading.json";
 
 function MakeRequest(props) {
   let Navigate = useNavigate();
@@ -16,7 +16,7 @@ function MakeRequest(props) {
   const LoadingAnimation = {
     loop: true,
     autoplay: true,
-    animationData: LoadingAnimation,
+    animationData: loadingAnimation,
     rendererSettings: {},
   };
   // 버튼 클릭 시 Loading -> Post -> Get -> Navigate 처리
@@ -126,6 +126,7 @@ function MakeRequest(props) {
             isStopped={false}
             isClickToPauseDisabled={true}
           />
+          <h2>챗팟이 맛있는 레시피를 추천해드릴게요!</h2>
         </Loading>
       ) : (
         <MakeBtn onClick={handleClick}>제작</MakeBtn>
