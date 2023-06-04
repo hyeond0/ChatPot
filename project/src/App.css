@@ -15,5 +15,6 @@
 
 body {
   margin: 0;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
+  background-color: #f2f0ef;
 }

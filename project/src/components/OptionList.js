@@ -9,9 +9,9 @@ function OptionList(props) {
   let dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
-  useEffect(() => {
-    console.log(props.selectedOption);
-  }, [props.selectedOption]);
+  // useEffect(() => {
+  //   console.log(props.selectedOption);
+  // }, [props.selectedOption]);
 
   const OptionContainer = styled.div`
     max-width: 100%;
