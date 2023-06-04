@@ -9,6 +9,26 @@
 <!-- Develop history -->
 
 # 📝 <b>개발로그</b>
+
+<details>
+<summary><b>2023/06/05 (재웅,FE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- /recipe 페이지 레이아웃 및 컴포넌트 재구성
+- GPT API 답변 바인딩 및 요청멘트 보정 (Issues 확인바랍니다)
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- / 페이지 레이아웃 및 컴포넌트 구조 변경 (1)
+  - 식재료버튼 클릭 시 활성화 CSS 구현 + 식재료별 아이콘 삽입 예정
+- /recipe 하단 버튼 (저장, 공유, 리로드) CSS 및 기능 구현 (2)
+  - 챗봇 및 로그인 구현
+
+<br>
+</details>
+
 <details>
 <summary><b>2023/06/04 (2) (재웅,FE)</b></summary>
 
