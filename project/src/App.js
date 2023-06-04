@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { NavBar, SelectList, SelectedList, OptionList, MakeRequest } from "./Components";
-import { RecipeContext, RecipeButton, RecipeChat } from "./Components";
+import { RecipePage } from "./Components";
 import { TestPage, ScrollTranslate } from "./Components";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,7 +16,7 @@ function App() {
 
   const App = styled.div`
     width: 100%;
-    /* height: 100%; */
+    height: 100vh;
     padding: 0px 0px;
     background-color: #f2f0ef;
 
@@ -76,24 +76,7 @@ function App() {
           path="/recipe"
           element={
             <>
-              <StyledContainer>
-                <StyledRow>
-                  <Col md={8}>
-                    <StyledRow>
-                      <RecipeContext recieveData={State.recieveData}></RecipeContext>
-                    </StyledRow>
-                  </Col>
-                  <Col md={4}>
-                    <StyledRow>
-                      <RecipeButton></RecipeButton>
-                    </StyledRow>
-                    <StyledRow>
-                      more chat
-                      <RecipeChat></RecipeChat>
-                    </StyledRow>
-                  </Col>
-                </StyledRow>
-              </StyledContainer>
+              <RecipePage recieveData={State.recieveData}></RecipePage>
             </>
           }
         />
@@ -101,10 +84,7 @@ function App() {
           path="/test"
           element={
             <>
-              {/* <StyledContainer> */}
-              {/* <ScrollTranslate></ScrollTranslate> */}
               <TestPage></TestPage>
-              {/* </StyledContainer> */}
             </>
           }
         />

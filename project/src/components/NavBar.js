@@ -34,6 +34,7 @@ function NavBar() {
     margin: 0 auto;
     left: 0;
     right: 0;
+    z-index: 1;
   `;
 
   const StyledIcon = styled.div`
@@ -48,7 +49,7 @@ function NavBar() {
 
   return (
     <NavBar>
-      <p style={{ verticalAlign: "center", minWidth: "30px" }}>0604(18:20)</p>
+      <p style={{ verticalAlign: "center", minWidth: "30px" }}>0605(02:50)</p>
       <img
         alt="logo"
         style={{ height: "40px", cursor: "pointer" }}
