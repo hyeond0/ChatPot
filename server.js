@@ -86,20 +86,13 @@ const postReact = async (req, res) => {
       : [];
 
     // chatGPT의 레시피 추천 정보에서 따온 정보 object로 저장.
-    let information = [
-      {
-        name: name,
-        element: element,
-        instructions: instructions,
-      },
-    ];
-
-    console.log(information);
     // 요리 정보 react로 전송
-    res.send(information);
+    res.json({
+      name: name,
+      element: element,
+      instructions: instructions,
+    });
   }
-
-  // res.json(information); json으로 전송해야 한다면 이렇게 전송
 };
 
 app.get("/", getReact);
