@@ -9,6 +9,57 @@
 <!-- Develop history -->
 
 # 📝 <b>개발로그</b>
+<details>
+<summary><b>2023/06/04 (2) (재웅,FE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- /test 풀페이지 스크롤 애니메이션 구현
+- lottie-react 라이브러리 설치
+
+<br>
+<h2><b>⚙️ in Progess</b></h2>
+
+- GET으로 받아온 데이터 바인딩하여, /recipe에 출력 구현 중
+  - 데이터 받아오는 것 이외에도 바인딩 과정에서 문제 발생하여 해결 중
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- /recipe 실제 데이터 받아와지면 바인딩 마무리 + 버튼 기능 구현
+- /recipe 페이지 레이아웃 및 컴포넌트 재구성
+- / 페이지 레이아웃 및 컴포넌트 구조 변경
+  - 변경 후 식재료 선택 시 활성화 CSS 구현 + 식재료별 아이콘 삽입 예정
+
+<br>
+</details>
+
+<details>
+<summary><b>2023/06/04 (재웅,FE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- /test 풀페이지 스크롤 애니메이션 구현
+
+<br>
+<h2><b>⚙️ in Progess</b></h2>
+
+- /recipe 페이지 레이아웃 재구성 중
+  - 그에 따른 App.js 컴포넌트 구조도 바꿀 예정
+- GET으로 받아온 데이터 바인딩하여, /recipe에 출력 구현 예정
+  - 데이터 받아오는 과정에서 오류가 발생
+  - 오류1. response 변수에 담기지 않음
+  - 오류2. Parsing 과정에서, GPT가 규칙을 지키지 않아 null로 담기게 됨
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- /recipe 실제 데이터 받아와지면 바인딩 마무리 + 버튼 기능 구현
+- / 페이지 레이아웃 및 컴포넌트 구조 변경
+  - 변경 후 식재료 선택 시 활성화 CSS 구현 + 식재료별 아이콘 삽입 예정
+
+<br>
+</details>
 
 <details>
 <summary><b>2023/06/04 (현도,BE)</b></summary>
