@@ -11,6 +11,20 @@
 # 📝 <b>개발로그</b>
 
 <details>
+<summary><b>2023/06/06 (재웅,FE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- / 페이지 재구성
+  - App.js 내 / 페이지 분할 (SelectPage, OptionPage)
+  - Testpage에서 시험하던 스와이프 / 풀페이지 스크롤 기능 사용 잠시 보류
+  - 사유는 onClick 통한 상태값 갱신 시 재렌더링되어 위치가 초기화됨
+  - 따라서 뷰포트 크기에 맞는 페이지를 주요 기능 하나씩 사용하게 구성 중에 있음
+
+<br>
+</details>
+
+<details>
 <summary><b>2023/06/05 (현도,BE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
