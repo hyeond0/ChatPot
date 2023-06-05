@@ -3,12 +3,15 @@ import styled from "styled-components";
 import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { NavBar, SelectList, SelectedList, OptionList, MakeRequest } from "./Components";
-import { RecipePage } from "./Components";
-import { TestPage, ScrollTranslate } from "./Components";
+import { RecipePage, OptionPage, SelectPage, TestPage } from "./Components";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
-
+// 1. #f2f0ef
+// 2. #e5dcd5
+// 3. #bcb1a2
+// 4. #d3d1d0
+// 5. #352e29
 function App() {
   let State = useSelector((state) => {
     return state;
@@ -17,7 +20,7 @@ function App() {
   const App = styled.div`
     width: 100%;
     height: 100vh;
-    padding: 0px 0px;
+    padding: 100px 0px;
     background-color: #f2f0ef;
 
     display: flex;
@@ -27,16 +30,6 @@ function App() {
     text-align: center;
 
     overflow-x: hidden;
-    /* overflow-y: hidden; */
-  `;
-
-  const StyledRow = styled(Row)`
-    display: flex;
-    justify-content: center;
-    align-items: start;
-    /* background-color: #d3d1d0; */
-
-    padding: 10px;
   `;
 
   const StyledContainer = styled(Container)`
@@ -76,7 +69,7 @@ function App() {
           path="/recipe"
           element={
             <>
-              <RecipePage recieveData={State.recieveData}></RecipePage>
+              <RecipePage></RecipePage>
             </>
           }
         />
@@ -84,10 +77,28 @@ function App() {
           path="/test"
           element={
             <>
-              <TestPage></TestPage>
+              <TestPage
+                select={State.select}
+                selected={State.selected}
+                inputValue={State.inputValue}
+                selectedOption={State.selectedOption}
+                input={State.inputClick}
+                option={State.option}
+                recieveData={State.recieveData}
+              ></TestPage>
             </>
           }
         />
+        <Route path="/home" element={<></>} />
+        <Route
+          path="/selectIngredients"
+          element={
+            <>
+              <SelectPage></SelectPage>
+            </>
+          }
+        />
+        <Route path="/selectOption" element={<></>} />
       </Routes>
     </App>
   );
