@@ -22,12 +22,12 @@ export const postReact = async (req, res) => {
       {
         role: "assistant",
         content:
-          "안녕하세요! 어떤 요리를 만들고 싶으신가요? 제가 도와드릴게요.",
+          "안녕하세요! 무엇을 도와드릴까요? 식재료와 만들고 싶은 옵션을 알려주세요.",
       },
 
       {
         role: "user",
-        content: `${ingredients}를 이용한  ${option}요리를 요리 이름, 재료, 레시피 순서로 하나의 요리만 추천해 줘. 답변은 요리 이름, 재료, 레시피 순서로 답변해줍니다. 답변을 해줄 때 요리 이름, 재료, 레시피 순서는 각각 중괄호, []로 감싸서 답변해줍니다.`,
+        content: `${ingredients}를 이용한 ${option}요리를 한가지만 추천해 줘. 답변은, 요리명 : {요리 이름}, 재료 : {["내용1","내용2",...]}, 레시피 순서 : {["내용1","내용2",..]}, 소개 : {해당 요리에 관한 간단한 소개} 형태를 맞춰 답변해줘. 재료는 양(amount)도 함께 알려 줘. 다른 멘트는 안해도 돼 `,
       },
     ];
 
@@ -40,30 +40,42 @@ export const postReact = async (req, res) => {
     });
 
     let recipeString = completion.data.choices[0].message["content"];
-    console.log(recipeString);
 
-    // 이름 추출
-    const nameRegex = /{([^}]*)}/;
-    const nameMatch = recipeString.match(nameRegex);
-    const name = nameMatch ? nameMatch[1] : "";
+    const dishNameRegex = /요리명\s*:\s*{([^}]*)}/;
+    // 요리명 다음에 오는 중괄호를 찾음.
+    const dishNameMatch = recipeString.match(dishNameRegex);
+    // recipeString에서 dishNameRegex와 일치하는 부분을 찾아 매칭.
+    const dishName = dishNameMatch ? dishNameMatch[1].trim() : "";
+    // trim() 함수를 사용하여 앞뒤의 공백을 제거.
 
-    // 식재료 추출
-    const elementRegex = /\[재료\]\n([\s\S]*?)\n\n/;
-    const elementMatch = recipeString.match(elementRegex);
-    const element = elementMatch ? elementMatch[1].split("\n") : [];
+    const elementsRegex = /재료\s*:\s*{([^}]*)}/;
+    // 재료 다음에 오는 중괄호({}) 안의 내용을 찾음.
+    const elementsMatch = recipeString.match(elementsRegex);
+    // recipeString에서 elementsRegex와 일치하는 부분을 찾아 매칭.
+    const elements = elementsMatch ? elementsMatch[1] : "";
 
-    // 레시피 순서 추출
-    const instructionsRegex = /\[레시피 순서\]\n([\s\S]*)/;
-    const instructionsMatch = recipeString.match(instructionsRegex);
-    const instructions = instructionsMatch
-      ? instructionsMatch[1].split("\n")
-      : [];
+    // const elements = elementsMatch ? elementsMatch[1].split(",") : [];
+    //  ,로 구분하여 문자열을 배열로 변환.
+
+    const recipeStepsRegex = /레시피\s*순서\s*:\s*{([^}]*)}/;
+    // 레시피 순서 다음에 오는 중괄호({}) 안의 내용을 찾음.
+    const recipeStepsMatch = recipeString.match(recipeStepsRegex);
+    // recipeString에서 recipeStepsMatch 일치하는 부분을 찾아 매칭.
+    const recipeSteps = recipeStepsMatch ? recipeStepsMatch[1] : "";
+
+    const introductionRegex = /소개\s*:\s*{([^}]*)}/;
+    // 소개 다음에 오는 중괄호({}) 안의 내용을 찾음.
+    const introductionMatch = recipeString.match(introductionRegex);
+    // recipeString에서 introductionRegex와 일치하는 부분을 찾아 매칭.
+    const introduction = introductionMatch ? introductionMatch[1].trim() : "";
+    // trim() 함수를 사용하여 앞뒤의 공백을 제거.
 
     // 요리 정보 react로 전송
     res.json({
-      name: name,
-      element: element,
-      instructions: instructions,
+      dishName: dishName,
+      elements: elements,
+      recipeSteps: recipeSteps,
+      introduction: introduction,
     });
   }
 };
