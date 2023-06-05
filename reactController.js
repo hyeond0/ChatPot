@@ -22,12 +22,12 @@ export const postReact = async (req, res) => {
       {
         role: "assistant",
         content:
-          "안녕하세요! 어떤 요리를 만들고 싶으신가요? 제가 도와드릴게요.",
+          "안녕하세요! 무엇을 도와드릴까요? 식재료와 만들고 싶은 옵션을 알려주세요.",
       },
 
       {
         role: "user",
-        content: `${ingredients}를 이용한  ${option}요리를 요리 이름, 재료, 레시피 순서로 하나의 요리만 추천해 줘. 답변은 요리 이름, 재료, 레시피 순서로 답변해줍니다. 답변을 해줄 때 요리 이름, 재료, 레시피 순서는 각각 중괄호, []로 감싸서 답변해줍니다.`,
+        content: `${ingredients} 를 이용한 ${option} 요리를 한가지만 추천해 줘. 답변은 요리 이름, 재료, 레시피 순서로 부탁해. 답변을 해줄 때 요리 이름, 재료, 레시피 순서는 각각 중괄호, []로 감싸서 답변해줘. 해당 양식을 기억했다가, 메뉴 추천을 부탁할 때 같은 양식으로 답변해줘.`,
       },
     ];
 
@@ -40,7 +40,6 @@ export const postReact = async (req, res) => {
     });
 
     let recipeString = completion.data.choices[0].message["content"];
-    console.log(recipeString);
 
     // 이름 추출
     const nameRegex = /{([^}]*)}/;

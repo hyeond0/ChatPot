@@ -2,7 +2,12 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 let select = createSlice({
   name: "select",
-  initialState: [{ type: "대파" }, { type: "양파" }, { type: "달걀" }, { type: "돼지고기" }],
+  initialState: [
+    { type: "대파" },
+    { type: "양파" },
+    { type: "달걀" },
+    { type: "돼지고기" },
+  ],
   reducers: {},
 });
 
@@ -25,7 +30,15 @@ let selected = createSlice({
 
 let option = createSlice({
   name: "option",
-  initialState: ["면요리", "찜요리", "국물류 / 탕류", "볶음류", "건강식", "추운 날 먹기 좋은", "비 오는 날 먹기 좋은"],
+  initialState: [
+    "면류",
+    "찜류",
+    "국물류 / 탕류",
+    "볶음류",
+    "건강식",
+    "추운 날 먹기 좋은",
+    "비 오는 날 먹기 좋은",
+  ],
   reducers: {
     AddOption(state, item) {
       state.push(item.payload);
