@@ -5,8 +5,22 @@ let select = createSlice({
   initialState: [
     { type: "대파" },
     { type: "양파" },
+    { type: "파프리카" },
+    { type: "양배추" },
+    { type: "고추" },
     { type: "달걀" },
     { type: "돼지고기" },
+    { type: "닭고기" },
+    { type: "소고기" },
+    { type: "대파" },
+    { type: "양파" },
+    { type: "파프리카" },
+    { type: "양배추" },
+    { type: "고추" },
+    { type: "달걀" },
+    { type: "돼지고기" },
+    { type: "닭고기" },
+    { type: "소고기" },
   ],
   reducers: {},
 });
@@ -30,15 +44,7 @@ let selected = createSlice({
 
 let option = createSlice({
   name: "option",
-  initialState: [
-    "면류",
-    "찜류",
-    "국물류 / 탕류",
-    "볶음류",
-    "건강식",
-    "추운 날 먹기 좋은",
-    "비 오는 날 먹기 좋은",
-  ],
+  initialState: ["면류", "찜류", "국물류 / 탕류", "볶음류", "건강식", "추운 날 먹기 좋은", "비 오는 날 먹기 좋은"],
   reducers: {
     AddOption(state, item) {
       state.push(item.payload);
@@ -73,15 +79,17 @@ let inputClick = createSlice({
 let recieveData = createSlice({
   name: "recieveData",
   initialState: {
-    name: "",
-    element: [],
-    instructions: [],
+    dishName: "",
+    elements: [],
+    recipeSteps: [],
+    introduction: "",
   },
   reducers: {
     setRecieveData: (state, action) => {
-      state.name = action.payload.name;
-      state.element = action.payload.element;
-      state.instructions = action.payload.instructions;
+      state.dishName = action.payload.dishName;
+      state.elements = action.payload.elements;
+      state.recipeSteps = action.payload.recipeSteps;
+      state.introduction = action.payload.introduction;
     },
   },
 });
