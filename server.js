@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, "project/build")));
 
-app.get("/", getReact);
+app.get("*", getReact);
 app.post("/", postReact);
 
 export default app;
