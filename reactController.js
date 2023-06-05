@@ -21,8 +21,7 @@ export const postReact = async (req, res) => {
       },
       {
         role: "assistant",
-        content:
-          "안녕하세요! 무엇을 도와드릴까요? 식재료와 만들고 싶은 옵션을 알려주세요.",
+        content: "안녕하세요! 무엇을 도와드릴까요? 식재료와 만들고 싶은 옵션을 알려주세요.",
       },
 
       {
