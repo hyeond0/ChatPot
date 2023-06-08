@@ -35,6 +35,10 @@ function NavBar() {
     left: 0;
     right: 0;
     z-index: 1;
+
+    @media (min-width: 768px) {
+      justify-content: space-between;
+    }
   `;
 
   const StyledIcon = styled.div`
@@ -47,29 +51,50 @@ function NavBar() {
     min-width: 30px;
   `;
 
+  const BuildTime = styled.div`
+    width: 100%;
+    padding: 10px 0px;
+    background-color: white;
+    margin: 0px;
+
+    position: fixed;
+    top: 100px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  `;
+
+  const [showTag, setShowTag] = useState(window.innerWidth <= 768);
+
   return (
-    <NavBar>
-      <p style={{ verticalAlign: "center", minWidth: "30px" }}>0606(03:40)</p>
-      <img
-        alt="logo"
-        style={{ height: "40px", cursor: "pointer" }}
-        src={logoBM}
-        onClick={() => {
-          Navigate("/");
-        }}
-      ></img>
-      <StyledIcon onMouseEnter={addHover} onMouseLeave={removeHover}>
-        {isHovered ? (
-          <BsPersonFill
-            onClick={() => {
-              Navigate("/test");
-            }}
-          />
-        ) : (
-          <BsPerson />
-        )}
-      </StyledIcon>
-    </NavBar>
+    <>
+      <NavBar>
+        {showTag && <p style={{ verticalAlign: "center", minWidth: "30px" }}></p>}
+        <img
+          alt="logo"
+          style={{ height: "40px", cursor: "pointer" }}
+          src={logoBM}
+          onClick={() => {
+            Navigate("/");
+          }}
+        ></img>
+        <StyledIcon onMouseEnter={addHover} onMouseLeave={removeHover}>
+          {isHovered ? (
+            <BsPersonFill
+              onClick={() => {
+                Navigate("/test");
+              }}
+            />
+          ) : (
+            <BsPerson />
+          )}
+        </StyledIcon>
+      </NavBar>
+      <BuildTime>
+        ⏰ <b>Build Time :</b> 0608(24:00)
+      </BuildTime>
+    </>
   );
 }
 

@@ -140,7 +140,7 @@ const StyledCol = styled(Col)`
 
   display: flex;
   justify-content: start;
-  align-items: center;
+  align-items: start;
   flex-direction: column;
 
   padding: 0px 20px 10% 20px;
