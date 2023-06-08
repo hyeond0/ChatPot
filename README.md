@@ -11,6 +11,33 @@
 # 📝 <b>개발로그</b>
 
 <details>
+<summary><b>2023/06/09 (재웅,FE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- Instruction 별 페이지 분할
+    - 페이지별 컴포넌트, 상태 바인딩 재구성
+- Navbar 로고 위치 변경 : 웹 / 모바일 화면에서 위치 다름
+- (develop only)BuildTIme 위치 변경
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- 제작 버튼 예외처리
+  - 담긴 식재료가 없을 시 버튼 비활성화하기
+- 식재료 버튼 활성화 CSS 구현
+- 페이지 전환 애니메이션 구현
+- 폰트, 아이콘
+- App.js 코드 정리
+
+<br>
+<h2><b>🖼️ Preview</b></h2>
+<!-- <img src="./project/screenHistory/0515(1).png"> -->
+  
+<br>
+</details>
+
+<details>
 <summary><b>2023/06/06 (재웅,FE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
