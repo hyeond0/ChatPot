@@ -3,10 +3,16 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { styled, createGlobalStyle, css } from "styled-components";
 import { Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-import { pushSelected, removeSelected } from "../store.js";
+import axios from "axios";
+
+import { pushSelected, removeSelected, setRecieveData } from "../store.js";
 import { BiX, BiListPlus } from "react-icons/bi";
 import { useForm } from "react-hook-form";
+
+import Lottie from "react-lottie";
+import loadingAnimation from "../lottie/loading.json";
 
 function SelectPage() {
   const { register, handleSubmit } = useForm();
@@ -14,6 +20,43 @@ function SelectPage() {
   let State = useSelector((state) => {
     return state;
   });
+  let Navigate = useNavigate();
+
+  // Post & Loading
+  const [loading, setLoading] = useState(false);
+  const LoadingAnimation = {
+    loop: true,
+    autoplay: true,
+    animationData: loadingAnimation,
+    rendererSettings: {},
+  };
+
+  // 버튼 클릭 시 Loading -> Post -> Get -> Navigate 처리
+  // 해당 과정은 이전 단계가 성공해야 연쇄적으로 처리가 가능함
+  const handleClick = () => {
+    setLoading(true);
+
+    const ingredients = State.selected;
+    const option = State.selectedOption;
+    const sendData = { ingredients, option };
+
+    axios
+      .post("/", sendData)
+      .then((res) => {
+        const respond = res.data;
+        console.log(respond);
+
+        dispatch(setRecieveData(respond));
+
+        console.log(State.receiveData);
+        setLoading(false);
+        Navigate("/recipe");
+      })
+      .catch((error) => {
+        console.log("로딩 실패! 다시 시작해주세요", error);
+        setLoading(false);
+      });
+  };
 
   return (
     <>
@@ -79,9 +122,46 @@ function SelectPage() {
             </SelectedContainer>
           </SCol>
         </SRow>
-      </SContainer>
-      <ButtonLeft>좌</ButtonLeft>
-      <ButtonRight>우</ButtonRight>
+      </SContainer>{" "}
+      <Footer>
+        <ButtonNavigate
+          onClick={() => {
+            Navigate("/");
+          }}
+        >
+          좌
+        </ButtonNavigate>
+
+        {loading ? (
+          <>
+            <Loading>
+              <div>
+                <Lottie
+                  options={LoadingAnimation}
+                  height={400}
+                  width={400}
+                  isPaused={false}
+                  isStopped={false}
+                  isClickToPauseDisabled={true}
+                />
+              </div>
+              <div style={{ fontSize: "160%" }}>
+                챗팟이 맛있는 레시피를<br></br> 추천해드릴게요!
+              </div>
+            </Loading>
+          </>
+        ) : (
+          <MakeBtn onClick={handleClick}>제작</MakeBtn>
+        )}
+
+        <ButtonNavigate
+          onClick={() => {
+            Navigate("/selectOption");
+          }}
+        >
+          우
+        </ButtonNavigate>
+      </Footer>
     </>
   );
 }
@@ -175,7 +255,7 @@ const SRow = styled(Row)`
 `;
 
 const SCol = styled(Col)`
-  margin: 0px 0px 7% 0px;
+  margin: 0px 0px 3% 0px;
   padding: 0px;
   height: 100%;
 
@@ -186,7 +266,7 @@ const SCol = styled(Col)`
 const SelectContainer = styled.div`
   padding: 20px 0px;
   width: 100%;
-  max-height: 100%;
+  max-height: 95%;
 
   display: flex;
   flex-wrap: nowrap;
@@ -221,12 +301,10 @@ const SelectContainer = styled.div`
 `;
 
 const SelectItem = styled.div`
-  width: 23%;
-  /* min-width: 23%; */
-  min-width: 30%;
+  width: 140px;
 
   margin-bottom: 2%;
-  height: 170px;
+  height: 140px;
   background-color: #ffffff;
 
   display: flex;
@@ -240,7 +318,6 @@ const SelectItem = styled.div`
   cursor: pointer;
 
   @media (min-width: 768px) {
-    min-width: 23%;
   }
 `;
 
@@ -249,12 +326,12 @@ const SelectedContainer = styled.div`
   padding-bottom: 100px;
 
   width: 100%;
-  max-height: 100%;
+  height: 95%;
 
   display: flex;
   flex-direction: column;
 
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: auto;
   gap: 12px;
 
@@ -343,6 +420,75 @@ const CustomInput = styled.input`
   color: #f2f0ef;
 
   width: 100%;
+`;
+
+const Footer = styled.div`
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 2%;
+  position: fixed;
+  bottom: 20px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+
+  @media (min-width: 768px) {
+    bottom: 30px;
+  }
+`;
+
+const ButtonNavigate = styled.div`
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #f2f0ef;
+  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.38);
+  box-shadow: 0 0 0 2px #352e29 inset;
+`;
+
+const MakeBtn = styled.div`
+  width: 40%;
+  height: 60px;
+  color: #f2f0ef;
+  background-color: #352e29;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 200px;
+  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
+
+  cursor: pointer;
+`;
+
+const Loading = styled.div`
+  width: 100%;
+  height: 100%;
+
+  background-color: #f2f0ef;
+  /* background-color: black; */
+  position: fixed;
+  bottom: 0%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  transition: all 1s;
 `;
 
 export default SelectPage;
