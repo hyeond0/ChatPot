@@ -6,7 +6,6 @@ import { NavBar, SelectList, SelectedList, OptionList, MakeRequest } from "./Com
 import { RecipePage, OptionPage, SelectPage, TestPage } from "./Components";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row, Col } from "react-bootstrap";
 
 // 1. #f2f0ef
 // 2. #e5dcd5
@@ -35,13 +34,6 @@ function App() {
     overflow-x: hidden;
   `;
 
-  const StyledContainer = styled(Container)`
-    width: 100%;
-    /* height: 100vh; */
-    padding-top: 100px;
-    margin: 0px;
-  `;
-
   return (
     <App>
       <NavBar></NavBar>
@@ -51,6 +43,7 @@ function App() {
           element={
             <>
               <button
+                style={{ marginTop: "100px" }}
                 onClick={() => {
                   Navigate("/selectIngredients");
                 }}
@@ -100,29 +93,6 @@ function App() {
                 option={State.option}
                 recieveData={State.recieveData}
               ></TestPage>
-            </>
-          }
-        />
-
-        <Route
-          path="/buffer"
-          element={
-            <>
-              <StyledContainer>
-                <SelectList select={State.select} selected={State.selected}></SelectList>
-                <SelectedList selected={State.selected}></SelectedList>
-                <OptionList
-                  inputValue={State.inputValue}
-                  selectedOption={State.selectedOption}
-                  input={State.inputClick}
-                  option={State.option}
-                ></OptionList>
-                <MakeRequest
-                  recieveData={State.recieveData}
-                  selectedOption={State.selectedOption}
-                  selected={State.selected}
-                ></MakeRequest>
-              </StyledContainer>
             </>
           }
         />
