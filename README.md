@@ -11,6 +11,34 @@
 # 📝 <b>개발로그</b>
 
 <details>
+<summary><b>2023/06/09 (2) (재웅,FE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- 식재료 선택하지 않은 상태에서 제작 버튼 클릭 시 예외 처리 구현
+- 식재료 / 옵션 초기화 버튼 구현
+- 식재료 리스트업 및 아이콘 추가
+- Hover, Active 등 상태에 따른 CSS 변화 구현
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- 메인 페이지
+    - 비디오 추가
+    - TypeIt 추가
+    - /selectIngredients 이동 버튼 추가
+- 페이지 간 전환 애니메이션 구현
+    
+<br>
+<h2><b>🖼️ Preview</b></h2>
+<img src="./project/screenHistory/0610(2).png">
+<img src="./project/screenHistory/0610(1).png">
+
+<br>
+</details>
+
+
+<details>
 <summary><b>2023/06/09 (재웅,FE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
@@ -32,8 +60,9 @@
 
 <br>
 <h2><b>🖼️ Preview</b></h2>
-<!-- <img src="./project/screenHistory/0515(1).png"> -->
-  
+<img src="./project/screenHistory/0609(1).png">
+<img src="./project/screenHistory/0609(2).png">
+
 <br>
 </details>
 
