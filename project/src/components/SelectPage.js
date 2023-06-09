@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { styled, createGlobalStyle, css } from "styled-components";
+import { styled, createGlobalStyle, css, keyframes } from "styled-components";
 import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import { pushSelected, removeSelected, setRecieveData } from "../store.js";
+import { pushSelected, removeSelected, setRecieveData, isSelectedEmpty } from "../store.js";
 import { BiX, BiListPlus } from "react-icons/bi";
+import { BsHouse, BsHouseFill, BsArrowRight, BsFillXCircleFill } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 
 import Lottie from "react-lottie";
 import loadingAnimation from "../lottie/loading.json";
+import emptyAnimatiion from "../lottie/empty.json";
 
 function SelectPage() {
   const { register, handleSubmit } = useForm();
@@ -22,12 +24,27 @@ function SelectPage() {
   });
   let Navigate = useNavigate();
 
+  const [isEmpty, setEmpty] = useState(true);
+  const [emptyAlert, setEmptyAlert] = useState(false);
+  // const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    State.selected.length === 0 ? setEmpty(true) : setEmpty(false);
+  }, [State.selected]);
+
   // Post & Loading
   const [loading, setLoading] = useState(false);
   const LoadingAnimation = {
     loop: true,
     autoplay: true,
     animationData: loadingAnimation,
+    rendererSettings: {},
+  };
+
+  const EmptyAnimation = {
+    loop: true,
+    autoplay: true,
+    animationData: emptyAnimatiion,
     rendererSettings: {},
   };
 
@@ -70,9 +87,10 @@ function SelectPage() {
                 return (
                   <>
                     <SelectItem
+                      clicked={State.selected.includes(item.type)}
                       onClick={(e) => {
                         e.preventDefault();
-                        const selectedValue = e.currentTarget.innerText;
+                        const selectedValue = e.currentTarget.children[1].innerText;
 
                         if (State.selected.includes(selectedValue)) {
                           dispatch(removeSelected(selectedValue));
@@ -81,7 +99,8 @@ function SelectPage() {
                         }
                       }}
                     >
-                      {item.type}
+                      <ItemDiv fs="330%"> {item.thumbnail}</ItemDiv>
+                      <ItemDiv> {item.type}</ItemDiv>
                     </SelectItem>
                   </>
                 );
@@ -114,7 +133,11 @@ function SelectPage() {
                   }
                 })}
               >
-                <CustomInput type="text" placeholder="추가할 식재료를 직접 작성해주세요" {...register("ingredients")} />
+                <CustomInput
+                  type="text"
+                  placeholder="찾으시는 식재료가 보이지 않으신다면, 직접 추가하세요!"
+                  {...register("ingredients")}
+                />
                 <BtnSubmit type="submit">
                   <StyledBiListPlus />
                 </BtnSubmit>
@@ -129,7 +152,7 @@ function SelectPage() {
             Navigate("/");
           }}
         >
-          좌
+          <BsHouseFill style={{ fontSize: "25px", color: "#f2f0ef" }}></BsHouseFill>
         </ButtonNavigate>
 
         {loading ? (
@@ -145,13 +168,53 @@ function SelectPage() {
                   isClickToPauseDisabled={true}
                 />
               </div>
-              <div style={{ fontSize: "160%" }}>
+              <div style={{ fontSize: "145%" }}>
                 챗팟이 맛있는 레시피를<br></br> 추천해드릴게요!
               </div>
             </Loading>
           </>
         ) : (
-          <MakeBtn onClick={handleClick}>제작</MakeBtn>
+          <MakeBtn
+            onClick={() => {
+              if (isEmpty) {
+                setEmptyAlert(true);
+              } else {
+                handleClick();
+              }
+            }}
+          >
+            제작
+          </MakeBtn>
+        )}
+
+        {emptyAlert ? (
+          <>
+            <AlertBg>
+              <AlertContainer>
+                <AlertDiv>
+                  <Lottie
+                    style={{ width: "70%" }}
+                    options={EmptyAnimation}
+                    height={300}
+                    isPaused={false}
+                    isStopped={false}
+                    isClickToPauseDisabled={true}
+                  />
+                </AlertDiv>
+                <AlertDiv>
+                  <h3>식재료를 선택해주세요!</h3>
+                </AlertDiv>
+                <AlertDiv>
+                  <BsFillXCircleFill
+                    onClick={() => setEmptyAlert(false)}
+                    style={{ fontSize: "30px", color: "lightgray" }}
+                  />
+                </AlertDiv>
+              </AlertContainer>
+            </AlertBg>
+          </>
+        ) : (
+          <></>
         )}
 
         <ButtonNavigate
@@ -159,32 +222,12 @@ function SelectPage() {
             Navigate("/selectOption");
           }}
         >
-          우
+          <BsArrowRight style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowRight>
         </ButtonNavigate>
       </Footer>
     </>
   );
 }
-
-const ButtonLeft = styled.div`
-  position: fixed;
-  bottom: 5%;
-  left: 15%;
-
-  @media (min-width: 768px) {
-    left: 5%;
-  }
-`;
-
-const ButtonRight = styled.div`
-  position: fixed;
-  bottom: 5%;
-  right: 15%;
-
-  @media (min-width: 768px) {
-    right: 5%;
-  }
-`;
 
 const GlobalStyle = createGlobalStyle`
  ${css`
@@ -240,7 +283,7 @@ const SContainer = styled(Container)`
   padding: 0px 30px;
 
   @media (min-width: 768px) {
-    padding: 0px 0px 0px 0px;
+    padding: 0px 30px;
   }
 `;
 
@@ -312,13 +355,35 @@ const SelectItem = styled.div`
   align-items: center;
   flex-grow: 0;
   flex-shrink: 0;
+  flex-direction: column;
 
   border-radius: 25px;
   box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.2);
+
   cursor: pointer;
+
+  &:hover {
+    & > :nth-child(1) {
+      transform: scale(1.2);
+      transition: transform 0.5s ease;
+    }
+  }
+
+  ${({ clicked }) =>
+    clicked &&
+    `
+  color: #f2f0ef;
+  background-color: #352e29;
+
+  // box-shadow: none;
+`}
 
   @media (min-width: 768px) {
   }
+`;
+
+const ItemDiv = styled.div`
+  font-size: ${(props) => props.fs};
 `;
 
 const SelectedContainer = styled.div`
@@ -386,6 +451,8 @@ const BtnBackground = styled.div`
   flex-shrink: 0;
 
   border-radius: 50%;
+
+  cursor: pointer;
 `;
 
 const StyledBiX = styled(BiX)`
@@ -450,9 +517,20 @@ const ButtonNavigate = styled.div`
   justify-content: center;
   align-items: center;
 
-  background-color: #f2f0ef;
-  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.38);
-  box-shadow: 0 0 0 2px #352e29 inset;
+  background-color: #352e29;
+
+  cursor: pointer;
+  /* background-color: #352e29; */
+
+  font-size: 25px;
+  color: #f2f0ef;
+  transition: transform 0.3s ease;
+
+  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
+
+  &:hover {
+    transform: scale(1.2);
+  }
 `;
 
 const MakeBtn = styled.div`
@@ -469,6 +547,11 @@ const MakeBtn = styled.div`
   box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
 
   cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 const Loading = styled.div`
@@ -491,4 +574,50 @@ const Loading = styled.div`
   transition: all 1s;
 `;
 
+const AlertBg = styled.div`
+  width: 100%;
+  height: 100%;
+
+  background-color: #0000002e;
+  position: fixed;
+  bottom: 0%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  transition: all 1s;
+`;
+
+const AlertContainer = styled.div`
+  width: 85%;
+  max-width: 500px;
+  padding: 0px 20px 30px 20px;
+  gap: 12px;
+
+  background-color: white;
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+
+  /* gap: 20px; */
+
+  border-radius: 20px;
+  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
+
+  @media (min-width: 768px) {
+    /* height: 70%; */
+  }
+`;
+
+const AlertDiv = styled.div`
+  width: 100%;
+  /* height: 100%; */
+`;
 export default SelectPage;

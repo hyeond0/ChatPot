@@ -68,7 +68,7 @@ function RecipePage(props) {
                 return <div key={i}>{item}</div>;
               })}
           </StyledCol>
-          <StyledCol md={7} justifyContent="start" alignItems="start">
+          <StyledCol md={7} justifyContent="start" alignItems="start" style={{ textAlign: "start" }}>
             <CardHeader>
               <b>레시피</b>
             </CardHeader>

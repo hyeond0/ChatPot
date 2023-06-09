@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { pushOption, removeOption, AddOption, setRecieveData } from "../store.js";
+import { pushOption, removeOption, AddOption, setRecieveData, initOption, initSelected } from "../store.js";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -10,17 +10,25 @@ import styled, { createGlobalStyle, css } from "styled-components";
 import { Container, Row, Col } from "react-bootstrap";
 
 import { BiListPlus } from "react-icons/bi";
+import { BsArrowLeft, BsArrowRepeat, BsFillXCircleFill } from "react-icons/bs";
 import Lottie from "react-lottie";
 import loadingAnimation from "../lottie/loading.json";
+import emptyAnimatiion from "../lottie/empty.json";
 
 function OptionPage(props) {
   const { register, handleSubmit } = useForm();
   let Navigate = useNavigate();
-
   let dispatch = useDispatch();
   let State = useSelector((state) => {
     return state;
   });
+
+  const [isEmpty, setEmpty] = useState(true);
+  const [emptyAlert, setEmptyAlert] = useState(false);
+
+  useEffect(() => {
+    State.selected.length === 0 ? setEmpty(true) : setEmpty(false);
+  }, [State.selected]);
 
   // Post & Loading
   const [loading, setLoading] = useState(false);
@@ -28,6 +36,13 @@ function OptionPage(props) {
     loop: true,
     autoplay: true,
     animationData: loadingAnimation,
+    rendererSettings: {},
+  };
+
+  const EmptyAnimation = {
+    loop: true,
+    autoplay: true,
+    animationData: emptyAnimatiion,
     rendererSettings: {},
   };
 
@@ -48,12 +63,10 @@ function OptionPage(props) {
 
         dispatch(setRecieveData(respond));
 
-        console.log(State.receiveData);
         setLoading(false);
         Navigate("/recipe");
       })
-      .catch((erroe) => {
-        console.log("로딩 실패! 다시 시작해주세요");
+      .catch((error) => {
         setLoading(false);
       });
   };
@@ -107,7 +120,7 @@ function OptionPage(props) {
             Navigate("/selectIngredients");
           }}
         >
-          좌
+          <BsArrowLeft style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowLeft>
         </ButtonNavigate>
 
         {loading ? (
@@ -123,16 +136,63 @@ function OptionPage(props) {
                   isClickToPauseDisabled={true}
                 />
               </div>
-              <div style={{ fontSize: "160%" }}>
+              <div style={{ fontSize: "145%" }}>
                 챗팟이 맛있는 레시피를<br></br> 추천해드릴게요!
               </div>
             </Loading>
           </>
         ) : (
-          <MakeBtn onClick={handleClick}>제작</MakeBtn>
+          <MakeBtn
+            onClick={() => {
+              if (isEmpty) {
+                setEmptyAlert(true);
+              } else {
+                handleClick();
+              }
+            }}
+          >
+            제작
+          </MakeBtn>
         )}
 
-        <ButtonNavigate>초기화</ButtonNavigate>
+        {emptyAlert ? (
+          <>
+            <AlertBg>
+              <AlertContainer>
+                <AlertDiv>
+                  <Lottie
+                    style={{ width: "70%" }}
+                    options={EmptyAnimation}
+                    height={300}
+                    isPaused={false}
+                    isStopped={false}
+                    isClickToPauseDisabled={true}
+                  />
+                </AlertDiv>
+                <AlertDiv>
+                  <h3>식재료를 선택해주세요!</h3>
+                </AlertDiv>
+                <AlertDiv>
+                  <BsFillXCircleFill
+                    onClick={() => setEmptyAlert(false)}
+                    style={{ fontSize: "30px", color: "lightgray" }}
+                  />
+                </AlertDiv>
+              </AlertContainer>
+            </AlertBg>
+          </>
+        ) : (
+          <></>
+        )}
+
+        <ButtonNavigate
+          onClick={() => {
+            dispatch(initOption());
+            dispatch(initSelected());
+          }}
+        >
+          <BsArrowRepeat style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowRepeat>
+        </ButtonNavigate>
       </Footer>
     </>
   );
@@ -249,6 +309,8 @@ const OptionList = styled.div`
   overflow-x: auto;
   box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.2);
 
+  transition: transform 0.3s ease;
+
   @media (min-width: 768px) {
     width: 49%;
   }
@@ -259,6 +321,7 @@ const OptionList = styled.div`
 
     /* box-shadow: none; */
     transition: background-color 1.5s;
+    /* transform: scale(1.1); */
   }
 
   ${({ clicked }) =>
@@ -352,9 +415,14 @@ const ButtonNavigate = styled.div`
   justify-content: center;
   align-items: center;
 
-  background-color: f2f0ef;
-  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.38);
-  box-shadow: 0 0 0 2px #352e29 inset;
+  background-color: #352e29;
+
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 `;
 
 const MakeBtn = styled.div`
@@ -371,6 +439,11 @@ const MakeBtn = styled.div`
   box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
 
   cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 const Loading = styled.div`
@@ -390,6 +463,53 @@ const Loading = styled.div`
   flex-direction: column;
 
   transition: all 1s;
+`;
+
+const AlertBg = styled.div`
+  width: 100%;
+  height: 100%;
+
+  background-color: #0000002e;
+  position: fixed;
+  bottom: 0%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  transition: all 1s;
+`;
+
+const AlertContainer = styled.div`
+  width: 85%;
+  max-width: 500px;
+  padding: 0px 20px 30px 20px;
+  gap: 12px;
+
+  background-color: white;
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+
+  /* gap: 20px; */
+
+  border-radius: 20px;
+  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
+
+  @media (min-width: 768px) {
+    /* height: 70%; */
+  }
+`;
+
+const AlertDiv = styled.div`
+  width: 100%;
+  /* height: 100%; */
 `;
 
 export default OptionPage;

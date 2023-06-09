@@ -49,6 +49,8 @@ function NavBar() {
     color: #352e29;
     font-size: 20px;
     min-width: 30px;
+
+    cursor: pointer;
   `;
 
   const BuildTime = styled.div`
@@ -58,7 +60,7 @@ function NavBar() {
     margin: 0px;
 
     position: fixed;
-    top: 100px;
+    top: 0px;
     margin: 0 auto;
     left: 0;
     right: 0;
@@ -104,7 +106,7 @@ function NavBar() {
         </StyledIcon>
       </NavBar>
       <BuildTime>
-        ⏰ <b>Build Time :</b> 0608(24:00)
+        ⏰ <b>Build Time :</b> 0609(20:00)
       </BuildTime>
     </>
   );
