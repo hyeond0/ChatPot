@@ -29,7 +29,10 @@ function MakeRequest(props) {
     const sendData = { ingredients, option };
 
     axios
-      .post("/", sendData)
+      .post(
+        "https://pmdvygsgd476vldpybgbpeyntm0vqkqz.lambda-url.ap-northeast-2.on.aws/",
+        sendData
+      )
       .then((res) => {
         const respond = res.data;
         console.log(respond);
