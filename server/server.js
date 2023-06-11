@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // cors 이슈 해결
 let corsOptions = {
-  origin: "https://408984aa.chatpot.pages.dev",
+  origin: "https://chatpot.pages.dev",
   credentials: true,
 };
 app.use(cors(corsOptions));

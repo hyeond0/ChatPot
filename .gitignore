@@ -22,6 +22,7 @@ project/yarn-error.log*
 server/node_modules
 server/.pnp
 server/.pnp.js
+server/.env
 server/# testing
 server/coverage
 server/# production

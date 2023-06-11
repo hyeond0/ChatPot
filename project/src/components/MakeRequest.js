@@ -30,7 +30,7 @@ function MakeRequest(props) {
 
     axios
       .post(
-        "https://pmdvygsgd476vldpybgbpeyntm0vqkqz.lambda-url.ap-northeast-2.on.aws/",
+        "https://port-0-chatpot-dihik2mlir42qvx.sel4.cloudtype.app/",
         sendData
       )
       .then((res) => {
