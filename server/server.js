@@ -8,8 +8,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // cors 이슈 해결
-app.use(cors());
-app.use(express.static(path.join(__dirname, "project/build")));
+let corsOptions = {
+  origin: "https://54.180.141.241",
+  credentials: true,
+};
+app.use(cors(corsOptions));
+app.use(express.static(path.join(__dirname, "../project/build")));
 
 app.get("*", getReact);
 app.post("/", postReact);

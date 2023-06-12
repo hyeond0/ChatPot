@@ -40,7 +40,7 @@ function MakeRequest(props) {
         setLoading(false);
         Navigate("/recipe");
       })
-      .catch((erroe) => {
+      .catch((error) => {
         console.log("로딩 실패! 다시 시작해주세요");
         setLoading(false);
       });

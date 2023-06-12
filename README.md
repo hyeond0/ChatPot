@@ -11,6 +11,26 @@
 # 📝 <b>개발로그</b>
 
 <details>
+<summary><b>2023/06/12 (현도,BE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- AWS EC2 인스턴스를 이용한 배포
+  - http://54.180.141.241:8000/
+- EC2 인스턴스에 chatGPT API 환경변수 적용
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- IP주소 도메인으로 변경
+- 터미널 종료 시에도 서버가 유지되도록 pm2를 이용한 서버 기동 구현
+
+<br>
+
+<br>
+</details>
+
+<details>
 <summary><b>2023/06/09 (2) (재웅,FE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
@@ -24,11 +44,11 @@
 <h2><b>📚 Next</b></h2>
 
 - 메인 페이지
-    - 비디오 추가
-    - TypeIt 추가
-    - /selectIngredients 이동 버튼 추가
+  - 비디오 추가
+  - TypeIt 추가
+  - /selectIngredients 이동 버튼 추가
 - 페이지 간 전환 애니메이션 구현
-    
+
 <br>
 <h2><b>🖼️ Preview</b></h2>
 <img src="./project/screenHistory/0610(2).png">
@@ -37,14 +57,13 @@
 <br>
 </details>
 
-
 <details>
 <summary><b>2023/06/09 (재웅,FE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
 
 - Instruction 별 페이지 분할
-    - 페이지별 컴포넌트, 상태 바인딩 재구성
+  - 페이지별 컴포넌트, 상태 바인딩 재구성
 - Navbar 로고 위치 변경 : 웹 / 모바일 화면에서 위치 다름
 - (develop only)BuildTIme 위치 변경
 
