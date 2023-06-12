@@ -2,7 +2,7 @@ import { writing, openai } from "./chatgpt";
 const path = require("path");
 
 export const getReact = (req, res) => {
-  res.sendFile(path.join(__dirname, "/project/build/index.html"));
+  res.sendFile(path.join(__dirname, "../project/build/index.html"));
 };
 
 export const postReact = async (req, res) => {
