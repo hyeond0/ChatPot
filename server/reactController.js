@@ -40,7 +40,6 @@ export const postReact = async (req, res) => {
     });
 
     let recipeString = completion.data.choices[0].message["content"];
-    console.log(recipeString);
 
     const dishNameRegex = /요리명\s*:\s*{([^}]*)}/;
     // 요리명 다음에 오는 중괄호를 찾음.
