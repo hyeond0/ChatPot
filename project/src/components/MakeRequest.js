@@ -29,10 +29,7 @@ function MakeRequest(props) {
     const sendData = { ingredients, option };
 
     axios
-      .post(
-        "https://port-0-chatpot-dihik2mlir42qvx.sel4.cloudtype.app/",
-        sendData
-      )
+      .post("/", sendData)
       .then((res) => {
         const respond = res.data;
         console.log(respond);
@@ -43,7 +40,7 @@ function MakeRequest(props) {
         setLoading(false);
         Navigate("/recipe");
       })
-      .catch((erroe) => {
+      .catch((error) => {
         console.log("로딩 실패! 다시 시작해주세요");
         setLoading(false);
       });
