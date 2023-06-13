@@ -1,0 +1,20 @@
+.App {
+  width: 100vw;
+  height: 200vh;
+  padding: 0px 20px;
+  background-color: #f2f0ef;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  text-align: center;
+
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  /* overflow-y: hidden; */
+  background-color: #f2f0ef;
+}
