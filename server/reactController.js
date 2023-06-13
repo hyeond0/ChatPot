@@ -2,7 +2,7 @@ import { writing, openai } from "./chatgpt";
 const path = require("path");
 
 export const getReact = (req, res) => {
-  res.sendFile(path.join(__dirname, "/project/build/index.html"));
+  res.sendFile(path.join(__dirname, "../project/build/index.html"));
 };
 
 export const postReact = async (req, res) => {
@@ -40,7 +40,6 @@ export const postReact = async (req, res) => {
     });
 
     let recipeString = completion.data.choices[0].message["content"];
-    console.log(recipeString);
 
     const dishNameRegex = /요리명\s*:\s*{([^}]*)}/;
     // 요리명 다음에 오는 중괄호를 찾음.
