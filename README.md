@@ -11,12 +11,32 @@
 # 📝 <b>개발로그</b>
 
 <details>
+<summary><b>2023/06/13 (현도,BE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- pm2를 통해 터미널 종료 시에도 서버 작동
+- React로 Get Mapping시 경로 오류 수정
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- IP주소 도메인으로 변경
+  - 카페24를 통해 구현 예정
+- 같은 재료와 옵션으로 다른 레시피 추천 기능 구현
+
+<br>
+
+<br>
+</details>
+
+<details>
 <summary><b>2023/06/12 (현도,BE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
 
 - AWS EC2 인스턴스를 이용한 배포
-  - http://54.180.141.241:8000/
+  - http://43.200.255.186:8000/
 - EC2 인스턴스에 chatGPT API 환경변수 적용
 
 <br>
