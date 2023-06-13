@@ -13,7 +13,7 @@ let corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
-app.use(express.static(path.join(__dirname, "../project/build")));
+app.use(express.static(path.join(__dirname, "project/build")));
 
 app.get("*", getReact);
 app.post("/", postReact);
