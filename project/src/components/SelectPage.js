@@ -174,17 +174,19 @@ function SelectPage() {
             </Loading>
           </>
         ) : (
-          <MakeBtn
-            onClick={() => {
-              if (isEmpty) {
-                setEmptyAlert(true);
-              } else {
-                handleClick();
-              }
-            }}
-          >
-            제작
-          </MakeBtn>
+          <>
+            {/* // <MakeBtn
+          //   onClick={() => {
+          //     if (isEmpty) {
+          //       setEmptyAlert(true);
+          //     } else {
+          //       handleClick();
+          //     }
+          //   }}
+          // >
+          //   제작
+          // </MakeBtn> */}
+          </>
         )}
 
         {emptyAlert ? (
@@ -374,8 +376,6 @@ const SelectItem = styled.div`
     `
   color: #f2f0ef;
   background-color: #352e29;
-
-  // box-shadow: none;
 `}
 
   @media (min-width: 768px) {
@@ -520,7 +520,6 @@ const ButtonNavigate = styled.div`
   background-color: #352e29;
 
   cursor: pointer;
-  /* background-color: #352e29; */
 
   font-size: 25px;
   color: #f2f0ef;
@@ -559,7 +558,6 @@ const Loading = styled.div`
   height: 100%;
 
   background-color: #f2f0ef;
-  /* background-color: black; */
   position: fixed;
   bottom: 0%;
   margin: 0 auto;
@@ -606,18 +604,14 @@ const AlertContainer = styled.div`
   align-items: center;
   flex-direction: column;
 
-  /* gap: 20px; */
-
   border-radius: 20px;
   box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
 
   @media (min-width: 768px) {
-    /* height: 70%; */
   }
 `;
 
 const AlertDiv = styled.div`
   width: 100%;
-  /* height: 100%; */
 `;
 export default SelectPage;

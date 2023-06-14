@@ -143,6 +143,7 @@ function OptionPage(props) {
           </>
         ) : (
           <MakeBtn
+            activated={isEmpty}
             onClick={() => {
               if (isEmpty) {
                 setEmptyAlert(true);
@@ -274,7 +275,6 @@ const SRow = styled(Row)`
   align-items: start;
 
   @media (min-width: 768px) {
-    /* height: 100%; */
     gap: 5px;
   }
 `;
@@ -300,28 +300,25 @@ const OptionList = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* flex-wrap: wrap; */
 
   border-radius: 10px;
-  /* box-shadow: 0 0 0 1px #d3d1d0 inset; */
 
   overflow-y: hidden;
   overflow-x: auto;
   box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.2);
 
   transition: transform 0.3s ease;
+  cursor: pointer;
 
   @media (min-width: 768px) {
     width: 49%;
-  }
 
-  &:hover {
-    color: #f2f0ef;
-    background-color: #352e29;
+    &:hover {
+      color: #f2f0ef;
+      background-color: #352e29;
 
-    /* box-shadow: none; */
-    transition: background-color 1.5s;
-    /* transform: scale(1.1); */
+      /* transition: background-color 1.5s; */
+    }
   }
 
   ${({ clicked }) =>
@@ -444,6 +441,17 @@ const MakeBtn = styled.div`
   &:hover {
     transform: scale(1.05);
   }
+
+  /* ${({ isEmpty }) =>
+    !isEmpty &&
+    `
+  cursor:default;
+  opacity:0.4;
+
+  &:hover {
+    transform: none;
+  }
+`} */
 `;
 
 const Loading = styled.div`
@@ -497,19 +505,15 @@ const AlertContainer = styled.div`
   align-items: center;
   flex-direction: column;
 
-  /* gap: 20px; */
-
   border-radius: 20px;
   box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
 
   @media (min-width: 768px) {
-    /* height: 70%; */
   }
 `;
 
 const AlertDiv = styled.div`
   width: 100%;
-  /* height: 100%; */
 `;
 
 export default OptionPage;
