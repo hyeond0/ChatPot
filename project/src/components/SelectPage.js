@@ -1,79 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { styled, createGlobalStyle, css, keyframes } from "styled-components";
 import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
-
-import { pushSelected, removeSelected, setRecieveData, isSelectedEmpty } from "../store.js";
+import { pushSelected, removeSelected } from "../store.js";
 import { BiX, BiListPlus } from "react-icons/bi";
-import { BsHouse, BsHouseFill, BsArrowRight, BsFillXCircleFill } from "react-icons/bs";
+import { BsHouseFill, BsArrowRight } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 
-import Lottie from "react-lottie";
-import loadingAnimation from "../lottie/loading.json";
-import emptyAnimatiion from "../lottie/empty.json";
-
 function SelectPage() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   let dispatch = useDispatch();
   let State = useSelector((state) => {
     return state;
   });
   let Navigate = useNavigate();
-
-  const [isEmpty, setEmpty] = useState(true);
-  const [emptyAlert, setEmptyAlert] = useState(false);
-  // const [active, setActive] = useState(false);
-
-  useEffect(() => {
-    State.selected.length === 0 ? setEmpty(true) : setEmpty(false);
-  }, [State.selected]);
-
-  // Post & Loading
-  const [loading, setLoading] = useState(false);
-  const LoadingAnimation = {
-    loop: true,
-    autoplay: true,
-    animationData: loadingAnimation,
-    rendererSettings: {},
-  };
-
-  const EmptyAnimation = {
-    loop: true,
-    autoplay: true,
-    animationData: emptyAnimatiion,
-    rendererSettings: {},
-  };
-
-  // 버튼 클릭 시 Loading -> Post -> Get -> Navigate 처리
-  // 해당 과정은 이전 단계가 성공해야 연쇄적으로 처리가 가능함
-  const handleClick = () => {
-    setLoading(true);
-
-    const ingredients = State.selected;
-    const option = State.selectedOption;
-    const sendData = { ingredients, option };
-
-    axios
-      .post("/", sendData)
-      .then((res) => {
-        const respond = res.data;
-        console.log(respond);
-
-        dispatch(setRecieveData(respond));
-
-        console.log(State.receiveData);
-        setLoading(false);
-        Navigate("/recipe");
-      })
-      .catch((error) => {
-        console.log("로딩 실패! 다시 시작해주세요", error);
-        setLoading(false);
-      });
-  };
 
   return (
     <>
@@ -130,6 +73,7 @@ function SelectPage() {
                 onSubmit={handleSubmit((data) => {
                   if (data.ingredients.length) {
                     dispatch(pushSelected(data.ingredients));
+                    reset();
                   }
                 })}
               >
@@ -154,70 +98,6 @@ function SelectPage() {
         >
           <BsHouseFill style={{ fontSize: "25px", color: "#f2f0ef" }}></BsHouseFill>
         </ButtonNavigate>
-
-        {loading ? (
-          <>
-            <Loading>
-              <div>
-                <Lottie
-                  options={LoadingAnimation}
-                  height={400}
-                  width={400}
-                  isPaused={false}
-                  isStopped={false}
-                  isClickToPauseDisabled={true}
-                />
-              </div>
-              <div style={{ fontSize: "145%" }}>
-                챗팟이 맛있는 레시피를<br></br> 추천해드릴게요!
-              </div>
-            </Loading>
-          </>
-        ) : (
-          <>
-            {/* // <MakeBtn
-          //   onClick={() => {
-          //     if (isEmpty) {
-          //       setEmptyAlert(true);
-          //     } else {
-          //       handleClick();
-          //     }
-          //   }}
-          // >
-          //   제작
-          // </MakeBtn> */}
-          </>
-        )}
-
-        {emptyAlert ? (
-          <>
-            <AlertBg>
-              <AlertContainer>
-                <AlertDiv>
-                  <Lottie
-                    style={{ width: "70%" }}
-                    options={EmptyAnimation}
-                    height={300}
-                    isPaused={false}
-                    isStopped={false}
-                    isClickToPauseDisabled={true}
-                  />
-                </AlertDiv>
-                <AlertDiv>
-                  <h3>식재료를 선택해주세요!</h3>
-                </AlertDiv>
-                <AlertDiv>
-                  <BsFillXCircleFill
-                    onClick={() => setEmptyAlert(false)}
-                    style={{ fontSize: "30px", color: "lightgray" }}
-                  />
-                </AlertDiv>
-              </AlertContainer>
-            </AlertBg>
-          </>
-        ) : (
-          <></>
-        )}
 
         <ButtonNavigate
           onClick={() => {
