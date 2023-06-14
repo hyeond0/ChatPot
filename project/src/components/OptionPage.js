@@ -16,7 +16,7 @@ import loadingAnimation from "../lottie/loading.json";
 import emptyAnimatiion from "../lottie/empty.json";
 
 function OptionPage(props) {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   let Navigate = useNavigate();
   let dispatch = useDispatch();
   let State = useSelector((state) => {
@@ -54,6 +54,10 @@ function OptionPage(props) {
     const ingredients = State.selected;
     const option = State.selectedOption;
     const sendData = { ingredients, option };
+
+    if (State.selectedOption.length === 0) {
+      const option = ["아무"];
+    }
 
     axios
       .post("/", sendData)
@@ -103,6 +107,7 @@ function OptionPage(props) {
             onSubmit={handleSubmit((data) => {
               if (data.option.length) {
                 dispatch(AddOption(data.option));
+                reset();
               }
             })}
           >
@@ -143,7 +148,6 @@ function OptionPage(props) {
           </>
         ) : (
           <MakeBtn
-            activated={isEmpty}
             onClick={() => {
               if (isEmpty) {
                 setEmptyAlert(true);

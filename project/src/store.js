@@ -65,12 +65,18 @@ let selected = createSlice({
 let option = createSlice({
   name: "option",
   initialState: [
-    "볶음류",
-    "면류",
-    "찜류",
-    "국물류 / 탕류",
-    "건강식",
-    "저염식",
+    "한식",
+    "중식",
+    "일식",
+    "양식",
+    "디저트",
+    "간편식",
+    "저렴한",
+    "매콤한",
+    "비건식",
+    "락토프리",
+    "파티음식",
+    "오이빼줘",
     "추운 날 먹기 좋은",
     "비 오는 날 먹기 좋은",
   ],
@@ -118,6 +124,7 @@ let recieveData = createSlice({
     elements: [],
     recipeSteps: [],
     introduction: "",
+    messages: [],
   },
   reducers: {
     setRecieveData: (state, action) => {
@@ -125,6 +132,7 @@ let recieveData = createSlice({
       state.elements = action.payload.elements;
       state.recipeSteps = action.payload.recipeSteps;
       state.introduction = action.payload.introduction;
+      state.messages = action.payload.messages;
     },
   },
 });

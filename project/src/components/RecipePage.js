@@ -1,18 +1,89 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import styled from "styled-components";
 import { Container, Row, Col } from "react-bootstrap";
-import { BiBookmark, BiExport, BiRevision } from "react-icons/bi";
+import { BiBookmark, BiExport, BiRevision, BiHomeAlt2 } from "react-icons/bi";
+import { BsFillXCircleFill } from "react-icons/bs";
+
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+import { setRecieveData } from "../store.js";
 
 import Lottie from "react-lottie";
 import * as loading from "../lottie/result1.json";
 
 function RecipePage(props) {
+  let Navigate = useNavigate();
   let dispatch = useDispatch();
   let State = useSelector((state) => {
     return state;
   });
+
+  const [isEmptyAlert, setEmptyAlert] = useState(false);
+  const [isWrongAlert, setWrongAlert] = useState(false);
+
+  const handleClick = () => {
+    const messages = State.messages;
+    const sendData = { messages };
+
+    if (State.selectedOption.length === 0) {
+      const option = ["아무"];
+    }
+
+    axios
+      .post("/", sendData)
+      .then((res) => {
+        const respond = res.data;
+        console.log(respond);
+
+        dispatch(setRecieveData(respond));
+
+        Navigate("/recipe");
+      })
+      .catch((error) => {
+        setEmptyAlert(true);
+      });
+  };
+
+  // useEffect(() => {
+  //   const response = State.recieveData;
+  //   // 받아온 모든 데이터가 비어있을 경우 (페이지 새로고침 등)
+  //   // 결과가 존재하지 않습니다.
+
+  //   // 규칙에 위배된 답변으로 파싱이 이루어지지 않을 경우
+  //   // response.message 전문 출력
+  //   if (
+  //     response.dishName.length === 0 &&
+  //     response.elements.length === 0 &&
+  //     response.recipeSteps.length === 0 &&
+  //     response.introduction.legnth === 0 &&
+  //     response.messages.length === 0
+  //   ) {
+  //     setEmptyAlert(true);
+  //   } else if (
+  //     response.dishName.length === 0 &&
+  //     response.elements.length === 0 &&
+  //     response.recipeSteps.length === 0 &&
+  //     response.introduction.legnth === 0 &&
+  //     !response.messages.length === 0
+  //   ) {
+  //     setWrongAlert(true);
+  //   } else {
+  //     setEmptyAlert(false);
+  //     setWrongAlert(false);
+  //   }
+
+  //   // State 하나로  Boolean 값 대신 에러코드 통해서 관리해도 될 듯
+  //   console.log(isEmptyAlert);
+
+  //   console.log(response.dishName.length);
+  //   console.log(response.elements.length);
+  //   console.log(response.recipeSteps.length);
+  //   console.log(response.introduction.length);
+  //   // console.log(response.messages.length);
+  // }, [State.recieveData]);
 
   const resultLottie = {
     loop: true,
@@ -24,14 +95,11 @@ function RecipePage(props) {
   return (
     <>
       <StyledContainer>
-        {/* 메뉴소개 */}
         <StyledRow backgroundColor="#ffffff" height="">
           <StyledCol md={6} justifyContent="center" alignItems="center">
             <Lottie
               style={{ zIndex: "0", width: "100%" }}
               options={resultLottie}
-              // height={100}
-              // width={200}
               isPaused={false}
               isStopped={false}
               isClickToPauseDisabled={true}
@@ -41,9 +109,7 @@ function RecipePage(props) {
             <JustRow>
               <Header>오늘 식사메뉴,</Header>
               <Header>
-                {/* 오늘 식사메뉴, <b>{props.recieveData.name}</b>어떠세요? */}
                 <b>{State.recieveData.dishName} </b>
-                {/* <br /> */}
                 어떠세요?
               </Header>
             </JustRow>
@@ -61,7 +127,6 @@ function RecipePage(props) {
             <CardHeader>
               <b>식재료</b>
             </CardHeader>
-            <SubHeader>Ingredients</SubHeader>
             <Divider />
             {State.recieveData.elements !== undefined &&
               State.recieveData.elements.map(function (item, i) {
@@ -72,7 +137,6 @@ function RecipePage(props) {
             <CardHeader>
               <b>레시피</b>
             </CardHeader>
-            <SubHeader>Recipe</SubHeader>
             <Divider />
             {State.recieveData.recipeSteps !== undefined &&
               State.recieveData.recipeSteps.map(function (item, i) {
@@ -81,20 +145,50 @@ function RecipePage(props) {
           </StyledCol>
         </StyledRow>
 
+        {isEmptyAlert ? (
+          <>
+            <AlertBg>
+              <AlertContainer>
+                <AlertDiv>
+                  {/* <Lottie
+                    style={{ width: "70%" }}
+                    options={EmptyAnimation}
+                    height={300}
+                    isPaused={false}
+                    isStopped={false}
+                    isClickToPauseDisabled={true}
+                  /> */}
+                </AlertDiv>
+                <AlertDiv>
+                  <h3>결과가 존재하지 않습니다.</h3>
+                </AlertDiv>
+                <AlertDiv>
+                  <BsFillXCircleFill
+                    onClick={() => setEmptyAlert(false)}
+                    style={{ fontSize: "30px", color: "lightgray" }}
+                  />
+                </AlertDiv>
+              </AlertContainer>
+            </AlertBg>
+          </>
+        ) : (
+          <></>
+        )}
+
         {/* 버튼 및 챗봇 */}
         <FooterRow>
           <FooterCol md={5}>
             <Button>
               <StyledBiBookmark></StyledBiBookmark> 레시피 저장
             </Button>
-            <Button>
-              <StyledBiExport></StyledBiExport> 레시피 공유
+            <Button onClick={handleClick()}>
+              <StyledBiRevision></StyledBiRevision> 재추천
             </Button>
             <Button>
-              <StyledBiRevision></StyledBiRevision> 다른 레시피
+              <BiHomeAlt2></BiHomeAlt2> 홈으로
             </Button>
           </FooterCol>
-          <FooterCol md={7}>챗봇</FooterCol>
+          {/* <FooterCol md={7}>챗봇</FooterCol> */}
         </FooterRow>
       </StyledContainer>
     </>
@@ -105,11 +199,11 @@ const StyledContainer = styled(Container)`
   width: 100%;
 
   padding: 25px;
-  padding-top: 100px;
+  /* padding-top: 100px; */
 
   @media (min-width: 768px) {
     padding: 0px;
-    padding-top: 100px;
+    /* padding-top: 100px; */
   }
 `;
 
@@ -180,7 +274,6 @@ const FooterCol = styled(Col)`
   align-items: start;
 
   @media (min-width: 768px) {
-    /* Medium (md) view size */
     flex-wrap: wrap;
     gap: 10px;
   }
@@ -225,6 +318,8 @@ const CardHeader = styled.div`
 
 const SubHeader = styled.div`
   font-size: 20px;
+  color: #b2b2b2;
+
   @media (min-width: 768px) {
     /* Medium (md) view size */
     margin-top: 0px;
@@ -243,6 +338,49 @@ const Divider = styled.div`
   @media (min-width: 768px) {
     width: 100%;
   }
+`;
+
+const AlertBg = styled.div`
+  width: 100%;
+  height: 100%;
+
+  background-color: #0000002e;
+  position: fixed;
+  bottom: 0%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  transition: all 1s;
+`;
+
+const AlertContainer = styled.div`
+  width: 85%;
+  max-width: 500px;
+  padding: 0px 20px 30px 20px;
+  gap: 12px;
+
+  background-color: white;
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+
+  border-radius: 20px;
+  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
+
+  @media (min-width: 768px) {
+  }
+`;
+
+const AlertDiv = styled.div`
+  width: 100%;
 `;
 
 const StyledBiBookmark = styled(BiBookmark)``;
