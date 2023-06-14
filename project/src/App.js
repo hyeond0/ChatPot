@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { NavBar, SelectList, SelectedList, OptionList, MakeRequest } from "./Components";
-import { RecipePage, OptionPage, SelectPage, TestPage } from "./Components";
+import { NavBar, RecipePage, OptionPage, SelectPage } from "./Components";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -14,9 +12,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // 5. #352e29
 
 function App() {
-  let State = useSelector((state) => {
-    return state;
-  });
   let Navigate = useNavigate();
 
   const App = styled.div`
@@ -79,23 +74,7 @@ function App() {
             </>
           }
         />
-
-        <Route
-          path="/test"
-          element={
-            <>
-              <TestPage
-                select={State.select}
-                selected={State.selected}
-                inputValue={State.inputValue}
-                selectedOption={State.selectedOption}
-                input={State.inputClick}
-                option={State.option}
-                recieveData={State.recieveData}
-              ></TestPage>
-            </>
-          }
-        />
+        <Route path="/test" element={<></>} />
       </Routes>
     </App>
   );

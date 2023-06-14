@@ -105,9 +105,9 @@ function NavBar() {
           )}
         </StyledIcon>
       </NavBar>
-      <BuildTime>
+      {/* <BuildTime>
         ⏰ <b>Build Time :</b> 0609(20:00)
-      </BuildTime>
+      </BuildTime> */}
     </>
   );
 }
