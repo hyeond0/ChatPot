@@ -9,6 +9,7 @@ import TypeIt from "typeit-react";
 import { BiChevronRight } from "react-icons/bi";
 
 function IndexPage(props) {
+  const Navigate = useNavigate();
   const food = [
     "스테이크",
     "피자",
@@ -402,7 +403,11 @@ function IndexPage(props) {
               메뉴 고민은 이제 그만, {viewportWidth < 768 && <br />} <b>챗팟</b>이 도와드릴게요!
             </SubTitle> */}
           </SRow>
-          <StartBtn>
+          <StartBtn
+            onClick={() => {
+              Navigate("/selectIngredients", { state: { direction: "right" } });
+            }}
+          >
             <div>시작하기</div>
             <BiChevronRight style={{ fontSize: "40px" }}></BiChevronRight>
           </StartBtn>
@@ -483,7 +488,7 @@ const StyeldTypeit = styled(TypeIt)`
 
 const SContainer = styled(Container)`
   width: 100%;
-  height: 88%;
+  height: 86%;
   margin: 0px 0px 0px 0px;
 
   position: fixed;

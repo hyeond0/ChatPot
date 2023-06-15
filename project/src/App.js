@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { NavBar, RecipePage, OptionPage, SelectPage, IndexPage } from "./Components";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 // 1. #f2f0ef
 // 2. #e5dcd5
@@ -12,7 +14,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // 5. #352e29
 
 function App() {
-  let Navigate = useNavigate();
+  const Navigate = useNavigate();
+  const location = useLocation();
 
   const App = styled.div`
     width: 100%;
@@ -35,49 +38,66 @@ function App() {
       font-weight: normal;
       font-style: normal;
     }
+
+    @font-face {
+      font-family: "Pretendard-Regular";
+      src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
+      font-weight: 400;
+      font-style: normal;
+    }
   `;
 
   return (
-    <App style={{ fontFamily: "NanumSquareNeo-Variable" }}>
+    <>
       <NavBar></NavBar>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <IndexPage></IndexPage>
-            </>
-          }
-        />
-        <Route
-          path="/selectIngredients"
-          element={
-            <>
-              <SelectPage></SelectPage>
-            </>
-          }
-        />
+      <TransitionGroup className="transitions-wrapper">
+        <CSSTransition
+          key={location.pathname}
+          classNames={location.state?.direction === "left" ? "left" : "right"}
+          timeout={300}
+        >
+          <App style={{ fontFamily: "NanumSquareNeo-Variable" }}>
+            <Routes location={location}>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <IndexPage style={{ position: "absolute" }}></IndexPage>
+                  </>
+                }
+              />
+              <Route
+                path="/selectIngredients"
+                element={
+                  <>
+                    <SelectPage style={{ position: "absolute" }}></SelectPage>
+                  </>
+                }
+              />
 
-        <Route
-          path="/selectOption"
-          element={
-            <>
-              <OptionPage></OptionPage>
-            </>
-          }
-        />
+              <Route
+                path="/selectOption"
+                element={
+                  <>
+                    <OptionPage style={{ position: "absolute" }}></OptionPage>
+                  </>
+                }
+              />
 
-        <Route
-          path="/recipe"
-          element={
-            <>
-              <RecipePage></RecipePage>
-            </>
-          }
-        />
-        <Route path="/test" element={<></>} />
-      </Routes>
-    </App>
+              <Route
+                path="/recipe"
+                element={
+                  <>
+                    <RecipePage style={{ position: "absolute" }}></RecipePage>
+                  </>
+                }
+              />
+              <Route path="/test" element={<></>} />
+            </Routes>
+          </App>
+        </CSSTransition>
+      </TransitionGroup>
+    </>
   );
 }
 
