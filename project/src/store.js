@@ -117,8 +117,8 @@ let inputClick = createSlice({
   },
 });
 
-let recieveData = createSlice({
-  name: "recieveData",
+let receiveData = createSlice({
+  name: "receiveData",
   initialState: {
     dishName: "",
     elements: [],
@@ -127,7 +127,7 @@ let recieveData = createSlice({
     messages: [],
   },
   reducers: {
-    setRecieveData: (state, action) => {
+    setReceiveData: (state, action) => {
       state.dishName = action.payload.dishName;
       state.elements = action.payload.elements;
       state.recipeSteps = action.payload.recipeSteps;
@@ -144,7 +144,7 @@ export default configureStore({
     option: option.reducer,
     inputClick: inputClick.reducer,
     selectedOption: selectedOption.reducer,
-    recieveData: recieveData.reducer,
+    receiveData: receiveData.reducer,
   },
 });
 
@@ -152,4 +152,4 @@ export let { setToggle } = inputClick.actions;
 export let { pushSelected, removeSelected, initSelected } = selected.actions;
 export let { pushOption, removeOption, initOption } = selectedOption.actions;
 export let { AddOption } = option.actions;
-export let { setRecieveData } = recieveData.actions;
+export let { setReceiveData } = receiveData.actions;

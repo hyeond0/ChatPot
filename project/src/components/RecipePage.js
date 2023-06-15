@@ -9,7 +9,7 @@ import { BsFillXCircleFill } from "react-icons/bs";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import { setRecieveData } from "../store.js";
+import { setReceiveData } from "../store.js";
 
 import Lottie from "react-lottie";
 import * as loading from "../lottie/result1.json";
@@ -25,7 +25,7 @@ function RecipePage(props) {
   const [isWrongAlert, setWrongAlert] = useState(false);
 
   const handleClick = () => {
-    const messages = State.messages;
+    const messages = State.receiveData.messages;
     const sendData = { messages };
 
     if (State.selectedOption.length === 0) {
@@ -33,17 +33,17 @@ function RecipePage(props) {
     }
 
     axios
-      .post("/", sendData)
+      .post("/recipe", sendData)
       .then((res) => {
         const respond = res.data;
         console.log(respond);
 
-        dispatch(setRecieveData(respond));
+        dispatch(setReceiveData(respond));
 
         Navigate("/recipe");
       })
       .catch((error) => {
-        setEmptyAlert(true);
+        // setEmptyAlert(true);
       });
   };
 
@@ -138,6 +138,7 @@ function RecipePage(props) {
               <b>레시피</b>
             </CardHeader>
             <Divider />
+
             {State.recieveData.recipeSteps !== undefined &&
               State.recieveData.recipeSteps.map(function (item, i) {
                 return <div key={i}>{item}</div>;
@@ -165,7 +166,7 @@ function RecipePage(props) {
                 <AlertDiv>
                   <BsFillXCircleFill
                     onClick={() => setEmptyAlert(false)}
-                    style={{ fontSize: "30px", color: "lightgray" }}
+                    style={{ fontSize: "30px", color: "lightgray", cursor: "pointer" }}
                   />
                 </AlertDiv>
               </AlertContainer>
@@ -177,20 +178,24 @@ function RecipePage(props) {
 
         {/* 버튼 및 챗봇 */}
         <FooterRow>
-          <FooterCol md={5}>
+          <FooterCol md={4}>
             <Button>
               <StyledBiBookmark></StyledBiBookmark> 레시피 저장
             </Button>
+          </FooterCol>
+          <FooterCol md={4}>
             <Button onClick={handleClick()}>
               <StyledBiRevision></StyledBiRevision> 재추천
             </Button>
+          </FooterCol>
+          <FooterCol md={4}>
             <Button>
               <BiHomeAlt2></BiHomeAlt2> 홈으로
             </Button>
           </FooterCol>
-          {/* <FooterCol md={7}>챗봇</FooterCol> */}
         </FooterRow>
       </StyledContainer>
+      {/* chatpot.co.kr */}
     </>
   );
 }
@@ -198,7 +203,7 @@ function RecipePage(props) {
 const StyledContainer = styled(Container)`
   width: 100%;
 
-  padding: 25px;
+  padding: 0px 25px;
   /* padding-top: 100px; */
 
   @media (min-width: 768px) {
@@ -263,11 +268,12 @@ const FooterRow = styled(Row)`
   margin: 20px 0px 0px 0px;
 
   @media (min-width: 768px) {
+    margin: 10px 0px 0px 0px;
   }
 `;
 
 const FooterCol = styled(Col)`
-  padding: 0px;
+  padding: 2% 0px;
 
   display: flex;
   justify-content: center;
@@ -276,6 +282,8 @@ const FooterCol = styled(Col)`
   @media (min-width: 768px) {
     flex-wrap: wrap;
     gap: 10px;
+
+    padding: 2% 10px;
   }
 `;
 
@@ -285,15 +293,26 @@ const Button = styled.div`
   align-items: center;
 
   width: 100%;
-  height: 30px;
   margin: 0px;
-  padding: 0px;
+  padding: 20px 20px;
+  border-radius: 30px;
 
-  background-color: aliceblue;
+  font-size: large;
+
+  gap: 12px;
+  cursor: pointer;
+
+  background-color: white;
+  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.2);
+  transition: all 0.3s ease;
 
   @media (min-width: 768px) {
     /* Medium (md) view size */
-    margin-right: 20px;
+    &:hover {
+      transform: scale(1.1);
+      background-color: #352e29;
+      color: white;
+    }
   }
 `;
 
@@ -306,8 +325,13 @@ const Header = styled.div`
 `;
 
 const CardHeader = styled.div`
+  width: 100%;
   font-size: 28px;
   margin-top: 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   @media (min-width: 768px) {
     /* Medium (md) view size */
@@ -328,7 +352,7 @@ const SubHeader = styled.div`
 `;
 
 const Divider = styled.div`
-  width: 20%;
+  width: 100%;
   height: 2px;
   background-color: #d1d1d1;
 
@@ -336,7 +360,7 @@ const Divider = styled.div`
   border-radius: 10px;
 
   @media (min-width: 768px) {
-    width: 100%;
+    /* width: 100%; */
   }
 `;
 
