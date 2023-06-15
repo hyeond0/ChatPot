@@ -1,5 +1,5 @@
 import express from "express";
-import { getReact, postReact } from "./reactController";
+import { getReact, postReact, reRecipe } from "./reactController";
 const path = require("path");
 const app = express();
 var cors = require("cors");
@@ -16,6 +16,7 @@ app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, "../project/build")));
 
 app.get("*", getReact);
-app.post("/", postReact);
+app.post("/selectOption", postReact);
+app.post("/recipe", reRecipe);
 
 export default app;
