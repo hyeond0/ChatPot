@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { pushOption, removeOption, AddOption, setRecieveData, initOption, initSelected } from "../store.js";
+import { pushOption, removeOption, AddOption, setReceiveData, initOption, initSelected } from "../store.js";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import { BiListPlus } from "react-icons/bi";
 import { BsArrowLeft, BsArrowRepeat, BsFillXCircleFill } from "react-icons/bs";
+
 import Lottie from "react-lottie";
 import loadingAnimation from "../lottie/loading.json";
 import emptyAnimatiion from "../lottie/empty.json";
@@ -60,12 +61,11 @@ function OptionPage(props) {
     }
 
     axios
-      .post("/", sendData)
+      .post("/selectOption", sendData)
       .then((res) => {
         const respond = res.data;
-        console.log(respond);
 
-        dispatch(setRecieveData(respond));
+        dispatch(setReceiveData(respond));
 
         setLoading(false);
         Navigate("/recipe");
@@ -180,7 +180,7 @@ function OptionPage(props) {
                 <AlertDiv>
                   <BsFillXCircleFill
                     onClick={() => setEmptyAlert(false)}
-                    style={{ fontSize: "30px", color: "lightgray" }}
+                    style={{ fontSize: "30px", color: "lightgray", cursor: "pointer" }}
                   />
                 </AlertDiv>
               </AlertContainer>
