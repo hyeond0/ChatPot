@@ -25,6 +25,12 @@
 - 레시피 저장 기능
 
 <br>
+<h2><b>🖼️ Preview</b></h2>
+<img src="./project/screenHistory/0616(1).png">
+<img src="./project/screenHistory/0616(2).gif">
+<img src="./project/screenHistory/0616(3).gif">
+
+<br>
 </details>
 
 <details>
@@ -42,6 +48,10 @@
 - 페이지 전환 애니메이션
 - 레시피 저장 기능
 
+ <br>
+<h2><b>🖼️ Preview</b></h2>
+<img src="./project/screenHistory/0615(1).png">
+  
 <br>
 </details>
 
