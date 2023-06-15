@@ -79,7 +79,7 @@ function SelectPage() {
               >
                 <CustomInput
                   type="text"
-                  placeholder="찾으시는 식재료가 보이지 않으신다면, 직접 추가하세요!"
+                  placeholder="원하는 식재료를 직접 추가해보세요!"
                   {...register("ingredients")}
                 />
                 <BtnSubmit type="submit">
@@ -191,7 +191,7 @@ const SCol = styled(Col)`
 const SelectContainer = styled.div`
   padding: 20px 0px;
   width: 100%;
-  max-height: 95%;
+  max-height: 92%;
 
   display: flex;
   flex-wrap: nowrap;

@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import styled from "styled-components";
-import { Container, Row, Col } from "react-bootstrap";
+import styled, { createGlobalStyle, css } from "styled-components";
+import { Container, Row, Col, Nav } from "react-bootstrap";
 import { BiBookmark, BiExport, BiRevision, BiHomeAlt2 } from "react-icons/bi";
-import { BsFillXCircleFill } from "react-icons/bs";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import { setReceiveData } from "../store.js";
+import { setReceiveData, initOption, initSelected } from "../store.js";
 
 import Lottie from "react-lottie";
-import * as loading from "../lottie/result1.json";
+import * as Error from "../lottie/error.json";
+import * as Process from "../lottie/loading.json";
+import * as Result from "../lottie/result1.json";
 
 function RecipePage(props) {
   let Navigate = useNavigate();
@@ -21,16 +22,26 @@ function RecipePage(props) {
     return state;
   });
 
+  var now = new Date();
+  var hours = +now.getHours();
+  var meal = "";
+
+  if (6 <= hours && hours < 11) meal = "아침 식사";
+  else if (11 <= hours && hours < 14) meal = "점심 식사";
+  else if (14 <= hours && hours < 17) meal = "늦은 점심";
+  else if (17 <= hours && hours < 21) meal = "저녁 식사";
+  else if (21 <= hours && hours < 22) meal = "늦은 저녁";
+  else if (22 <= hours && hours < 6) meal = "야식";
+
   const [isEmptyAlert, setEmptyAlert] = useState(false);
   const [isWrongAlert, setWrongAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
+    setLoading(true);
+
     const messages = State.receiveData.messages;
     const sendData = { messages };
-
-    if (State.selectedOption.length === 0) {
-      const option = ["아무"];
-    }
 
     axios
       .post("/recipe", sendData)
@@ -40,60 +51,163 @@ function RecipePage(props) {
 
         dispatch(setReceiveData(respond));
 
+        setLoading(false);
         Navigate("/recipe");
       })
       .catch((error) => {
-        // setEmptyAlert(true);
+        setLoading(false);
+        setEmptyAlert(true);
       });
   };
 
-  // useEffect(() => {
-  //   const response = State.recieveData;
-  //   // 받아온 모든 데이터가 비어있을 경우 (페이지 새로고침 등)
-  //   // 결과가 존재하지 않습니다.
+  useEffect(() => {
+    const response = State.receiveData;
+    // 받아온 모든 데이터가 비어있을 경우 (페이지 새로고침 등)
+    // 결과가 존재하지 않습니다.
+    if (
+      response.dishName.length === 0 &&
+      response.elements.length === 0 &&
+      response.recipeSteps.length === 0 &&
+      response.introduction.length === 0 &&
+      response.messages.length === 0
+    ) {
+      setEmptyAlert(true);
+    } else if (
+      response.dishName.length === 0 &&
+      response.elements.length === 0 &&
+      response.recipeSteps.length === 0 &&
+      response.introduction.length === 0 &&
+      !response.messages.length === 0
+    ) {
+      setWrongAlert(true);
+    } else {
+      setWrongAlert(false);
+      setEmptyAlert(false);
+    }
+    // 규칙에 위배된 답변으로 파싱이 이루어지지 않을 경우
+    // response.message 전문 출력
 
-  //   // 규칙에 위배된 답변으로 파싱이 이루어지지 않을 경우
-  //   // response.message 전문 출력
-  //   if (
-  //     response.dishName.length === 0 &&
-  //     response.elements.length === 0 &&
-  //     response.recipeSteps.length === 0 &&
-  //     response.introduction.legnth === 0 &&
-  //     response.messages.length === 0
-  //   ) {
-  //     setEmptyAlert(true);
-  //   } else if (
-  //     response.dishName.length === 0 &&
-  //     response.elements.length === 0 &&
-  //     response.recipeSteps.length === 0 &&
-  //     response.introduction.legnth === 0 &&
-  //     !response.messages.length === 0
-  //   ) {
-  //     setWrongAlert(true);
-  //   } else {
-  //     setEmptyAlert(false);
-  //     setWrongAlert(false);
-  //   }
+    // State 하나로  Boolean 값 대신 에러코드 통해서 관리해도 될 듯
+    console.log("empty? :", isEmptyAlert);
+    console.log("wrong? :", isWrongAlert);
 
-  //   // State 하나로  Boolean 값 대신 에러코드 통해서 관리해도 될 듯
-  //   console.log(isEmptyAlert);
+    console.log(response.dishName.length);
+    console.log(response.elements.length);
+    console.log(response.recipeSteps.length);
+    console.log(response.introduction.length);
+    console.log(response.messages.length);
+  }, [State.recieveData]);
 
-  //   console.log(response.dishName.length);
-  //   console.log(response.elements.length);
-  //   console.log(response.recipeSteps.length);
-  //   console.log(response.introduction.length);
-  //   // console.log(response.messages.length);
-  // }, [State.recieveData]);
+  const LoadingAnimation = {
+    loop: true,
+    autoplay: true,
+    animationData: Process,
+    rendererSettings: {},
+  };
 
   const resultLottie = {
     loop: true,
     autoplay: true,
-    animationData: loading,
+    animationData: Result,
+    rendererSettings: {},
+  };
+
+  const errorLottie = {
+    loop: false,
+    autoplay: true,
+    animationData: Error,
     rendererSettings: {},
   };
 
   return (
     <>
+      <GlobalStyle></GlobalStyle>
+      {loading ? (
+        <>
+          <Loading>
+            <div>
+              <Lottie
+                options={LoadingAnimation}
+                height={400}
+                width={400}
+                isPaused={false}
+                isStopped={false}
+                isClickToPauseDisabled={true}
+              />
+            </div>
+            <div style={{ fontSize: "145%" }}>
+              챗팟이 맛있는 레시피를<br></br> 추천해드릴게요!
+            </div>
+          </Loading>
+        </>
+      ) : (
+        <></>
+      )}
+
+      {isEmptyAlert ? (
+        <>
+          <AlertBg>
+            <AlertContainer>
+              <AlertDiv>
+                <Lottie
+                  style={{ width: "70%" }}
+                  options={errorLottie}
+                  height={300}
+                  isPaused={false}
+                  isStopped={false}
+                  isClickToPauseDisabled={true}
+                />
+              </AlertDiv>
+              <AlertDiv>
+                <h2>결과가 존재하지 않습니다.</h2>
+              </AlertDiv>
+              <h5
+                onClick={() => {
+                  Navigate("/selectIngredients");
+                }}
+                style={{ textDecoration: "underline", cursor: "pointer" }}
+              >
+                홈 화면으로
+              </h5>
+            </AlertContainer>
+          </AlertBg>
+        </>
+      ) : (
+        <></>
+      )}
+
+      {isWrongAlert ? (
+        <>
+          <AlertBg>
+            <AlertContainer>
+              <AlertDiv>
+                <Lottie
+                  style={{ width: "70%" }}
+                  options={errorLottie}
+                  height={300}
+                  isPaused={false}
+                  isStopped={false}
+                  isClickToPauseDisabled={true}
+                />
+              </AlertDiv>
+              <AlertDiv style={{ height: "100px", overflowY: "auto" }}>
+                <h4>{State.receiveData.messages[State.receiveData.messages.length - 1].context}</h4>
+              </AlertDiv>
+              <h5
+                onClick={() => {
+                  Navigate("/selectIngredients");
+                }}
+                style={{ textDecoration: "underline", cursor: "pointer" }}
+              >
+                홈 화면으로
+              </h5>
+            </AlertContainer>
+          </AlertBg>
+        </>
+      ) : (
+        <></>
+      )}
+
       <StyledContainer>
         <StyledRow backgroundColor="#ffffff" height="">
           <StyledCol md={6} justifyContent="center" alignItems="center">
@@ -107,15 +221,15 @@ function RecipePage(props) {
           </StyledCol>
           <StyledCol md={6} justifyContent="center" alignItems="center">
             <JustRow>
-              <Header>오늘 식사메뉴,</Header>
+              <Header>오늘 {meal},</Header>
               <Header>
-                <b>{State.recieveData.dishName} </b>
+                <b>{State.receiveData.dishName} </b>
                 어떠세요?
               </Header>
             </JustRow>
             <JustRow>
-              <SubHeader style={{ marginTop: "30px", padding: "0px 18%", fontSize: "17px" }}>
-                {State.recieveData.introduction}
+              <SubHeader style={{ marginTop: "30px", padding: "0px 15%", fontSize: "17px" }}>
+                {State.receiveData.introduction}
               </SubHeader>
             </JustRow>
           </StyledCol>
@@ -128,8 +242,8 @@ function RecipePage(props) {
               <b>식재료</b>
             </CardHeader>
             <Divider />
-            {State.recieveData.elements !== undefined &&
-              State.recieveData.elements.map(function (item, i) {
+            {State.receiveData.elements !== undefined &&
+              State.receiveData.elements.map(function (item, i) {
                 return <div key={i}>{item}</div>;
               })}
           </StyledCol>
@@ -139,42 +253,12 @@ function RecipePage(props) {
             </CardHeader>
             <Divider />
 
-            {State.recieveData.recipeSteps !== undefined &&
-              State.recieveData.recipeSteps.map(function (item, i) {
+            {State.receiveData.recipeSteps !== undefined &&
+              State.receiveData.recipeSteps.map(function (item, i) {
                 return <div key={i}>{item}</div>;
               })}
           </StyledCol>
         </StyledRow>
-
-        {isEmptyAlert ? (
-          <>
-            <AlertBg>
-              <AlertContainer>
-                <AlertDiv>
-                  {/* <Lottie
-                    style={{ width: "70%" }}
-                    options={EmptyAnimation}
-                    height={300}
-                    isPaused={false}
-                    isStopped={false}
-                    isClickToPauseDisabled={true}
-                  /> */}
-                </AlertDiv>
-                <AlertDiv>
-                  <h3>결과가 존재하지 않습니다.</h3>
-                </AlertDiv>
-                <AlertDiv>
-                  <BsFillXCircleFill
-                    onClick={() => setEmptyAlert(false)}
-                    style={{ fontSize: "30px", color: "lightgray", cursor: "pointer" }}
-                  />
-                </AlertDiv>
-              </AlertContainer>
-            </AlertBg>
-          </>
-        ) : (
-          <></>
-        )}
 
         {/* 버튼 및 챗봇 */}
         <FooterRow>
@@ -184,13 +268,24 @@ function RecipePage(props) {
             </Button>
           </FooterCol>
           <FooterCol md={4}>
-            <Button onClick={handleClick()}>
+            <Button
+              onClick={() => {
+                handleClick();
+              }}
+            >
               <StyledBiRevision></StyledBiRevision> 재추천
             </Button>
           </FooterCol>
           <FooterCol md={4}>
-            <Button>
-              <BiHomeAlt2></BiHomeAlt2> 홈으로
+            <Button
+              onClick={() => {
+                dispatch(initOption());
+                dispatch(initSelected());
+                Navigate("/");
+              }}
+            >
+              <BiHomeAlt2></BiHomeAlt2>
+              홈으로
             </Button>
           </FooterCol>
         </FooterRow>
@@ -199,6 +294,55 @@ function RecipePage(props) {
     </>
   );
 }
+
+const GlobalStyle = createGlobalStyle`
+@font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+ ${css`
+   ::-webkit-scrollbar {
+     width: 0px;
+   }
+
+   ::-webkit-scrollbar-track {
+     background-color: transparent;
+   }
+
+   ::-webkit-scrollbar-thumb {
+     background-color: #352e29;
+     border-radius: 50px;
+     width: 10px;
+   }
+
+   ::-webkit-scrollbar-thumb:hover {
+     background-color: #352e29;
+   }
+ `}
+    
+ @media (min-width: 768px) {
+    ${css`
+      ::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background-color: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: transparent;
+      }
+    `}
+  }
+`;
 
 const StyledContainer = styled(Container)`
   width: 100%;
@@ -281,9 +425,9 @@ const FooterCol = styled(Col)`
 
   @media (min-width: 768px) {
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
 
-    padding: 2% 10px;
+    padding: 2% 12px;
   }
 `;
 
@@ -317,10 +461,10 @@ const Button = styled.div`
 `;
 
 const Header = styled.div`
-  font-size: 30px;
+  font-size: 25px;
   @media (min-width: 768px) {
     /* Medium (md) view size */
-    font-size: 35px;
+    font-size: 30px;
   }
 `;
 
@@ -375,6 +519,8 @@ const AlertBg = styled.div`
   left: 0;
   right: 0;
 
+  z-index: 10;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -386,13 +532,13 @@ const AlertBg = styled.div`
 const AlertContainer = styled.div`
   width: 85%;
   max-width: 500px;
-  padding: 0px 20px 30px 20px;
-  gap: 12px;
+  padding: 0px 20px 40px 20px;
+  gap: 5px;
 
   background-color: white;
 
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
 
@@ -400,11 +546,35 @@ const AlertContainer = styled.div`
   box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
 
   @media (min-width: 768px) {
+    padding: 20px 20px 50px 20px;
+    gap: 20px;
   }
 `;
 
 const AlertDiv = styled.div`
   width: 100%;
+  /* height: 100px; */
+`;
+
+const Loading = styled.div`
+  width: 100%;
+  height: 100%;
+
+  background-color: #f2f0ef;
+  position: fixed;
+  bottom: 0%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  transition: all 1s;
 `;
 
 const StyledBiBookmark = styled(BiBookmark)``;
