@@ -3,20 +3,10 @@ import { useNavigate } from "react-router-dom";
 import logoBM from "../img/logoBM.png";
 import styled from "styled-components";
 import { BsPerson, BsPersonFill } from "react-icons/bs";
+import { BiChevronRight } from "react-icons/bi";
 
 function NavBar() {
   let Navigate = useNavigate();
-
-  // Hover Event State
-  const [isHovered, setIsHovered] = useState(false);
-
-  const addHover = () => {
-    setIsHovered(true);
-  };
-
-  const removeHover = () => {
-    setIsHovered(false);
-  };
 
   // Element Style
   const NavBar = styled.div`
@@ -26,7 +16,7 @@ function NavBar() {
     padding: 0px 4%;
 
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 
     position: fixed;
@@ -46,9 +36,17 @@ function NavBar() {
     align-items: center;
     justify-content: center;
 
+    gap: 10px;
+
     color: #352e29;
-    font-size: 20px;
+    font-size: 18px;
     min-width: 30px;
+
+    transition: all 1s ease;
+
+    &:hover {
+      text-decoration: underline;
+    }
 
     cursor: pointer;
   `;
@@ -84,7 +82,6 @@ function NavBar() {
   return (
     <>
       <NavBar>
-        {showTag && <p style={{ verticalAlign: "center", minWidth: "30px" }}></p>}
         <img
           alt="logo"
           style={{ height: "40px", cursor: "pointer" }}
@@ -93,21 +90,15 @@ function NavBar() {
             Navigate("/");
           }}
         ></img>
-        <StyledIcon onMouseEnter={addHover} onMouseLeave={removeHover}>
-          {isHovered ? (
-            <BsPersonFill
-              onClick={() => {
-                Navigate("/test");
-              }}
-            />
-          ) : (
-            <BsPerson />
-          )}
-        </StyledIcon>
+        {/* <StyledIcon
+          onClick={() => {
+            Navigate("/selectIngredients");
+          }}
+        >
+          <b>챗팟 시작하기</b>
+          <BiChevronRight style={{ fontSize: "35px" }} />
+        </StyledIcon> */}
       </NavBar>
-      {/* <BuildTime>
-        ⏰ <b>Build Time :</b> 0609(20:00)
-      </BuildTime> */}
     </>
   );
 }

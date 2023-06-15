@@ -11,7 +11,24 @@
 # 📝 <b>개발로그</b>
 
 <details>
+<summary><b>2023/06/15 (재웅,FE)</b></summary>
 
+<h2><b>✅ Done</b></h2>
+
+- 레시피 결과 페이지 Alert 및 재추천 기능 구현
+- 메인 페이지 애니메이션 (TypeIt)
+- 웹폰트 적용
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- 페이지 전환 애니메이션
+- 레시피 저장 기능
+
+<br>
+</details>
+
+<details>
 <summary><b>2023/06/14 (재웅,FE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
@@ -51,8 +68,8 @@
 - 레시피 저장 기능 구현
   - 버튼을 누르면 현재 추천받은 레시피 html 페이지를 그대로 캡처해서 저장할 수 있는 기능
   <br>
- </details>
-  
+  </details>
+
 <details>
 <summary><b>2023/06/13 회의록</b></summary>
 

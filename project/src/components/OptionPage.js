@@ -78,6 +78,7 @@ function OptionPage(props) {
   return (
     <>
       <GlobalStyle></GlobalStyle>
+
       <SContainer>
         <Title>2. 옵션을 선택하세요</Title>
         <Context>선택을 원하지 않는다면, 바로 제작 버튼을 눌러도 좋아요</Context>
@@ -204,6 +205,8 @@ function OptionPage(props) {
 }
 
 const GlobalStyle = createGlobalStyle`
+
+
  ${css`
    ::-webkit-scrollbar {
      width: 0px;
@@ -248,6 +251,7 @@ const GlobalStyle = createGlobalStyle`
 const Title = styled.div`
   font-size: 180%;
   margin: 20px 0px;
+
 `;
 
 const Context = styled.div`
@@ -262,7 +266,7 @@ const SContainer = styled(Container)`
   padding: 0px 30px;
 
   @media (min-width: 768px) {
-    padding: 0px 0px 0px 0px;
+    padding: 0px 30px;
   }
 `;
 
