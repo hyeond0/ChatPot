@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { NavBar, RecipePage, OptionPage, SelectPage } from "./Components";
+import { NavBar, RecipePage, OptionPage, SelectPage, IndexPage } from "./Components";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -17,7 +17,7 @@ function App() {
   const App = styled.div`
     width: 100%;
     height: 100vh;
-    padding: 100px 0px;
+    padding: 100px 0px 40px 0px;
     background-color: #f2f0ef;
 
     display: flex;
@@ -37,14 +37,7 @@ function App() {
           path="/"
           element={
             <>
-              <button
-                style={{ marginTop: "100px" }}
-                onClick={() => {
-                  Navigate("/selectIngredients");
-                }}
-              >
-                임시 이동 버튼
-              </button>
+              <IndexPage></IndexPage>
             </>
           }
         />
