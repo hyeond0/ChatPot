@@ -68,12 +68,27 @@ function OptionPage(props) {
         dispatch(setReceiveData(respond));
 
         setLoading(false);
-        Navigate("/recipe");
+        Navigate("/recipe", { state: { direction: "right" } });
       })
       .catch((error) => {
         setLoading(false);
       });
   };
+
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // 컴포넌트가 언마운트될 때 리사이즈 이벤트 리스너를 제거
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
@@ -81,7 +96,7 @@ function OptionPage(props) {
 
       <SContainer>
         <Title>2. 옵션을 선택하세요</Title>
-        <Context>선택을 원하지 않는다면, 바로 제작 버튼을 눌러도 좋아요</Context>
+        <Context>선택을 원하지 않는다면, {viewportWidth < 768 && <br />}바로 제작 버튼을 눌러도 좋아요</Context>
         <SRow style={{ maxHeight: "70%", paddingBottom: "10px" }}>
           {State.option.map(function (item, i) {
             return (
@@ -123,7 +138,7 @@ function OptionPage(props) {
       <Footer>
         <ButtonNavigate
           onClick={() => {
-            Navigate("/selectIngredients");
+            Navigate("/selectIngredients", { state: { direction: "left" } });
           }}
         >
           <BsArrowLeft style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowLeft>
@@ -143,7 +158,7 @@ function OptionPage(props) {
                 />
               </div>
               <div style={{ fontSize: "145%" }}>
-                챗팟이 맛있는 레시피를<br></br> 추천해드릴게요!
+                <b>챗팟</b>이 맛있는 레시피를<br></br> 추천해드릴게요!
               </div>
             </Loading>
           </>
@@ -251,7 +266,6 @@ const GlobalStyle = createGlobalStyle`
 const Title = styled.div`
   font-size: 180%;
   margin: 20px 0px;
-
 `;
 
 const Context = styled.div`
@@ -492,6 +506,7 @@ const AlertBg = styled.div`
   left: 0;
   right: 0;
 
+  /* z-index: -1; */
   display: flex;
   justify-content: center;
   align-items: center;

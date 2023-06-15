@@ -23,7 +23,7 @@ function RecipePage(props) {
   });
 
   var now = new Date();
-  var hours = +now.getHours();
+  var hours = now.getHours();
   var meal = "";
 
   if (6 <= hours && hours < 11) meal = "아침 식사";
@@ -31,7 +31,7 @@ function RecipePage(props) {
   else if (14 <= hours && hours < 17) meal = "늦은 점심";
   else if (17 <= hours && hours < 21) meal = "저녁 식사";
   else if (21 <= hours && hours < 22) meal = "늦은 저녁";
-  else if (22 <= hours && hours < 6) meal = "야식";
+  else if (22 <= hours || hours < 6) meal = "야식";
 
   const [isEmptyAlert, setEmptyAlert] = useState(false);
   const [isWrongAlert, setWrongAlert] = useState(false);
@@ -84,18 +84,6 @@ function RecipePage(props) {
       setWrongAlert(false);
       setEmptyAlert(false);
     }
-    // 규칙에 위배된 답변으로 파싱이 이루어지지 않을 경우
-    // response.message 전문 출력
-
-    // State 하나로  Boolean 값 대신 에러코드 통해서 관리해도 될 듯
-    console.log("empty? :", isEmptyAlert);
-    console.log("wrong? :", isWrongAlert);
-
-    console.log(response.dishName.length);
-    console.log(response.elements.length);
-    console.log(response.recipeSteps.length);
-    console.log(response.introduction.length);
-    console.log(response.messages.length);
   }, [State.recieveData]);
 
   const LoadingAnimation = {
@@ -136,7 +124,7 @@ function RecipePage(props) {
               />
             </div>
             <div style={{ fontSize: "145%" }}>
-              챗팟이 맛있는 레시피를<br></br> 추천해드릴게요!
+              <b>챗팟</b>이 맛있는 레시피를<br></br> 추천해드릴게요!
             </div>
           </Loading>
         </>

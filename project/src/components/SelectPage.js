@@ -16,7 +16,7 @@ function SelectPage() {
   let State = useSelector((state) => {
     return state;
   });
-  let Navigate = useNavigate();
+  const Navigate = useNavigate();
 
   return (
     <>
@@ -93,7 +93,7 @@ function SelectPage() {
       <Footer>
         <ButtonNavigate
           onClick={() => {
-            Navigate("/");
+            Navigate("/", { state: { direction: "left" } });
           }}
         >
           <BsHouseFill style={{ fontSize: "25px", color: "#f2f0ef" }}></BsHouseFill>
@@ -101,7 +101,7 @@ function SelectPage() {
 
         <ButtonNavigate
           onClick={() => {
-            Navigate("/selectOption");
+            Navigate("/selectOption", { state: { direction: "right" } });
           }}
         >
           <BsArrowRight style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowRight>
