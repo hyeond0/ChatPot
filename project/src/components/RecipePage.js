@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import html2canvas from "html2canvas";
 import styled, { createGlobalStyle, css } from "styled-components";
 import { Container, Row, Col, Nav } from "react-bootstrap";
 import { BiBookmark, BiExport, BiRevision, BiHomeAlt2 } from "react-icons/bi";
@@ -58,6 +58,21 @@ function RecipePage(props) {
         setLoading(false);
         setEmptyAlert(true);
       });
+  };
+
+  const saveRecipe = () => {
+    html2canvas(document.getElementById("screenshot")).then((canvas) => {
+      onSaveAs(canvas.toDataURL("image/png"), "chatpot-recipe.png");
+    });
+
+    const onSaveAs = (uri, filename) => {
+      var link = document.createElement("a");
+      document.body.appendChild(link);
+      link.href = uri;
+      link.download = filename;
+      link.click();
+      document.body.removeChild(link);
+    };
   };
 
   useEffect(() => {
@@ -179,7 +194,13 @@ function RecipePage(props) {
                 />
               </AlertDiv>
               <AlertDiv style={{ height: "100px", overflowY: "auto" }}>
-                <h4>{State.receiveData.messages[State.receiveData.messages.length - 1].context}</h4>
+                <h4>
+                  {
+                    State.receiveData.messages[
+                      State.receiveData.messages.length - 1
+                    ].context
+                  }
+                </h4>
               </AlertDiv>
               <h5
                 onClick={() => {
@@ -196,7 +217,7 @@ function RecipePage(props) {
         <></>
       )}
 
-      <StyledContainer>
+      <StyledContainer id="screenshot">
         <StyledRow backgroundColor="#ffffff" height="">
           <StyledCol md={6} justifyContent="center" alignItems="center">
             <Lottie
@@ -216,7 +237,13 @@ function RecipePage(props) {
               </Header>
             </JustRow>
             <JustRow>
-              <SubHeader style={{ marginTop: "30px", padding: "0px 15%", fontSize: "17px" }}>
+              <SubHeader
+                style={{
+                  marginTop: "30px",
+                  padding: "0px 15%",
+                  fontSize: "17px",
+                }}
+              >
                 {State.receiveData.introduction}
               </SubHeader>
             </JustRow>
@@ -235,7 +262,12 @@ function RecipePage(props) {
                 return <div key={i}>{item}</div>;
               })}
           </StyledCol>
-          <StyledCol md={7} justifyContent="start" alignItems="start" style={{ textAlign: "start" }}>
+          <StyledCol
+            md={7}
+            justifyContent="start"
+            alignItems="start"
+            style={{ textAlign: "start" }}
+          >
             <CardHeader>
               <b>레시피</b>
             </CardHeader>
@@ -251,7 +283,7 @@ function RecipePage(props) {
         {/* 버튼 및 챗봇 */}
         <FooterRow>
           <FooterCol md={4}>
-            <Button>
+            <Button onClick={() => saveRecipe()}>
               <StyledBiBookmark></StyledBiBookmark> 레시피 저장
             </Button>
           </FooterCol>

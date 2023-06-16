@@ -11,6 +11,29 @@
 # 📝 <b>개발로그</b>
 
 <details>
+<summary><b>2023/06/16 (현도,BE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- html2Canvas를 이용한 레시피 저장 기능 구현
+  - png 형태로 저장되도록 설정.
+  - (에러) css가 적용되기 전 화면이 저장되는 것 같음.
+    - 1. 캡쳐 방법이 HTML의 DOM과 CSS 속성을 캔버스에 옮겨 이미지화 시키는 것인데 일부 CSS는 지원하지 않기 때문이라고 함.
+      1. 아니면 내가 React id 경로를 잘못 지정해서 생긴 문제일수도 있음.
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- 에러 수정 후 ver 1.0.0 배포
+
+<br>
+<h2><b>🖼️ Preview</b></h2>
+<img src="./project/screenHistory/0616(4).png">
+<img src="./project/screenHistory/0616(5).png">
+
+<br>
+</details>
+<details>
 <summary><b>2023/06/16 (재웅,FE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
