@@ -15,6 +15,27 @@
 
 <h2><b>✅ Done</b></h2>
 
+- 레시피 저장 기능
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- 프로젝트 정리
+
+<br>
+<h2><b>🖼️ Preview</b></h2>
+<img src="./project/screenHistory/0617(1).png">
+<img src="./project/screenHistory/0617(2).png">
+<img src="./project/screenHistory/0617(3).png">
+
+<br>
+</details>
+
+<details>
+<summary><b>2023/06/16 (재웅,FE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
 - React-transition-group 라이브러리 설치
 - 페이지 간 전환 애니메이션
 - 파비콘 및 페이지명 지정
