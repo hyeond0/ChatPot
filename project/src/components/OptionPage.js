@@ -149,6 +149,7 @@ function OptionPage(props) {
             <Loading>
               <div>
                 <Lottie
+                  style={{ cursor: "default" }}
                   options={LoadingAnimation}
                   height={400}
                   width={400}
@@ -275,7 +276,7 @@ const Context = styled.div`
 
 const SContainer = styled(Container)`
   width: 100%;
-  height: 87%;
+  height: 80%;
   margin: 0px 0px 0px 0px;
   padding: 0px 30px;
 
