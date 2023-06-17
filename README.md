@@ -11,7 +11,7 @@
 # 📝 <b>개발로그</b>
 
 <details>
-<summary><b>2023/06/16 (재웅,FE)</b></summary>
+<summary><b>2023/06/17 (재웅,FE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
 
