@@ -24,7 +24,6 @@
 
 <br>
 <h2><b>🖼️ Preview</b></h2>
-<img src="./project/screenHistory/0617(1).png">
 <img src="./project/screenHistory/0617(2).png">
 <img src="./project/screenHistory/0617(3).png">
 
