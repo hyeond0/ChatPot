@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import styled, { createGlobalStyle, css } from "styled-components";
 import { Container, Row, Col, Nav } from "react-bootstrap";
-import { BiBookmark, BiExport, BiRevision, BiHomeAlt2 } from "react-icons/bi";
+import { BiExport, BiRevision, BiHomeAlt2, BiDownload, BiLandscape, BiWindowClose } from "react-icons/bi";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,9 @@ import Lottie from "react-lottie";
 import * as Error from "../lottie/error.json";
 import * as Process from "../lottie/loading.json";
 import * as Result from "../lottie/result1.json";
+
+import html2canvas from "html2canvas";
+import logoBM from "../img/logoBM.png";
 
 function RecipePage(props) {
   let Navigate = useNavigate();
@@ -36,12 +39,25 @@ function RecipePage(props) {
   const [isEmptyAlert, setEmptyAlert] = useState(false);
   const [isWrongAlert, setWrongAlert] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [unShown, setUnshown] = useState(false);
+
+  const captureHTML = async () => {
+    const element = document.getElementById("captureElement"); // 캡처할 HTML 요소의 ID 또는 Ref를 사용
+    const canvas = await html2canvas(element);
+    const image = canvas.toDataURL("image/png"); // 이미지 데이터 얻기 (PNG 형식)
+    const recipeName = State.receiveData.dishName;
+
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = `${recipeName}.png`;
+    link.click();
+    setUnshown(false);
+  };
 
   const handleClick = () => {
-    setLoading(true);
-
     const messages = State.receiveData.messages;
     const sendData = { messages };
+    setLoading(true);
 
     axios
       .post("/recipe", sendData)
@@ -115,6 +131,7 @@ function RecipePage(props) {
           <Loading>
             <div>
               <Lottie
+                style={{ cursor: "default" }}
                 options={LoadingAnimation}
                 height={400}
                 width={400}
@@ -138,7 +155,7 @@ function RecipePage(props) {
             <AlertContainer>
               <AlertDiv>
                 <Lottie
-                  style={{ width: "70%" }}
+                  style={{ width: "70%", cursor: "default" }}
                   options={errorLottie}
                   height={300}
                   isPaused={false}
@@ -224,18 +241,22 @@ function RecipePage(props) {
         </StyledRow>
 
         {/* 식재료, 레시피 안내 */}
-        <StyledRow backgroundColor="#" height="" style={{ minHeight: "200px" }}>
-          <StyledCol md={5} justifyContent="start" alignItems="start">
+        <StyledRow backgroundColor="#ffffff" height="" style={{ minHeight: "200px", padding: "30px 20px" }}>
+          <StyledCol md={3} justifyContent="start" alignItems="start">
             <CardHeader>
               <b>식재료</b>
             </CardHeader>
             <Divider />
             {State.receiveData.elements !== undefined &&
               State.receiveData.elements.map(function (item, i) {
-                return <div key={i}>{item}</div>;
+                return (
+                  <div key={i} style={{ marginTop: "5px" }}>
+                    - {item}
+                  </div>
+                );
               })}
           </StyledCol>
-          <StyledCol md={7} justifyContent="start" alignItems="start" style={{ textAlign: "start" }}>
+          <StyledCol md={9} justifyContent="start" alignItems="start" style={{ textAlign: "start" }}>
             <CardHeader>
               <b>레시피</b>
             </CardHeader>
@@ -243,16 +264,23 @@ function RecipePage(props) {
 
             {State.receiveData.recipeSteps !== undefined &&
               State.receiveData.recipeSteps.map(function (item, i) {
-                return <div key={i}>{item}</div>;
+                return (
+                  <div key={i} style={{ marginTop: "5px" }}>
+                    {item}
+                  </div>
+                );
               })}
           </StyledCol>
         </StyledRow>
-
         {/* 버튼 및 챗봇 */}
         <FooterRow>
           <FooterCol md={4}>
-            <Button>
-              <StyledBiBookmark></StyledBiBookmark> 레시피 저장
+            <Button
+              onClick={() => {
+                setUnshown(true);
+              }}
+            >
+              <StyledBiDownload></StyledBiDownload> 레시피 다운로드
             </Button>
           </FooterCol>
           <FooterCol md={4}>
@@ -279,9 +307,165 @@ function RecipePage(props) {
         </FooterRow>
       </StyledContainer>
       {/* chatpot.co.kr */}
+
+      <Wrapper className={unShown ? "show" : ""}>
+        <CaptureBtnArea>
+          <div>
+            <b style={{ fontSize: "180%" }}>{State.receiveData.dishName}</b>
+            <br></br> 레시피를 저장하시겠어요?
+          </div>
+          <div style={{ display: "flex", justifyContent: "cente", alignItems: "center", gap: "12px" }}>
+            <CaptureBtn onClick={captureHTML}>
+              <BiLandscape></BiLandscape>저장
+            </CaptureBtn>
+            <CaptureBtn
+              onClick={() => {
+                setUnshown(false);
+              }}
+            >
+              <BiWindowClose></BiWindowClose>
+              닫기
+            </CaptureBtn>
+          </div>
+        </CaptureBtnArea>
+
+        <Row>
+          <CapturedArea id="captureElement">
+            <CapturedRow style={{ fontSize: "30px", fontWeight: "900" }}>{State.receiveData.dishName}</CapturedRow>
+            <CapturedContext style={{ textAlign: "start" }}>
+              <h5 style={{ fontWeight: "600" }}>식재료</h5> <Divider />
+              {State.receiveData.elements !== undefined &&
+                State.receiveData.elements.map(function (item, i) {
+                  return (
+                    <div key={i} style={{ marginTop: "5px" }}>
+                      - {item}
+                    </div>
+                  );
+                })}
+            </CapturedContext>
+            <CapturedContext style={{ textAlign: "start" }}>
+              <h5 style={{ fontWeight: "600" }}>레시피</h5> <Divider />
+              {State.receiveData.recipeSteps !== undefined &&
+                State.receiveData.recipeSteps.map(function (item, i) {
+                  return (
+                    <div key={i} style={{ marginTop: "5px" }}>
+                      {item}
+                    </div>
+                  );
+                })}
+            </CapturedContext>
+
+            <CapturedRow style={{ fontSize: "15px", fontWeight: "300", color: "#b2b2b2" }}>
+              <Divider />
+
+              {State.receiveData.introduction}
+            </CapturedRow>
+            <CapturedRow>
+              <img alt="logo" style={{ height: "40px" }} src={logoBM} />
+            </CapturedRow>
+          </CapturedArea>
+        </Row>
+      </Wrapper>
     </>
   );
 }
+
+const CaptureBtnArea = styled.div`
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  gap: 12px;
+`;
+
+const CaptureBtn = styled.div`
+  cursor: pointer;
+  /* width: 100%; */
+  height: 40px;
+
+  background-color: #352e29;
+  color: #f2f0ef;
+
+  margin: 20px 0px;
+  padding: 18px 20px;
+
+  gap: 6px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 20px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
+  /* height: 100%; */
+  overflow-y: auto;
+
+  /* background-color: #0000002e; */
+  background-color: #f2f0ef;
+  position: fixed;
+  top: 0%;
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease-in-out, visibility 0s linear 0.3s;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s ease-in-out, visibility 0s linear;
+  }
+`;
+
+const CapturedArea = styled.div`
+  width: 500px;
+  /* height: 700px; */
+  background-color: #f2f0ef;
+  /* background-color: white; */
+  padding: 30px;
+  /* overflow-y: auto; */
+
+  color: #352e29;
+  z-index: 10;
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+
+  gap: 24px;
+
+  /* top: 50%; */
+`;
+
+const CapturedRow = styled.div`
+  width: 100%;
+`;
+
+const CapturedContext = styled.div`
+  width: 100%;
+  background-color: white;
+  padding: 20px;
+  text-align: start;
+
+  border-radius: 20px;
+`;
 
 const GlobalStyle = createGlobalStyle`
 @font-face {
@@ -345,7 +529,7 @@ const StyledContainer = styled(Container)`
 `;
 
 const StyledRow = styled(Row)`
-  padding: 0px;
+  padding: 10px;
 
   background-color: ${(props) => props.backgroundColor};
   height: ${(props) => props.height};
@@ -458,7 +642,7 @@ const Header = styled.div`
 
 const CardHeader = styled.div`
   width: 100%;
-  font-size: 28px;
+  font-size: 25px;
   margin-top: 20px;
 
   display: flex;
@@ -467,7 +651,7 @@ const CardHeader = styled.div`
 
   @media (min-width: 768px) {
     /* Medium (md) view size */
-    font-size: 28px;
+    font-size: 25px;
     margin-top: 0px;
   }
 `;
@@ -565,7 +749,7 @@ const Loading = styled.div`
   transition: all 1s;
 `;
 
-const StyledBiBookmark = styled(BiBookmark)``;
+const StyledBiDownload = styled(BiDownload)``;
 const StyledBiExport = styled(BiExport)``;
 const StyledBiRevision = styled(BiRevision)``;
 

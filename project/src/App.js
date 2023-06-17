@@ -92,7 +92,6 @@ function App() {
                   </>
                 }
               />
-              <Route path="/test" element={<></>} />
             </Routes>
           </App>
         </CSSTransition>
