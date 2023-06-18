@@ -11,6 +11,24 @@
 # 📝 <b>개발로그</b>
 
 <details>
+<summary><b>2023/06/18 (현도,BE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- AWS EC2, pm2를 이용한 임시 버전 배포
+  - http://43.200.255.186:8000/
+- 현재 구현된 모든 기능 테스트
+  
+<br>
+<h2><b>📚 Next</b></h2>
+
+- 버그 확인 및 오류 수정
+- 도메인 구매 후 http를 https로 배포 적용
+
+<br>
+</details>
+
+<details>
 <summary><b>2023/06/17 (재웅,FE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
