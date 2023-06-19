@@ -59,6 +59,7 @@ function SelectPage() {
                       {item}
                       <BtnBackground
                         onClick={(e) => {
+                          e.preventDefault();
                           const selectedValue = e.currentTarget.closest("#selectedList").innerText;
                           dispatch(removeSelected(selectedValue));
                         }}

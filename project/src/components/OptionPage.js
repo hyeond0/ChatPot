@@ -91,6 +91,7 @@ function OptionPage(props) {
   }, []);
 
   function handleOptionClick(e) {
+    e.preventDefault();
     const selectedValue = e.currentTarget.innerText;
     if (State.selectedOption.includes(selectedValue)) {
       dispatch(removeOption(selectedValue));

@@ -552,7 +552,7 @@ const Rectangle = styled.div`
   @media (min-width: 768px) {
     padding: 0px 0px 5% 0px;
 
-    gap: 20%;
+    gap: 23%;
   }
 `;
 
