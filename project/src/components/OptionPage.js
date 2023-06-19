@@ -90,6 +90,15 @@ function OptionPage(props) {
     };
   }, []);
 
+  function handleOptionClick(e) {
+    const selectedValue = e.currentTarget.innerText;
+    if (State.selectedOption.includes(selectedValue)) {
+      dispatch(removeOption(selectedValue));
+    } else {
+      dispatch(pushOption(selectedValue));
+    }
+  }
+
   return (
     <>
       <GlobalStyle></GlobalStyle>
@@ -103,14 +112,8 @@ function OptionPage(props) {
               <>
                 <OptionList
                   clicked={State.selectedOption.includes(item)}
-                  onClick={(e) => {
-                    const selectedValue = e.currentTarget.innerText;
-                    if (State.selectedOption.includes(selectedValue)) {
-                      dispatch(removeOption(selectedValue));
-                    } else {
-                      dispatch(pushOption(selectedValue));
-                    }
-                  }}
+                  onClick={handleOptionClick}
+                  onTouchStart={handleOptionClick}
                 >
                   {item}
                 </OptionList>
@@ -127,7 +130,7 @@ function OptionPage(props) {
               }
             })}
           >
-            <CustomInput type="text" placeholder="원하는 옵션을 직접 추가해보세요!" {...register("option")} />
+            <CustomInput type="text" placeholder="옵션 직접 추가" {...register("option")} />
             <BtnSubmit type="submit">
               <StyledBiListPlus />
             </BtnSubmit>
@@ -265,12 +268,20 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Title = styled.div`
-  font-size: 180%;
+  font-size: 150%;
   margin: 20px 0px;
+
+  display: flex;
+  justify-content: center;
+  align-items: start;
+
+  @media (min-width: 768px) {
+    font-size: 180%;
+  }
 `;
 
 const Context = styled.div`
-  font-size: 100%;
+  font-size: 90%;
   margin: 20px 0px;
 `;
 

@@ -8,7 +8,7 @@ function NavBar() {
 
   const NavBar = styled.div`
     width: 100vw;
-    height: 100px;
+    height: 70px;
     background-color: #f2f0ef;
     padding: 0px 4%;
 
@@ -25,23 +25,32 @@ function NavBar() {
 
     @media (min-width: 768px) {
       justify-content: space-between;
+      height: 100px;
     }
   `;
 
   return (
     <>
       <NavBar>
-        <img
+        <StyledImg
           alt="logo"
-          style={{ height: "40px", cursor: "pointer" }}
           src={logoBM}
           onClick={() => {
             Navigate("/", { state: { direction: "left" } });
           }}
-        ></img>
+        ></StyledImg>
       </NavBar>
     </>
   );
 }
+
+const StyledImg = styled.img`
+  height: 30px;
+  cursor: pointer;
+
+  @media (min-width: 768px) {
+    height: 40px;
+  }
+`;
 
 export default NavBar;
