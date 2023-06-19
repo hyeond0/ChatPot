@@ -408,10 +408,10 @@ function IndexPage(props) {
               Navigate("/selectIngredients", { state: { direction: "right" } });
             }}
           >
-            <div>
+            <div style={{ color: "#352e29" }}>
               <b>챗팟</b> 시작하기
             </div>
-            <BiChevronRight style={{ fontSize: "40px" }}></BiChevronRight>
+            <BiChevronRight style={{ fontSize: "40px", color: "#352e29" }}></BiChevronRight>
           </StartBtn>
         </Rectangle>
       </SContainer>
@@ -464,6 +464,7 @@ const GlobalStyle = createGlobalStyle`
 const Title = styled.span`
   font-size: 25px;
   font-weight: 100;
+  color: #352e29;
 
   @media (min-width: 768px) {
     font-size: 30px;
@@ -481,8 +482,10 @@ const SubTitle = styled.span`
 const StyeldTypeit = styled(TypeIt)`
   font-size: 30px;
   font-weight: 900;
-  background-color: #f2f0ef;
-  color: #352e29;
+  /* background-color: #f2f0ef; */
+  background-color: #352e29;
+  /* color: #352e29; */
+  color: #f2f0ef;
   padding: 0px 8px;
 
   /* width: ; */
@@ -531,7 +534,7 @@ const Rectangle = styled.div`
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 10% 0px;
 
-  background-color: #352e29;
+  /* background-color: #352e29; */
 
   overflow-y: auto;
   overflow-x: hidden;
@@ -563,11 +566,11 @@ const StartBtn = styled.div`
   gap: 12px;
   margin-top: 50px;
 
-  @media (min-width: 768px) {
+  /* @media (min-width: 768px) {
     &:hover {
-      text-decoration: none;
+      text-decoration: underline;
     }
-  }
+  } */
 
   &:hover {
     text-decoration: underline;

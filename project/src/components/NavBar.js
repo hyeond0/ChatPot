@@ -45,7 +45,7 @@ function NavBar() {
 }
 
 const StyledImg = styled.img`
-  height: 30px;
+  height: 40px;
   cursor: pointer;
 
   @media (min-width: 768px) {
