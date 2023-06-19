@@ -110,11 +110,7 @@ function OptionPage(props) {
           {State.option.map(function (item, i) {
             return (
               <>
-                <OptionList
-                  clicked={State.selectedOption.includes(item)}
-                  onClick={handleOptionClick}
-                  onTouchStart={handleOptionClick}
-                >
+                <OptionList clicked={State.selectedOption.includes(item)} onClick={handleOptionClick}>
                   {item}
                 </OptionList>
               </>
@@ -290,6 +286,8 @@ const SContainer = styled(Container)`
   height: 80%;
   margin: 0px 0px 0px 0px;
   padding: 0px 30px;
+
+  overflow-y: none;
 
   @media (min-width: 768px) {
     padding: 0px 30px;
