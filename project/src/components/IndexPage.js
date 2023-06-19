@@ -408,7 +408,9 @@ function IndexPage(props) {
               Navigate("/selectIngredients", { state: { direction: "right" } });
             }}
           >
-            <div>시작하기</div>
+            <div>
+              <b>챗팟</b> 시작하기
+            </div>
             <BiChevronRight style={{ fontSize: "40px" }}></BiChevronRight>
           </StartBtn>
         </Rectangle>
@@ -460,7 +462,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Title = styled.span`
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 100;
 
   @media (min-width: 768px) {
@@ -477,18 +479,18 @@ const SubTitle = styled.span`
 `;
 
 const StyeldTypeit = styled(TypeIt)`
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 900;
-  background-color: yellow;
+  background-color: #f2f0ef;
   color: #352e29;
-  padding: 0px 13px;
+  padding: 0px 8px;
 
   /* width: ; */
 `;
 
 const SContainer = styled(Container)`
   width: 100%;
-  height: 86%;
+  height: 85%;
   margin: 0px 0px 0px 0px;
 
   position: fixed;
@@ -540,7 +542,7 @@ const Rectangle = styled.div`
   align-items: center;
 
   color: white;
-  gap: 30%;
+  gap: 20%;
 
   border-radius: 40px 40px 0px 0px;
 
@@ -560,6 +562,12 @@ const StartBtn = styled.div`
   cursor: pointer;
   gap: 12px;
   margin-top: 50px;
+
+  @media (min-width: 768px) {
+    &:hover {
+      text-decoration: none;
+    }
+  }
 
   &:hover {
     text-decoration: underline;

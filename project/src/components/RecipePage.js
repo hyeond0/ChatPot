@@ -520,6 +520,7 @@ const StyledContainer = styled(Container)`
   width: 100%;
 
   padding: 0px 25px;
+  overflow-y: none;
   /* padding-top: 100px; */
 
   @media (min-width: 768px) {

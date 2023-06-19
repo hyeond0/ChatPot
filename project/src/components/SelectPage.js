@@ -154,8 +154,12 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Title = styled.div`
-  font-size: 180%;
+  font-size: 150%;
   margin: 20px 0px;
+
+  @media (min-width: 768px) {
+    font-size: 180%;
+  }
 `;
 
 const SContainer = styled(Container)`
@@ -278,10 +282,11 @@ const SelectedContainer = styled.div`
 
   overflow-x: hidden;
   overflow-y: auto;
-  gap: 12px;
+  gap: 8px;
 
   @media (min-width: 768px) {
     padding: 20px;
+    gap: 12px;
   }
 `;
 

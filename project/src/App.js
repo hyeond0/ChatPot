@@ -20,7 +20,7 @@ function App() {
   const App = styled.div`
     width: 100%;
     height: 100vh;
-    padding: 100px 0px 40px 0px;
+    padding: 70px 0px 40px 0px;
     background-color: #f2f0ef;
 
     display: flex;
@@ -30,6 +30,7 @@ function App() {
     text-align: center;
 
     overflow-x: hidden;
+    overflow-y: none;
 
     @font-face {
       font-family: "NanumSquareNeo-Variable";
@@ -44,6 +45,10 @@ function App() {
       src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
       font-weight: 400;
       font-style: normal;
+    }
+
+    @media (min-width: 768px) {
+      padding: 100px 0px 40px 0px;
     }
   `;
 
