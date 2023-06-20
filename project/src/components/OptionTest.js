@@ -16,7 +16,7 @@ import Lottie from "react-lottie";
 import loadingAnimation from "../lottie/loading.json";
 import emptyAnimatiion from "../lottie/empty.json";
 
-function OptionPage(props) {
+function OptionTest(props) {
   const { register, handleSubmit, reset } = useForm();
   let Navigate = useNavigate();
   let dispatch = useDispatch();
@@ -26,6 +26,7 @@ function OptionPage(props) {
 
   const [isEmpty, setEmpty] = useState(true);
   const [emptyAlert, setEmptyAlert] = useState(false);
+  const [targetValue, setTargetValue] = useState("");
 
   useEffect(() => {
     State.selected.length === 0 ? setEmpty(true) : setEmpty(false);
@@ -98,6 +99,7 @@ function OptionPage(props) {
     } else {
       dispatch(pushOption(selectedValue));
     }
+    setTargetValue(selectedValue);
   }
 
   return (
@@ -107,6 +109,10 @@ function OptionPage(props) {
       <SContainer>
         <Title>2. 옵션을 선택하세요</Title>
         <Context>선택을 원하지 않는다면, {viewportWidth < 768 && <br />}바로 제작 버튼을 눌러도 좋아요</Context>
+        <div style={{ height: "100px", width: "100%", backgroundColor: "white" }}>
+          SelectedOption :{State.selectedOption} <br />
+          TargetValue : {targetValue}
+        </div>
         <SRow style={{ maxHeight: "70%", paddingBottom: "10px" }}>
           {State.option.map(function (item, i) {
             return (
@@ -127,7 +133,7 @@ function OptionPage(props) {
               }
             })}
           >
-            <CustomInput type="text" placeholder="원하는 옵션을 직접 추가해보세요!" {...register("option")} />
+            <CustomInput type="text" placeholder="옵션 직접 추가" {...register("option")} />
             <BtnSubmit type="submit">
               <StyledBiListPlus />
             </BtnSubmit>
@@ -266,9 +272,7 @@ const GlobalStyle = createGlobalStyle`
 
 const Title = styled.div`
   font-size: 150%;
-  margin: 20px 0px 0px 0px;
-  color: #352e29;
-  font-weight: 600;
+  margin: 20px 0px;
 
   display: flex;
   justify-content: center;
@@ -280,10 +284,8 @@ const Title = styled.div`
 `;
 
 const Context = styled.div`
-  color: #352e29;
-
   font-size: 90%;
-  margin: 10px 0px 20px 0px;
+  margin: 20px 0px;
 `;
 
 const SContainer = styled(Container)`
@@ -379,7 +381,6 @@ const OptionWrite = styled.form`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0px 10px 20px -5px rgba(29, 18, 10, 0.317);
 
   border-radius: 100px;
 
@@ -451,7 +452,6 @@ const ButtonNavigate = styled.div`
   align-items: center;
 
   background-color: #352e29;
-  box-shadow: 0px 10px 20px -5px rgba(29, 18, 10, 0.417);
 
   cursor: pointer;
   transition: transform 0.3s ease;
@@ -556,4 +556,4 @@ const AlertDiv = styled.div`
   width: 100%;
 `;
 
-export default OptionPage;
+export default OptionTest;

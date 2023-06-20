@@ -385,7 +385,7 @@ function IndexPage(props) {
       <SContainer>
         <Rectangle>
           <SRow>
-            <Title>오늘 식사메뉴</Title>
+            <Title>오늘 식사메뉴,</Title>
             <StyeldTypeit
               getBeforeInit={(instance) => {
                 for (let i = 0; i <= 50; i++) {
@@ -398,20 +398,16 @@ function IndexPage(props) {
             />
             <Title> 어떠세요?</Title>
           </SRow>
-          <SRow>
-            {/* <SubTitle>
-              메뉴 고민은 이제 그만, {viewportWidth < 768 && <br />} <b>챗팟</b>이 도와드릴게요!
-            </SubTitle> */}
-          </SRow>
+          <SubTitle>
+            메뉴 고민은 이제 그만!{viewportWidth < 768 && <br />} <b>🍯챗팟</b>이 도와드릴게요.
+          </SubTitle>
           <StartBtn
             onClick={() => {
               Navigate("/selectIngredients", { state: { direction: "right" } });
             }}
           >
-            <div style={{ color: "#352e29" }}>
-              <b>챗팟</b> 시작하기
-            </div>
-            <BiChevronRight style={{ fontSize: "40px", color: "#352e29" }}></BiChevronRight>
+            <div>시작하기</div>
+            <BiChevronRight style={{ fontSize: "40px" }}></BiChevronRight>
           </StartBtn>
         </Rectangle>
       </SContainer>
@@ -473,15 +469,20 @@ const Title = styled.span`
 
 const SubTitle = styled.span`
   font-size: 18px;
+  color: #352e29;
+  margin-top: 10px;
+
+  margin-bottom: 60%;
 
   @media (min-width: 768px) {
     font-size: 20px;
+    margin-bottom: 20%;
   }
 `;
 
 const StyeldTypeit = styled(TypeIt)`
   font-size: 30px;
-  font-weight: 900;
+  font-weight: 700;
   /* background-color: #f2f0ef; */
   background-color: #352e29;
   /* color: #352e29; */
@@ -512,6 +513,8 @@ const SRow = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  margin-bottom: 10px;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -545,14 +548,14 @@ const Rectangle = styled.div`
   align-items: center;
 
   color: white;
-  gap: 20%;
+  /* gap: 20%; */
 
   border-radius: 40px 40px 0px 0px;
 
   @media (min-width: 768px) {
     padding: 0px 0px 5% 0px;
 
-    gap: 23%;
+    /* gap: 23%; */
   }
 `;
 
@@ -560,17 +563,21 @@ const StartBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #352e29;
 
-  font-size: 25px;
+  font-size: 20px;
   cursor: pointer;
   gap: 12px;
   margin-top: 50px;
+  /* margin-bottom: 10px; */
 
-  /* @media (min-width: 768px) {
+  @media (min-width: 768px) {
     &:hover {
-      text-decoration: underline;
+      text-decoration: none;
     }
-  } */
+    margin-bottom: 10px;
+    font-size: 25px;
+  }
 
   &:hover {
     text-decoration: underline;
