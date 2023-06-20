@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import { NavBar, RecipePage, OptionPage, SelectPage, IndexPage } from "./Components";
+import { NavBar, RecipePage, OptionPage, SelectPage, IndexPage, OptionTest } from "./Components";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -94,6 +94,15 @@ function App() {
                 element={
                   <>
                     <RecipePage style={{ position: "absolute" }}></RecipePage>
+                  </>
+                }
+              />
+
+              <Route
+                path="/test"
+                element={
+                  <>
+                    <OptionTest style={{ position: "absolute" }}></OptionTest>
                   </>
                 }
               />

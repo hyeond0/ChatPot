@@ -59,7 +59,7 @@ function SelectPage() {
                       {item}
                       <BtnBackground
                         onClick={(e) => {
-                          e.preventDefault();
+                          e.stopPropagation();
                           const selectedValue = e.currentTarget.closest("#selectedList").innerText;
                           dispatch(removeSelected(selectedValue));
                         }}
@@ -156,7 +156,13 @@ const GlobalStyle = createGlobalStyle`
 
 const Title = styled.div`
   font-size: 150%;
-  margin: 20px 0px;
+  margin: 20px 0px 0px 0px;
+  color: #352e29;
+  font-weight: 600;
+
+  display: flex;
+  justify-content: center;
+  align-items: start;
 
   @media (min-width: 768px) {
     font-size: 180%;
@@ -321,11 +327,11 @@ const SelectedWrite = styled.form`
   justify-content: space-between;
   align-items: center;
 
-  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.2);
+  box-shadow: 0px 10px 20px -5px rgba(29, 18, 10, 0.317);
   border-radius: 10px;
 `;
 
-const BtnBackground = styled.div`
+const BtnBackground = styled.button`
   width: 25px;
   height: 25px;
   margin-left: 20px;
@@ -337,6 +343,7 @@ const BtnBackground = styled.div`
   flex-shrink: 0;
 
   border-radius: 50%;
+  border: none;
 
   cursor: pointer;
 `;
@@ -411,93 +418,11 @@ const ButtonNavigate = styled.div`
   color: #f2f0ef;
   transition: transform 0.3s ease;
 
-  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
+  box-shadow: 0px 10px 20px -5px rgba(29, 18, 10, 0.417);
 
   &:hover {
     transform: scale(1.2);
   }
 `;
 
-const MakeBtn = styled.div`
-  width: 40%;
-  height: 60px;
-  color: #f2f0ef;
-  background-color: #352e29;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 200px;
-  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
-
-  cursor: pointer;
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-`;
-
-const Loading = styled.div`
-  width: 100%;
-  height: 100%;
-
-  background-color: #f2f0ef;
-  position: fixed;
-  bottom: 0%;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-
-  transition: all 1s;
-`;
-
-const AlertBg = styled.div`
-  width: 100%;
-  height: 100%;
-
-  background-color: #0000002e;
-  position: fixed;
-  bottom: 0%;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-
-  transition: all 1s;
-`;
-
-const AlertContainer = styled.div`
-  width: 85%;
-  max-width: 500px;
-  padding: 0px 20px 30px 20px;
-  gap: 12px;
-
-  background-color: white;
-
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  flex-direction: column;
-
-  border-radius: 20px;
-  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
-
-  @media (min-width: 768px) {
-  }
-`;
-
-const AlertDiv = styled.div`
-  width: 100%;
-`;
 export default SelectPage;
