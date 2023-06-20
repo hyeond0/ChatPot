@@ -117,7 +117,11 @@ function OptionTest(props) {
           {State.option.map(function (item, i) {
             return (
               <>
-                <OptionList clicked={State.selectedOption.includes(item)} onClick={handleOptionClick}>
+                <OptionList
+                  clicked={State.selectedOption.includes(item)}
+                  onClick={handleOptionClick}
+                  // onTouchStart={handleOptionClick}
+                >
                   {item}
                 </OptionList>
               </>
@@ -330,8 +334,8 @@ const SCol = styled(Col)`
 const OptionList = styled.div`
   min-width: 100px;
   width: 100%;
-  height: 30px;
-  padding: 30px 20px;
+  height: 80px;
+  /* padding: 30px 20px; */
   margin: 4px 0px;
   text-align: start;
   background-color: white;
