@@ -55,7 +55,14 @@ function SelectPage() {
               {State.selected.map(function (item, i) {
                 return (
                   <>
-                    <SelectedItem id="selectedList">
+                    <SelectedItem
+                      id="selectedList"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const selectedValue = e.currentTarget.innerText;
+                        dispatch(removeSelected(selectedValue));
+                      }}
+                    >
                       {item}
                       <BtnBackground
                         onClick={(e) => {
@@ -331,7 +338,7 @@ const SelectedWrite = styled.form`
   border-radius: 10px;
 `;
 
-const BtnBackground = styled.button`
+const BtnBackground = styled.div`
   width: 25px;
   height: 25px;
   margin-left: 20px;
