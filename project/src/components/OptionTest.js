@@ -113,7 +113,15 @@ function OptionTest(props) {
           SelectedOption :{State.selectedOption} <br />
           TargetValue : {targetValue}
         </div>
-        <SRow style={{ maxHeight: "70%", paddingBottom: "10px" }}>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch(pushOption("옵션옵션"));
+          }}
+        >
+          추가
+        </button>
+        <SRow style={{ height: "50%", paddingBottom: "10px" }}>
           {State.option.map(function (item, i) {
             return (
               <>
