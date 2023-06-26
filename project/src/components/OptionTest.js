@@ -15,6 +15,7 @@ import { BsArrowLeft, BsArrowRepeat, BsFillXCircleFill } from "react-icons/bs";
 import Lottie from "react-lottie";
 import loadingAnimation from "../lottie/loading.json";
 import emptyAnimatiion from "../lottie/empty.json";
+import * as Error from "../lottie/error.json";
 
 function OptionTest(props) {
   const { register, handleSubmit, reset } = useForm();
@@ -27,6 +28,7 @@ function OptionTest(props) {
   const [isEmpty, setEmpty] = useState(true);
   const [emptyAlert, setEmptyAlert] = useState(false);
   const [targetValue, setTargetValue] = useState("");
+  const [isWrongAlert, setWrongAlert] = useState(false);
 
   useEffect(() => {
     State.selected.length === 0 ? setEmpty(true) : setEmpty(false);
@@ -45,6 +47,13 @@ function OptionTest(props) {
     loop: true,
     autoplay: true,
     animationData: emptyAnimatiion,
+    rendererSettings: {},
+  };
+
+  const errorLottie = {
+    loop: false,
+    autoplay: true,
+    animationData: Error,
     rendererSettings: {},
   };
 
@@ -73,6 +82,7 @@ function OptionTest(props) {
       })
       .catch((error) => {
         setLoading(false);
+        setWrongAlert(true);
       });
   };
 
@@ -109,11 +119,12 @@ function OptionTest(props) {
       <SContainer>
         <Title>2. 옵션을 선택하세요</Title>
         <Context>선택을 원하지 않는다면, {viewportWidth < 768 && <br />}바로 제작 버튼을 눌러도 좋아요</Context>
-        <div style={{ height: "100px", width: "100%", backgroundColor: "white" }}>
+        {/* <div style={{ height: "100px", width: "100%", backgroundColor: "white" }}>
           SelectedOption :{State.selectedOption} <br />
           TargetValue : {targetValue}
-        </div>
+        </div> */}
         <button
+          style={{ display: "none" }}
           onClick={(e) => {
             e.preventDefault();
             dispatch(pushOption("옵션옵션"));
@@ -121,7 +132,7 @@ function OptionTest(props) {
         >
           추가
         </button>
-        <SRow style={{ height: "50%", paddingBottom: "10px" }}>
+        <SRow style={{ height: "70%", paddingBottom: "10px" }}>
           {State.option.map(function (item, i) {
             return (
               <>
@@ -152,6 +163,40 @@ function OptionTest(props) {
           </OptionWrite>
         </SRow>
       </SContainer>
+
+      {isWrongAlert ? (
+        <>
+          <AlertBg>
+            <AlertContainer>
+              <AlertDiv>
+                <Lottie
+                  style={{ width: "70%" }}
+                  options={errorLottie}
+                  height={300}
+                  isPaused={false}
+                  isStopped={false}
+                  isClickToPauseDisabled={true}
+                />
+              </AlertDiv>
+              <AlertDiv>
+                <h3>
+                  문제가 발생했습니다.
+                  <br />
+                  잠시 후 다시 시도해주세요.
+                </h3>
+              </AlertDiv>
+              <AlertDiv>
+                <BsFillXCircleFill
+                  onClick={() => setEmptyAlert(false)}
+                  style={{ fontSize: "30px", color: "lightgray", cursor: "pointer" }}
+                />
+              </AlertDiv>
+            </AlertContainer>
+          </AlertBg>
+        </>
+      ) : (
+        <></>
+      )}
 
       <Footer>
         <ButtonNavigate
@@ -358,7 +403,7 @@ const OptionList = styled.div`
   overflow-x: auto;
   box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.2);
 
-  transition: transform 0.3s ease;
+  transition: all 0.5s ease;
   cursor: pointer;
 
   @media (min-width: 768px) {
@@ -367,8 +412,6 @@ const OptionList = styled.div`
     &:hover {
       color: #f2f0ef;
       background-color: #352e29;
-
-      /* transition: background-color 1.5s; */
     }
   }
 
@@ -397,14 +440,14 @@ const OptionWrite = styled.form`
   border-radius: 100px;
 
   position: fixed;
-  bottom: 100px;
+  bottom: 130px;
   margin: 0 auto;
   left: 0;
   right: 0;
 
   @media (min-width: 768px) {
     width: 60%;
-    bottom: 120px;
+    bottom: 160px;
   }
 `;
 
@@ -444,13 +487,13 @@ const Footer = styled.div`
 
   gap: 2%;
   position: fixed;
-  bottom: 20px;
+  bottom: 50px;
   margin: 0 auto;
   left: 0;
   right: 0;
 
   @media (min-width: 768px) {
-    bottom: 30px;
+    bottom: 50px;
   }
 `;
 
@@ -535,7 +578,7 @@ const AlertBg = styled.div`
   left: 0;
   right: 0;
 
-  /* z-index: -1; */
+  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;

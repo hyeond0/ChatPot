@@ -6,7 +6,16 @@ import styled, { createGlobalStyle, css } from "styled-components";
 import { Container, Row, Col } from "react-bootstrap";
 
 import TypeIt from "typeit-react";
-import { BiChevronRight } from "react-icons/bi";
+import { BiChevronRight, BiInfoCircle, BiMobile } from "react-icons/bi";
+import { BsApple, BsAndroid, BsBoxArrowUp, BsPlusSquare, BsGithub, BsGlobe, BsFillEnvelopeFill } from "react-icons/bs";
+
+import guide1 from "../img/iphone1.jpeg";
+import guide2 from "../img/iphone2.jpeg";
+import guide3 from "../img/iphone3.jpeg";
+import guide4 from "../img/iphone4.jpeg";
+
+import profile1 from "../img/profile1.png";
+import profile2 from "../img/profile2.png";
 
 function IndexPage(props) {
   const Navigate = useNavigate();
@@ -365,15 +374,16 @@ function IndexPage(props) {
   ];
 
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const [showGuide, setShowGuide] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
 
+  // 뷰포트 Resize 이벤트
   useEffect(() => {
     const handleResize = () => {
       setViewportWidth(window.innerWidth);
     };
 
     window.addEventListener("resize", handleResize);
-
-    // 컴포넌트가 언마운트될 때 리사이즈 이벤트 리스너를 제거
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -401,16 +411,202 @@ function IndexPage(props) {
           <SubTitle>
             메뉴 고민은 이제 그만!{viewportWidth < 768 && <br />} <b>🍯챗팟</b>이 도와드릴게요.
           </SubTitle>
+        </Rectangle>
+        <FooterDiv>
           <StartBtn
             onClick={() => {
               Navigate("/selectIngredients", { state: { direction: "right" } });
             }}
           >
-            <div>시작하기</div>
+            <div>챗팟 시작하기</div>
             <BiChevronRight style={{ fontSize: "40px" }}></BiChevronRight>
           </StartBtn>
-        </Rectangle>
+          <FooterText
+            onClick={() => {
+              setShowGuide(true);
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            <BiMobile />
+            모바일 가이드
+          </FooterText>
+          <FooterText
+            onClick={() => {
+              setShowInfo(true);
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            <BiInfoCircle />
+            서비스 정보
+          </FooterText>
+        </FooterDiv>
       </SContainer>
+
+      <Wrapper className={showGuide ? "show" : ""}>
+        <WContainer>
+          <Text>
+            🍯챗팟은 웹-모바일 간 호환을 지원하는
+            <br /> <b>PWA(Progressive Web App)</b>로 제작되었습니다.
+          </Text>
+          <WRow>
+            <FooterText style={{ fontWeight: "600", fontSize: "20px" }}>
+              <BsApple />
+              아이폰에서 챗팟 이용하기
+            </FooterText>
+            <WImg src={guide1} />
+            <Text style={{ marginBottom: "30px" }}>
+              1. 챗팟(chatpot.co.kr)에 접속한 후,
+              <br /> 우측 상단의 공유{" "}
+              <BsBoxArrowUp
+                style={{
+                  borderRadius: "5px",
+                  backgroundColor: "352e29",
+                  color: "f2f0ef",
+                  padding: "4px",
+                  fontSize: "25px",
+                }}
+              />{" "}
+              아이콘을 클릭해주세요.
+            </Text>
+            <WImg src={guide2} />
+            <Text style={{ marginBottom: "30px" }}>
+              2. 홈화면에 추가{" "}
+              <BsPlusSquare
+                style={{
+                  borderRadius: "5px",
+                  backgroundColor: "352e29",
+                  color: "f2f0ef",
+                  padding: "4px",
+                  fontSize: "25px",
+                }}
+              />{" "}
+              아이콘을 클릭해주세요.
+            </Text>
+            <WImg src={guide3} />
+            <Text style={{ marginBottom: "30px" }}>3. 우측 상단의 "추가"를 클릭해주세요.</Text>
+            <WImg src={guide4} />
+            <Text style={{ marginBottom: "30px" }}>4. 설치 완료!</Text>
+          </WRow>
+
+          <WRow>
+            <FooterText style={{ fontWeight: "600", fontSize: "20px" }}>
+              <BsAndroid /> 안드로이드폰에서 챗팟 이용하기
+            </FooterText>
+            <Text style={{ marginBottom: "30px", fontSize: "40px" }}>🚧</Text>
+          </WRow>
+        </WContainer>
+
+        <CloseBtn
+          onClick={() => {
+            setShowGuide(false);
+          }}
+        >
+          닫기
+        </CloseBtn>
+      </Wrapper>
+
+      <Wrapper className={showInfo ? "show" : ""}>
+        <WContainer>
+          <WRow>
+            <FooterText style={{ fontWeight: "600", fontSize: "20px" }}>🍯 About</FooterText>
+            <Text>
+              <b>챗팟(www.chatpot.co.kr)</b>은 ChatGPT API를 이용한 사용자 맞춤 메뉴 및 레시피 추천 서비스입니다.
+              <br />
+              <br />
+              현재 시범 운영 중에 있으며, API 응답수 제한으로 인해 서비스가 불안정할 수 있습니다. 이 경우 잠시 기다렸다
+              서비스를 이용해주세요.
+              <br />
+              <br />
+              프로젝트에 관한 자세한 정보와 개발 로그는{" "}
+              <b
+                style={{ textDecoration: "underLine", cursor: "pointer" }}
+                onClick={() => {
+                  window.open("https://github.com/w00ngja/ChatPot", "_blank");
+                }}
+              >
+                이곳
+              </b>
+              을 통해 확인하실 수 있습니다.
+            </Text>
+          </WRow>
+          <WRow>
+            <FooterText style={{ fontWeight: "600", fontSize: "20px" }}>🧑🏻‍💻 Credit</FooterText>
+            <WImg src={profile1} style={{ borderRadius: "50%" }} />
+            <Text style={{ fontSize: "20px", marginBottom: "40px" }}>
+              황재웅 (Jaewoong) {""}
+              <span
+                style={{
+                  fontSize: "10px",
+                  fontWeight: "900",
+                  padding: "5px 10px",
+                  backgroundColor: "#352e29",
+                  borderRadius: "10px",
+                  color: "#f2f0ef",
+                }}
+              >
+                Frontend
+              </span>
+              <div
+                style={{ fontSize: "13px", margin: "10px 0px", cursor: "pointer" }}
+                onClick={() => {
+                  window.open("https://github.com/w00ngja", "_blank");
+                }}
+              >
+                <BsGithub /> https://github.com/w00ngja
+              </div>
+              <div
+                style={{ fontSize: "13px", margin: "10px 0px", cursor: "pointer" }}
+                onClick={() => {
+                  window.open("https://w00ngja.tistory.com/", "_blank");
+                }}
+              >
+                <BsGlobe /> https://w00ngja.tistory.com/
+              </div>
+            </Text>
+
+            <WImg src={profile2} style={{ borderRadius: "50%" }} />
+            <Text style={{ fontSize: "20px", marginBottom: "40px" }}>
+              정현도 (Hyundo) {""}
+              <span
+                style={{
+                  fontSize: "10px",
+                  fontWeight: "900",
+                  padding: "5px 10px",
+                  backgroundColor: "#352e29",
+                  borderRadius: "10px",
+                  color: "#f2f0ef",
+                }}
+              >
+                Backend
+              </span>
+              <div
+                style={{ fontSize: "13px", margin: "10px 0px", cursor: "pointer" }}
+                onClick={() => {
+                  window.open("https://github.com/hyeond0", "_blank");
+                }}
+              >
+                <BsGithub /> https://github.com/hyeond0
+              </div>
+              <div
+                style={{ fontSize: "13px", margin: "10px 0px", cursor: "pointer" }}
+                onClick={() => {
+                  window.open("https://velog.io/@hyeond0", "_blank");
+                }}
+              >
+                <BsGlobe /> https://velog.io/@hyeond0
+              </div>
+            </Text>
+          </WRow>
+        </WContainer>
+
+        <CloseBtn
+          onClick={() => {
+            setShowInfo(false);
+          }}
+        >
+          닫기
+        </CloseBtn>
+      </Wrapper>
     </>
   );
 }
@@ -457,41 +653,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Title = styled.span`
-  font-size: 25px;
-  font-weight: 100;
-  color: #352e29;
-
-  @media (min-width: 768px) {
-    font-size: 30px;
-  }
-`;
-
-const SubTitle = styled.span`
-  font-size: 18px;
-  color: #352e29;
-  margin-top: 10px;
-
-  margin-bottom: 60%;
-
-  @media (min-width: 768px) {
-    font-size: 20px;
-    margin-bottom: 20%;
-  }
-`;
-
-const StyeldTypeit = styled(TypeIt)`
-  font-size: 30px;
-  font-weight: 700;
-  /* background-color: #f2f0ef; */
-  background-color: #352e29;
-  /* color: #352e29; */
-  color: #f2f0ef;
-  padding: 0px 8px;
-
-  /* width: ; */
-`;
-
 const SContainer = styled(Container)`
   width: 100%;
   height: 85%;
@@ -535,27 +696,82 @@ const Rectangle = styled.div`
   width: 100%;
   height: 100%;
   margin: 0px 0px 0px 0px;
-  padding: 0px 0px 10% 0px;
-
-  /* background-color: #352e29; */
-
   overflow-y: auto;
   overflow-x: hidden;
 
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  justify-content: center;
   align-items: center;
 
   color: white;
-  /* gap: 20%; */
+`;
 
-  border-radius: 40px 40px 0px 0px;
+const Title = styled.span`
+  font-size: 30px;
+  font-weight: 100;
+  color: #352e29;
 
   @media (min-width: 768px) {
-    padding: 0px 0px 5% 0px;
+    font-size: 35px;
+  }
+`;
 
-    /* gap: 23%; */
+const SubTitle = styled.span`
+  font-size: 20px;
+  color: #352e29;
+  margin: 10px 0px 200px 0px;
+
+  @media (min-width: 768px) {
+    font-size: 25px;
+  }
+`;
+
+const StyeldTypeit = styled(TypeIt)`
+  font-size: 33px;
+  font-weight: 700;
+  background-color: #352e29;
+  color: #f2f0ef;
+  padding: 0px 8px;
+
+  @media (min-width: 768px) {
+    font-size: 40px;
+  }
+`;
+
+const FooterDiv = styled.div`
+  width: 100%;
+  position: fixed;
+  bottom: 70px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    bottom: 90px;
+  }
+`;
+
+const FooterText = styled.span`
+  font-size: 16px;
+  color: #352e29;
+
+  margin-bottom: 8px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+
+  border-bottom: 2px solid #352e29;
+
+  @media (min-width: 768px) {
+    font-size: 18px;
   }
 `;
 
@@ -564,23 +780,111 @@ const StartBtn = styled.div`
   justify-content: center;
   align-items: center;
   color: #352e29;
+  font-weight: 800;
 
   font-size: 20px;
   cursor: pointer;
   gap: 12px;
-  margin-top: 50px;
-  /* margin-bottom: 10px; */
+
+  background-color: #f2f0ef;
+  border: 3px solid #352e29;
+  border-radius: 80px;
+  padding: 8px 20px;
+  margin-bottom: 30px;
+
+  transition: all 0.5s ease;
 
   @media (min-width: 768px) {
-    &:hover {
-      text-decoration: none;
-    }
-    margin-bottom: 10px;
     font-size: 25px;
   }
 
   &:hover {
-    text-decoration: underline;
+    background-color: #352e29;
+    color: #f2f0ef;
+  }
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  /* overflow-y: none; */
+
+  background-color: #f2f0ef;
+  position: fixed;
+  top: 0px;
+  padding-top: 100px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease-in-out, visibility 0s linear 0.3s;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s ease-in-out, visibility 0s linear;
+  }
+`;
+
+const WContainer = styled.div`
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: none;
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
+
+  padding: 0px 8%;
+  gap: 30px;
+
+  @media (min-width: 768px) {
+    padding: 0px 20%;
+  }
+`;
+
+const WRow = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: start;
+  align-items: center;
+  gap: 12px;
+  /* height: 100%; */
+`;
+
+const WImg = styled.img`
+  width: 250px;
+  box-shadow: 0px 10px 15px -5px rgba(153, 153, 153, 0.3);
+`;
+
+const CloseBtn = styled.div`
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f2f0ef;
+  font-weight: 800;
+  font-size: 20px;
+  cursor: pointer;
+
+  background-color: #352e29;
+  padding: 20px 20px;
+`;
+
+const Text = styled.div`
+  font-size: 15px;
+
+  @media (min-width: 768px) {
+    font-size: 18px;
   }
 `;
 
