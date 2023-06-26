@@ -30,7 +30,7 @@ function App() {
     text-align: center;
 
     overflow-x: hidden;
-    overflow-y: none;
+    overflow-y: auto;
 
     @font-face {
       font-family: "NanumSquareNeo-Variable";

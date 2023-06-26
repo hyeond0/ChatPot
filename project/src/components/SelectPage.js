@@ -52,18 +52,23 @@ function SelectPage() {
           </SCol>
           <SCol md={5}>
             <SelectedContainer>
+              <button
+                // style={{ display: "none" }}
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+              ></button>
               {State.selected.map(function (item, i) {
                 return (
                   <>
-                    <SelectedItem
-                      id="selectedList"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        const selectedValue = e.currentTarget.innerText;
-                        dispatch(removeSelected(selectedValue));
-                      }}
-                    >
+                    <SelectedItem id="selectedList">
                       {item}
+                      <button
+                        // style={{ display: "none" }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                        }}
+                      ></button>
                       <BtnBackground
                         onClick={(e) => {
                           e.stopPropagation();
@@ -77,6 +82,7 @@ function SelectPage() {
                   </>
                 );
               })}
+
               <SelectedWrite
                 onSubmit={handleSubmit((data) => {
                   if (data.ingredients.length) {
@@ -259,6 +265,7 @@ const SelectItem = styled.div`
 
   border-radius: 25px;
   box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.2);
+  transition: all 0.5s ease;
 
   cursor: pointer;
 
