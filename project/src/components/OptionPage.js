@@ -107,7 +107,18 @@ function OptionPage(props) {
       <SContainer>
         <Title>2. 옵션을 선택하세요</Title>
         <Context>선택을 원하지 않는다면, {viewportWidth < 768 && <br />}바로 제작 버튼을 눌러도 좋아요</Context>
-        <SRow style={{ maxHeight: "70%", paddingBottom: "10px" }}>
+
+        <button
+          style={{ display: "none" }}
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch(pushOption("옵션옵션"));
+          }}
+        >
+          추가
+        </button>
+
+        <SRow style={{ maxHeight: "75%", paddingBottom: "10px" }}>
           {State.option.map(function (item, i) {
             return (
               <>
@@ -344,7 +355,6 @@ const OptionList = styled.div`
   overflow-x: auto;
   box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.2);
 
-  transition: transform 0.3s ease;
   cursor: pointer;
 
   @media (min-width: 768px) {
@@ -353,8 +363,7 @@ const OptionList = styled.div`
     &:hover {
       color: #f2f0ef;
       background-color: #352e29;
-
-      /* transition: background-color 1.5s; */
+      transition: all 0.5s ease;
     }
   }
 
@@ -369,7 +378,7 @@ const OptionList = styled.div`
 `;
 
 const OptionWrite = styled.form`
-  width: 80%;
+  width: 70%;
   height: 30px;
   padding: 30px 30px;
   text-align: start;
@@ -381,7 +390,7 @@ const OptionWrite = styled.form`
   align-items: center;
   box-shadow: 0px 10px 20px -5px rgba(29, 18, 10, 0.317);
 
-  border-radius: 100px;
+  border-radius: 10px;
 
   position: fixed;
   bottom: 100px;
@@ -462,7 +471,7 @@ const ButtonNavigate = styled.div`
 `;
 
 const MakeBtn = styled.div`
-  width: 40%;
+  width: 50%;
   height: 60px;
   color: #f2f0ef;
   background-color: #352e29;
