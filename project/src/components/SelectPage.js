@@ -52,11 +52,23 @@ function SelectPage() {
           </SCol>
           <SCol md={5}>
             <SelectedContainer>
-              {/* {State.selected.map(function (item, i) {
+              <button
+                // style={{ display: "none" }}
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+              ></button>
+              {State.selected.map(function (item, i) {
                 return (
                   <>
                     <SelectedItem id="selectedList">
                       {item}
+                      <button
+                        // style={{ display: "none" }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                        }}
+                      ></button>
                       <BtnBackground
                         onClick={(e) => {
                           e.stopPropagation();
@@ -220,7 +232,7 @@ const SCol = styled(Col)`
 `;
 
 const SelectContainer = styled.div`
-  padding: 20px 0px;
+  padding: 20px 0px 0px 0px;
   width: 100%;
   max-height: 92%;
 
@@ -271,7 +283,7 @@ const SelectItem = styled.div`
   flex-direction: column;
 
   border-radius: 25px;
-  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.2);
+  box-shadow: 0px 10px 5px -5px rgba(153, 153, 153, 0.1);
   transition: all 0.5s ease;
 
   cursor: pointer;
@@ -326,9 +338,10 @@ const SelectedItem = styled.div`
 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
 
+  gap: 30px;
   box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.2);
   border-radius: 10px;
 

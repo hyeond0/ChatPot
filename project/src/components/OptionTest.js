@@ -112,17 +112,54 @@ function OptionTest(props) {
     setTargetValue(selectedValue);
   }
 
+  const FirstDiv = styled.div`
+    height: 160px;
+  `;
+
+  const SecondDiv = styled.div`
+    width: 100%;
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    overflow-y: auto;
+  `;
+
+  const ThirdDiv = styled.div`
+    height: 160px;
+  `;
+
   return (
     <>
       <GlobalStyle></GlobalStyle>
 
       <SContainer>
-        <Title>2. 옵션을 선택하세요</Title>
-        <Context>선택을 원하지 않는다면, {viewportWidth < 768 && <br />}바로 제작 버튼을 눌러도 좋아요</Context>
-        {/* <div style={{ height: "100px", width: "100%", backgroundColor: "white" }}>
-          SelectedOption :{State.selectedOption} <br />
-          TargetValue : {targetValue}
-        </div> */}
+        <FirstDiv>
+          <Title>2. 옵션을 선택하세요</Title>
+          <Context>선택을 원하지 않는다면, {viewportWidth < 768 && <br />}바로 제작 버튼을 눌러도 좋아요</Context>
+        </FirstDiv>
+        <SecondDiv>
+          {State.option.map(function (item, i) {
+            return (
+              <>
+                <OptionList
+                  clicked={State.selectedOption.includes(item)}
+                  onClick={handleOptionClick}
+                  // onTouchStart={handleOptionClick}
+                >
+                  {item}
+                </OptionList>
+              </>
+            );
+          })}
+        </SecondDiv>
+        <ThirdDiv>dsds</ThirdDiv>
+        {/* <SRow height="80px" style={{ gap: "0px" }}>
+          <Title>2. 옵션을 선택하세요</Title>
+          <Context>선택을 원하지 않는다면, {viewportWidth < 768 && <br />}바로 제작 버튼을 눌러도 좋아요</Context>
+        </SRow>
         <button
           style={{ display: "none" }}
           onClick={(e) => {
@@ -132,7 +169,7 @@ function OptionTest(props) {
         >
           추가
         </button>
-        <SRow style={{ height: "70%", paddingBottom: "10px" }}>
+        <SRow height="">
           {State.option.map(function (item, i) {
             return (
               <>
@@ -147,7 +184,7 @@ function OptionTest(props) {
             );
           })}
         </SRow>
-        <SRow>
+        <SRow height="160px">
           <OptionWrite
             onSubmit={handleSubmit((data) => {
               if (data.option.length) {
@@ -161,7 +198,58 @@ function OptionTest(props) {
               <StyledBiListPlus />
             </BtnSubmit>
           </OptionWrite>
-        </SRow>
+          <Footer>
+            <ButtonNavigate
+              onClick={() => {
+                Navigate("/selectIngredients", { state: { direction: "left" } });
+              }}
+            >
+              <BsArrowLeft style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowLeft>
+            </ButtonNavigate>
+
+            {loading ? (
+              <>
+                <Loading>
+                  <div>
+                    <Lottie
+                      style={{ cursor: "default" }}
+                      options={LoadingAnimation}
+                      height={400}
+                      width={400}
+                      isPaused={false}
+                      isStopped={false}
+                      isClickToPauseDisabled={true}
+                    />
+                  </div>
+                  <div style={{ fontSize: "145%" }}>
+                    <b>챗팟</b>이 맛있는 레시피를<br></br> 추천해드릴게요!
+                  </div>
+                </Loading>
+              </>
+            ) : (
+              <MakeBtn
+                onClick={() => {
+                  if (isEmpty) {
+                    setEmptyAlert(true);
+                  } else {
+                    handleClick();
+                  }
+                }}
+              >
+                제작
+              </MakeBtn>
+            )}
+
+            <ButtonNavigate
+              onClick={() => {
+                dispatch(initOption());
+                dispatch(initSelected());
+              }}
+            >
+              <BsArrowRepeat style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowRepeat>
+            </ButtonNavigate>
+          </Footer> */}
+        {/* </SRow> */}
       </SContainer>
 
       {isWrongAlert ? (
@@ -198,87 +286,35 @@ function OptionTest(props) {
         <></>
       )}
 
-      <Footer>
-        <ButtonNavigate
-          onClick={() => {
-            Navigate("/selectIngredients", { state: { direction: "left" } });
-          }}
-        >
-          <BsArrowLeft style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowLeft>
-        </ButtonNavigate>
-
-        {loading ? (
-          <>
-            <Loading>
-              <div>
+      {emptyAlert ? (
+        <>
+          <AlertBg>
+            <AlertContainer>
+              <AlertDiv>
                 <Lottie
-                  style={{ cursor: "default" }}
-                  options={LoadingAnimation}
-                  height={400}
-                  width={400}
+                  style={{ width: "70%" }}
+                  options={EmptyAnimation}
+                  height={300}
                   isPaused={false}
                   isStopped={false}
                   isClickToPauseDisabled={true}
                 />
-              </div>
-              <div style={{ fontSize: "145%" }}>
-                <b>챗팟</b>이 맛있는 레시피를<br></br> 추천해드릴게요!
-              </div>
-            </Loading>
-          </>
-        ) : (
-          <MakeBtn
-            onClick={() => {
-              if (isEmpty) {
-                setEmptyAlert(true);
-              } else {
-                handleClick();
-              }
-            }}
-          >
-            제작
-          </MakeBtn>
-        )}
-
-        {emptyAlert ? (
-          <>
-            <AlertBg>
-              <AlertContainer>
-                <AlertDiv>
-                  <Lottie
-                    style={{ width: "70%" }}
-                    options={EmptyAnimation}
-                    height={300}
-                    isPaused={false}
-                    isStopped={false}
-                    isClickToPauseDisabled={true}
-                  />
-                </AlertDiv>
-                <AlertDiv>
-                  <h3>식재료를 선택해주세요!</h3>
-                </AlertDiv>
-                <AlertDiv>
-                  <BsFillXCircleFill
-                    onClick={() => setEmptyAlert(false)}
-                    style={{ fontSize: "30px", color: "lightgray", cursor: "pointer" }}
-                  />
-                </AlertDiv>
-              </AlertContainer>
-            </AlertBg>
-          </>
-        ) : (
-          <></>
-        )}
-
-        <ButtonNavigate
-          onClick={() => {
-            dispatch(initOption());
-            dispatch(initSelected());
-          }}
-        >
-          <BsArrowRepeat style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowRepeat>
-        </ButtonNavigate>
-      </Footer>
+              </AlertDiv>
+              <AlertDiv>
+                <h3>식재료를 선택해주세요!</h3>
+              </AlertDiv>
+              <AlertDiv>
+                <BsFillXCircleFill
+                  onClick={() => setEmptyAlert(false)}
+                  style={{ fontSize: "30px", color: "lightgray", cursor: "pointer" }}
+                />
+              </AlertDiv>
+            </AlertContainer>
+          </AlertBg>
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
@@ -329,7 +365,8 @@ const GlobalStyle = createGlobalStyle`
 
 const Title = styled.div`
   font-size: 150%;
-  margin: 20px 0px;
+  margin: 20px 0px 0px 0px;
+  font-weight: 600;
 
   display: flex;
   justify-content: center;
@@ -337,42 +374,40 @@ const Title = styled.div`
 
   @media (min-width: 768px) {
     font-size: 180%;
+    margin: 0px 0px 0px 0px;
   }
 `;
 
 const Context = styled.div`
   font-size: 90%;
-  margin: 20px 0px;
+  margin: 10px 0px 0px 0px;
 `;
 
 const SContainer = styled(Container)`
   width: 100%;
-  height: 80%;
+  height: 100%;
   margin: 0px 0px 0px 0px;
   padding: 0px 30px;
 
-  overflow-y: none;
+  gap: 3%;
 
-  @media (min-width: 768px) {
-    padding: 0px 30px;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  overflow-y: none;
 `;
 
 const SRow = styled(Row)`
   width: 100%;
+  height: ${(props) => props.height || "auto"};
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
 
-  overflow-y: auto;
+  /* overflow-y: auto; */
   overflow-x: hidden;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-
-  @media (min-width: 768px) {
-    gap: 5px;
-  }
+  gap: 12px;
 `;
 
 const SCol = styled(Col)`
@@ -388,8 +423,8 @@ const OptionList = styled.div`
   min-width: 100px;
   width: 100%;
   height: 80px;
-  /* padding: 30px 20px; */
-  margin: 4px 0px;
+  padding: 30px 20px;
+  /* margin: 4px 0px; */
   text-align: start;
   background-color: white;
 
@@ -401,7 +436,7 @@ const OptionList = styled.div`
 
   overflow-y: hidden;
   overflow-x: auto;
-  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.2);
+  box-shadow: 0px 10px 3px -6px rgba(29, 18, 10, 0.05);
 
   transition: all 0.5s ease;
   cursor: pointer;
@@ -426,7 +461,7 @@ const OptionList = styled.div`
 `;
 
 const OptionWrite = styled.form`
-  width: 80%;
+  width: 100%;
   height: 30px;
   padding: 30px 30px;
   text-align: start;
@@ -437,13 +472,8 @@ const OptionWrite = styled.form`
   justify-content: space-between;
   align-items: center;
 
-  border-radius: 100px;
-
-  position: fixed;
-  bottom: 130px;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
+  box-shadow: 0px 10px 3px -6px rgba(29, 18, 10, 0.25);
+  border-radius: 10px;
 
   @media (min-width: 768px) {
     width: 60%;
@@ -487,7 +517,7 @@ const Footer = styled.div`
 
   gap: 2%;
   position: fixed;
-  bottom: 50px;
+  bottom: 40px;
   margin: 0 auto;
   left: 0;
   right: 0;
@@ -517,7 +547,7 @@ const ButtonNavigate = styled.div`
 `;
 
 const MakeBtn = styled.div`
-  width: 40%;
+  width: 60%;
   height: 60px;
   color: #f2f0ef;
   background-color: #352e29;
@@ -527,7 +557,7 @@ const MakeBtn = styled.div`
   align-items: center;
 
   border-radius: 200px;
-  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
+  box-shadow: 0px 10px 20px -5px rgba(29, 18, 10, 0.317);
 
   cursor: pointer;
   transition: transform 0.3s ease;
@@ -601,7 +631,7 @@ const AlertContainer = styled.div`
   flex-direction: column;
 
   border-radius: 20px;
-  box-shadow: 0px 10px 20px -5px rgba(153, 153, 153, 0.5);
+  box-shadow: 0px 10px 20px -5px rgba(29, 18, 10, 0.317);
 
   @media (min-width: 768px) {
   }
