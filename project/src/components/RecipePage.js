@@ -93,14 +93,15 @@ function RecipePage(props) {
       response.elements.length === 0 &&
       response.recipeSteps.length === 0 &&
       response.introduction.length === 0 &&
-      !response.messages.length === 0
+      !(response.messages[response.messages.length - 1].content.length === 0)
     ) {
+      console.log("State :", State.receiveData);
       setWrongAlert(true);
     } else {
       setWrongAlert(false);
       setEmptyAlert(false);
     }
-  }, [State.recieveData]);
+  }, []);
 
   const LoadingAnimation = {
     loop: true,
@@ -196,7 +197,7 @@ function RecipePage(props) {
                 />
               </AlertDiv>
               <AlertDiv style={{ height: "100px", overflowY: "auto" }}>
-                <h4>{State.receiveData.messages[State.receiveData.messages.length - 1].context}</h4>
+                <h4>{State.receiveData.messages[State.receiveData.messages.length - 1].content}</h4>
               </AlertDiv>
               <h5
                 onClick={() => {

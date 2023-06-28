@@ -27,7 +27,6 @@ function OptionTest(props) {
 
   const [isEmpty, setEmpty] = useState(true);
   const [emptyAlert, setEmptyAlert] = useState(false);
-  const [targetValue, setTargetValue] = useState("");
   const [isWrongAlert, setWrongAlert] = useState(false);
 
   useEffect(() => {
@@ -64,17 +63,18 @@ function OptionTest(props) {
 
     const ingredients = State.selected;
     const option = State.selectedOption;
-    const sendData = { ingredients, option };
 
     if (State.selectedOption.length === 0) {
-      const option = ["아무"];
+      option = ["아무"];
     }
+
+    const sendData = { ingredients, option };
 
     axios
       .post("/selectOption", sendData)
       .then((res) => {
         const respond = res.data;
-
+        console.log(respond);
         dispatch(setReceiveData(respond));
 
         setLoading(false);
@@ -109,27 +109,7 @@ function OptionTest(props) {
     } else {
       dispatch(pushOption(selectedValue));
     }
-    setTargetValue(selectedValue);
   }
-
-  const FirstDiv = styled.div`
-    height: 160px;
-  `;
-
-  const SecondDiv = styled.div`
-    width: 100%;
-    flex-grow: 1;
-
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
-    overflow-y: auto;
-  `;
-
-  const ThirdDiv = styled.div`
-    height: 160px;
-  `;
 
   return (
     <>
@@ -381,7 +361,7 @@ const SRow = styled(Row)`
   overflow-x: hidden;
   overflow-y: auto;
 
-  gap: 12px;
+  gap: 8px;
 `;
 
 const SCol = styled(Col)`
