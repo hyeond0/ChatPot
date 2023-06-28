@@ -1,4 +1,4 @@
-import { writing, openai, role } from "./chatgpt";
+import { writing, openai, example } from "./chatgpt";
 const path = require("path");
 
 export const getReact = (req, res) => {
@@ -10,21 +10,15 @@ export const postReact = async (req, res) => {
   let messages = [
     {
       role: "system",
-      content: role,
-    },
-    {
-      role: "user",
       content: writing,
     },
     {
       role: "assistant",
-      content:
-        "안녕하세요! 무엇을 도와드릴까요? 식재료와 만들고 싶은 옵션을 알려주세요.",
+      content: example,
     },
-
     {
       role: "user",
-      content: `${ingredients}를 이용한 ${option}요리를 한가지만 추천해 줘. 답변은, 요리명 : {요리 이름}, 재료 : {내용1,내용2,...}, 레시피 순서 : {1. , 2. , ...}, 소개 : {해당 요리에 관한 간단한 소개} 형태를 맞춰 답변해줘. 레시피 순서를 알려줄 땐 각 문장의 끝에 /를 붙여서 답변해줘. 재료는 양(amount)도 함께 알려 줘. 다른 멘트는 안해도 돼.`,
+      content: `${ingredients}를 이용한 ${option}요리를 한가지만 추천해 줘. 답변은, 요리명 : {요리명 }, 재료 : {내용1,내용2,...}, 레시피 순서 : {1. , 2. , ...}, 소개 : {해당 요리에 관한 간단한 소개} 형태를 맞춰 답변해줘. 레시피 순서를 알려줄 땐 각 문장의 끝에 /를 붙여서 답변해줘. 요리명, 재료, 레시피 순서, 소개 내용들을 {} 중괄호 안에 넣어서 답변해줘. 재료는 양(amount)도 함께 알려 줘. 다른 멘트는 안해도 돼.`,
     },
   ];
 
