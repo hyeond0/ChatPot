@@ -147,7 +147,7 @@ function OptionTest(props) {
         >
           추가
         </button>
-        <SRow style={{ marginBottom: "180px" }}>
+        <SRow>
           {State.option.map(function (item, i) {
             return (
               <>
@@ -252,7 +252,7 @@ function OptionTest(props) {
               </AlertDiv>
               <AlertDiv>
                 <BsFillXCircleFill
-                  onClick={() => setEmptyAlert(false)}
+                  onClick={() => setWrongAlert(false)}
                   style={{ fontSize: "30px", color: "lightgray", cursor: "pointer" }}
                 />
               </AlertDiv>
@@ -364,7 +364,7 @@ const SContainer = styled(Container)`
   width: 100%;
   height: 100%;
   margin: 0px 0px 0px 0px;
-  padding: 0px 30px;
+  padding: 0px 30px 180px 30px;
 
   display: flex;
   flex-direction: column;
@@ -396,7 +396,7 @@ const SCol = styled(Col)`
 const OptionList = styled.div`
   min-width: 100px;
   width: 100%;
-  height: 80px;
+  height: 70px;
   padding: 30px 20px;
   /* margin: 4px 0px; */
   text-align: start;
@@ -456,7 +456,7 @@ const OptionWrite = styled.form`
   right: 0;
 
   @media (min-width: 768px) {
-    width: 60%;
+    width: 50%;
     /* bottom: 160px; */
   }
 `;
@@ -527,7 +527,7 @@ const ButtonNavigate = styled.div`
 `;
 
 const MakeBtn = styled.div`
-  width: 60%;
+  width: 50%;
   height: 60px;
   color: #f2f0ef;
   background-color: #352e29;
@@ -546,16 +546,9 @@ const MakeBtn = styled.div`
     transform: scale(1.05);
   }
 
-  /* ${({ isEmpty }) =>
-    !isEmpty &&
-    `
-  cursor:default;
-  opacity:0.4;
-
-  &:hover {
-    transform: none;
+  @media (min-width: 768px) {
+    /* width: 60%; */
   }
-`} */
 `;
 
 const Loading = styled.div`

@@ -52,23 +52,11 @@ function SelectPage() {
           </SCol>
           <SCol md={5}>
             <SelectedContainer>
-              <button
-                // style={{ display: "none" }}
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-              ></button>
               {State.selected.map(function (item, i) {
                 return (
                   <>
                     <SelectedItem id="selectedList">
                       {item}
-                      <button
-                        // style={{ display: "none" }}
-                        onClick={(e) => {
-                          e.preventDefault();
-                        }}
-                      ></button>
                       <BtnBackground
                         onClick={(e) => {
                           e.stopPropagation();
@@ -82,26 +70,6 @@ function SelectPage() {
                   </>
                 );
               })}{" "}
-              <div>
-                {State.selected.map(function (item, i) {
-                  return (
-                    <>
-                      <SelectedItem id="selectedList">
-                        {item}
-                        <BtnBackground
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            const selectedValue = e.currentTarget.closest("#selectedList").innerText;
-                            dispatch(removeSelected(selectedValue));
-                          }}
-                        >
-                          <StyledBiX />
-                        </BtnBackground>
-                      </SelectedItem>
-                    </>
-                  );
-                })}
-              </div>
               <SelectedWrite
                 onSubmit={handleSubmit((data) => {
                   if (data.ingredients.length) {
@@ -198,6 +166,7 @@ const Title = styled.div`
 
   @media (min-width: 768px) {
     font-size: 180%;
+    margin: 0px 0px 20px 0px;
   }
 `;
 
@@ -326,7 +295,7 @@ const SelectedContainer = styled.div`
 
   @media (min-width: 768px) {
     padding: 20px;
-    gap: 12px;
+    /* gap: 12px; */
   }
 `;
 
@@ -338,7 +307,7 @@ const SelectedItem = styled.div`
 
   display: flex;
   flex-direction: row;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   align-items: center;
 
   gap: 30px;
@@ -346,7 +315,7 @@ const SelectedItem = styled.div`
   border-radius: 10px;
 
   @media (min-width: 768px) {
-    padding: 18px 20px;
+    padding: 20px 20px;
   }
 `;
 
@@ -361,7 +330,7 @@ const SelectedWrite = styled.form`
   justify-content: space-between;
   align-items: center;
 
-  box-shadow: 0px 10px 20px -5px rgba(29, 18, 10, 0.317);
+  box-shadow: 0px 10px 20px -5px rgba(29, 18, 10, 0.417);
   border-radius: 10px;
 `;
 
@@ -370,7 +339,7 @@ const BtnBackground = styled.div`
   height: 25px;
   background-color: #f2f0ef;
 
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
@@ -379,6 +348,10 @@ const BtnBackground = styled.div`
   border: none;
 
   cursor: pointer;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
 `;
 
 const StyledBiX = styled(BiX)`
