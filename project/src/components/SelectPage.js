@@ -52,18 +52,21 @@ function SelectPage() {
           </SCol>
           <SCol md={5}>
             <SelectedContainer>
+              <button
+                // style={{ display: "none" }}
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+              ></button>
               {State.selected.map(function (item, i) {
                 return (
                   <>
                     <SelectedItem id="selectedList">
                       {item}
                       <button
-                        style={{ width: "20px", height: "20px" }}
+                        // style={{ display: "none" }}
                         onClick={(e) => {
-                          e.stopPropagation();
-                          const selectedValue = e.currentTarget.closest("#selectedList").innerText;
-                          console.log(selectedValue);
-                          dispatch(removeSelected(selectedValue));
+                          e.preventDefault();
                         }}
                       ></button>
                       <BtnBackground
@@ -78,8 +81,27 @@ function SelectPage() {
                     </SelectedItem>
                   </>
                 );
-              })}
-
+              })} */}
+              <div>
+                {State.selected.map(function (item, i) {
+                  return (
+                    <>
+                      <SelectedItem id="selectedList">
+                        {item}
+                        <BtnBackground
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const selectedValue = e.currentTarget.closest("#selectedList").innerText;
+                            dispatch(removeSelected(selectedValue));
+                          }}
+                        >
+                          <StyledBiX />
+                        </BtnBackground>
+                      </SelectedItem>
+                    </>
+                  );
+                })}
+              </div>
               <SelectedWrite
                 onSubmit={handleSubmit((data) => {
                   if (data.ingredients.length) {
@@ -346,7 +368,6 @@ const SelectedWrite = styled.form`
 const BtnBackground = styled.div`
   width: 25px;
   height: 25px;
-  margin-left: 20px;
   background-color: #f2f0ef;
 
   display: flex;
@@ -364,7 +385,6 @@ const StyledBiX = styled(BiX)`
   color: #352e29;
   font-size: 20px;
   flex-shrink: 0;
-  border-radius: 50%;
 `;
 
 const StyledBiListPlus = styled(BiListPlus)`
