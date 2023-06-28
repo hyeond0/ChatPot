@@ -81,7 +81,7 @@ function SelectPage() {
                     </SelectedItem>
                   </>
                 );
-              })} */}
+              })}{" "}
               <div>
                 {State.selected.map(function (item, i) {
                   return (

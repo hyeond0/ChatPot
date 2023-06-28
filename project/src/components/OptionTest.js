@@ -136,30 +136,8 @@ function OptionTest(props) {
       <GlobalStyle></GlobalStyle>
 
       <SContainer>
-        <FirstDiv>
-          <Title>2. 옵션을 선택하세요</Title>
-          <Context>선택을 원하지 않는다면, {viewportWidth < 768 && <br />}바로 제작 버튼을 눌러도 좋아요</Context>
-        </FirstDiv>
-        <SecondDiv>
-          {State.option.map(function (item, i) {
-            return (
-              <>
-                <OptionList
-                  clicked={State.selectedOption.includes(item)}
-                  onClick={handleOptionClick}
-                  // onTouchStart={handleOptionClick}
-                >
-                  {item}
-                </OptionList>
-              </>
-            );
-          })}
-        </SecondDiv>
-        <ThirdDiv>dsds</ThirdDiv>
-        {/* <SRow height="80px" style={{ gap: "0px" }}>
-          <Title>2. 옵션을 선택하세요</Title>
-          <Context>선택을 원하지 않는다면, {viewportWidth < 768 && <br />}바로 제작 버튼을 눌러도 좋아요</Context>
-        </SRow>
+        <Title>2. 옵션을 선택하세요</Title>
+        <Context>선택을 원하지 않는다면, {viewportWidth < 768 && <br />}바로 제작 버튼을 눌러도 좋아요</Context>
         <button
           style={{ display: "none" }}
           onClick={(e) => {
@@ -169,7 +147,7 @@ function OptionTest(props) {
         >
           추가
         </button>
-        <SRow height="">
+        <SRow style={{ marginBottom: "180px" }}>
           {State.option.map(function (item, i) {
             return (
               <>
@@ -184,73 +162,72 @@ function OptionTest(props) {
             );
           })}
         </SRow>
-        <SRow height="160px">
-          <OptionWrite
-            onSubmit={handleSubmit((data) => {
-              if (data.option.length) {
-                dispatch(AddOption(data.option));
-                reset();
-              }
-            })}
-          >
-            <CustomInput type="text" placeholder="옵션 직접 추가" {...register("option")} />
-            <BtnSubmit type="submit">
-              <StyledBiListPlus />
-            </BtnSubmit>
-          </OptionWrite>
-          <Footer>
-            <ButtonNavigate
-              onClick={() => {
-                Navigate("/selectIngredients", { state: { direction: "left" } });
-              }}
-            >
-              <BsArrowLeft style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowLeft>
-            </ButtonNavigate>
-
-            {loading ? (
-              <>
-                <Loading>
-                  <div>
-                    <Lottie
-                      style={{ cursor: "default" }}
-                      options={LoadingAnimation}
-                      height={400}
-                      width={400}
-                      isPaused={false}
-                      isStopped={false}
-                      isClickToPauseDisabled={true}
-                    />
-                  </div>
-                  <div style={{ fontSize: "145%" }}>
-                    <b>챗팟</b>이 맛있는 레시피를<br></br> 추천해드릴게요!
-                  </div>
-                </Loading>
-              </>
-            ) : (
-              <MakeBtn
-                onClick={() => {
-                  if (isEmpty) {
-                    setEmptyAlert(true);
-                  } else {
-                    handleClick();
-                  }
-                }}
-              >
-                제작
-              </MakeBtn>
-            )}
-
-            <ButtonNavigate
-              onClick={() => {
-                dispatch(initOption());
-                dispatch(initSelected());
-              }}
-            >
-              <BsArrowRepeat style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowRepeat>
-            </ButtonNavigate>
-          </Footer> */}
-        {/* </SRow> */}
       </SContainer>
+
+      <Footer>
+        <OptionWrite
+          onSubmit={handleSubmit((data) => {
+            if (data.option.length) {
+              dispatch(AddOption(data.option));
+              reset();
+            }
+          })}
+        >
+          <CustomInput type="text" placeholder="옵션 직접 추가" {...register("option")} />
+          <BtnSubmit type="submit">
+            <StyledBiListPlus />
+          </BtnSubmit>
+        </OptionWrite>
+        <ButtonNavigate
+          onClick={() => {
+            Navigate("/selectIngredients", { state: { direction: "left" } });
+          }}
+        >
+          <BsArrowLeft style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowLeft>
+        </ButtonNavigate>
+
+        {loading ? (
+          <>
+            <Loading>
+              <div>
+                <Lottie
+                  style={{ cursor: "default" }}
+                  options={LoadingAnimation}
+                  height={400}
+                  width={400}
+                  isPaused={false}
+                  isStopped={false}
+                  isClickToPauseDisabled={true}
+                />
+              </div>
+              <div style={{ fontSize: "145%" }}>
+                <b>챗팟</b>이 맛있는 레시피를<br></br> 추천해드릴게요!
+              </div>
+            </Loading>
+          </>
+        ) : (
+          <MakeBtn
+            onClick={() => {
+              if (isEmpty) {
+                setEmptyAlert(true);
+              } else {
+                handleClick();
+              }
+            }}
+          >
+            제작
+          </MakeBtn>
+        )}
+
+        <ButtonNavigate
+          onClick={() => {
+            dispatch(initOption());
+            dispatch(initSelected());
+          }}
+        >
+          <BsArrowRepeat style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowRepeat>
+        </ButtonNavigate>
+      </Footer>
 
       {isWrongAlert ? (
         <>
@@ -380,7 +357,7 @@ const Title = styled.div`
 
 const Context = styled.div`
   font-size: 90%;
-  margin: 10px 0px 0px 0px;
+  margin: 10px 0px 20px 0px;
 `;
 
 const SContainer = styled(Container)`
@@ -388,8 +365,6 @@ const SContainer = styled(Container)`
   height: 100%;
   margin: 0px 0px 0px 0px;
   padding: 0px 30px;
-
-  gap: 3%;
 
   display: flex;
   flex-direction: column;
@@ -400,12 +375,11 @@ const SContainer = styled(Container)`
 
 const SRow = styled(Row)`
   width: 100%;
-  height: ${(props) => props.height || "auto"};
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
 
-  /* overflow-y: auto; */
   overflow-x: hidden;
+  overflow-y: auto;
 
   gap: 12px;
 `;
@@ -461,7 +435,7 @@ const OptionList = styled.div`
 `;
 
 const OptionWrite = styled.form`
-  width: 100%;
+  width: 80%;
   height: 30px;
   padding: 30px 30px;
   text-align: start;
@@ -472,12 +446,18 @@ const OptionWrite = styled.form`
   justify-content: space-between;
   align-items: center;
 
-  box-shadow: 0px 10px 3px -6px rgba(29, 18, 10, 0.25);
+  box-shadow: 0px 10px 20px -5px rgba(29, 18, 10, 0.317);
   border-radius: 10px;
+
+  position: fixed;
+  bottom: 130px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
 
   @media (min-width: 768px) {
     width: 60%;
-    bottom: 160px;
+    /* bottom: 160px; */
   }
 `;
 
