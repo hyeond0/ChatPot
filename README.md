@@ -6,7 +6,7 @@
 
 <br>
 
-<img src="./project/screenHistory/architecture.png">
+<img src="./project/src/img/architecture.png">
 
 <!-- Develop history -->
 
