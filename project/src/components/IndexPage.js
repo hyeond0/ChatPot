@@ -492,7 +492,8 @@ function IndexPage(props) {
             <FooterText style={{ fontWeight: "600", fontSize: "20px" }}>
               <BsAndroid /> 안드로이드폰에서 챗팟 이용하기
             </FooterText>
-            <Text style={{ marginBottom: "30px", fontSize: "40px" }}>🚧</Text>
+            <Text style={{ fontSize: "40px" }}>🚧</Text>
+            <Text style={{ marginBottom: "30px", fontSize: "20px" }}>준비 중</Text>
           </WRow>
         </WContainer>
 
@@ -511,12 +512,6 @@ function IndexPage(props) {
             <FooterText style={{ fontWeight: "600", fontSize: "20px" }}>🍯 About</FooterText>
             <Text>
               <b>챗팟(www.chatpot.co.kr)</b>은 ChatGPT API를 이용한 사용자 맞춤 메뉴 및 레시피 추천 서비스입니다.
-              <br />
-              <br />
-              현재 시범 운영 중에 있으며, API 응답수 제한으로 인해 서비스가 불안정할 수 있습니다. 이 경우 잠시 기다렸다
-              서비스를 이용해주세요.
-              <br />
-              <br />
               프로젝트에 관한 자세한 정보와 개발 로그는{" "}
               <b
                 style={{ textDecoration: "underLine", cursor: "pointer" }}
@@ -566,7 +561,7 @@ function IndexPage(props) {
 
             <WImg src={profile2} style={{ borderRadius: "50%" }} />
             <Text style={{ fontSize: "20px", marginBottom: "40px" }}>
-              정현도 (Hyundo) {""}
+              정현도 (Hyeondo) {""}
               <span
                 style={{
                   fontSize: "10px",

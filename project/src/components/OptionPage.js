@@ -181,7 +181,7 @@ function OptionTest(props) {
                 />
               </div>
               <div style={{ fontSize: "145%" }}>
-                <b>챗팟</b>이 맛있는 레시피를<br></br> 추천해드릴게요!
+                <b>챗팟</b>이 맛있는 레시피를<br></br> 추천해드릴게요
               </div>
             </Loading>
           </>
@@ -497,6 +497,7 @@ const ButtonNavigate = styled.div`
   align-items: center;
 
   background-color: #352e29;
+  box-shadow: 0px 10px 20px -5px rgba(29, 18, 10, 0.317);
 
   cursor: pointer;
   transition: transform 0.3s ease;

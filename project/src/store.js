@@ -3,6 +3,9 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 let select = createSlice({
   name: "select",
   initialState: [
+    { type: "돼지고기", thumbnail: "🍖" },
+    { type: "닭고기", thumbnail: "🍗" },
+    { type: "소고기", thumbnail: "🥩" },
     { type: "대파", thumbnail: "🥬" },
     { type: "마늘", thumbnail: "🧄" },
     { type: "양파", thumbnail: "🧅" },
@@ -19,9 +22,6 @@ let select = createSlice({
     { type: "아보카도", thumbnail: "🥑" },
     { type: "버섯", thumbnail: "🍄" },
     { type: "콩", thumbnail: "🫘" },
-    { type: "돼지고기", thumbnail: "🍖" },
-    { type: "닭고기", thumbnail: "🍗" },
-    { type: "소고기", thumbnail: "🥩" },
     { type: "치즈", thumbnail: "🧀" },
     { type: "사과", thumbnail: "🍎" },
     { type: "배", thumbnail: "🍐" },
@@ -74,7 +74,6 @@ let option = createSlice({
     "저렴한",
     "매콤한",
     "비건식",
-    "락토프리",
     "파티음식",
     "오이 안들어간",
     "추운 날 먹기 좋은",
