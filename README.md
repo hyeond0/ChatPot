@@ -6,9 +6,29 @@
 
 <br>
 
+<img src="./project/screenHistory/architecture.png">
+
 <!-- Develop history -->
 
 # 📝 <b>개발로그</b>
+
+<details>
+<summary><b>2023/06/30 (재웅,FE)</b></summary>
+
+<h2><b>✅ Done</b></h2>
+
+- 모바일 환경 터치 이슈 해결
+
+<br>
+<h2><b>📚 Next</b></h2>
+
+- 프로젝트 정리
+
+<br>
+<h2><b>🖼️ Preview</b></h2>
+
+<br>
+</details>
 
 <details>
 <summary><b>2023/06/26 (재웅,FE)</b></summary>
