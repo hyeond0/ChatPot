@@ -141,9 +141,7 @@ function RecipePage(props) {
                 isClickToPauseDisabled={true}
               />
             </div>
-            <div style={{ fontSize: "145%" }}>
-              <b>챗팟</b>이 맛있는 레시피를<br></br> 추천해드릴게요!
-            </div>
+            <div style={{ fontSize: "145%" }}>동일한 옵션의 다른 메뉴를 추천해드릴게요</div>
           </Loading>
         </>
       ) : (
@@ -215,7 +213,7 @@ function RecipePage(props) {
       )}
 
       <StyledContainer>
-        <StyledRow backgroundColor="#ffffff" height="">
+        <StyledRow backgroundColor="#ffffff" height="" style={{ marginTop: "5px" }}>
           <StyledCol md={6} justifyContent="center" alignItems="center">
             <Lottie
               style={{ zIndex: "0", width: "100%" }}
@@ -583,7 +581,7 @@ const JustCol = styled(Col)``;
 const FooterRow = styled(Row)`
   padding: 0px;
   min-height: 50px;
-  margin: 20px 0px 0px 0px;
+  margin: 10px 0px 0px 0px;
 
   @media (min-width: 768px) {
     margin: 10px 0px 0px 0px;
