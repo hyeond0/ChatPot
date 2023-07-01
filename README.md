@@ -8,7 +8,7 @@
 <center>
 <table align=center>
   <tr>
-    <th colspan="2" style="text-align:center">메뉴고민 즉시 해결, 챗팟</th>
+    <th colspan="2" style="text-align:center"><h3>메뉴고민 즉시 해결, 챗팟</h3></th>
   </tr>
   <tr>
     <td>소개</td>
@@ -24,11 +24,11 @@
   </tr>
   <tr>
     <td rowspan="2">팀원</td>
-    <td style="display:flex;align-items:center;gap:6px"><img src="./project/src/img/profile1.png" style="width:30px;border-radius:50%"/><a href="https://github.com/w00ngja">황재웅(w00ngja)</a> (FE) <a style="background-color:#352e29;border-radius:20px;font-size:10px;padding:2px 6px;color:#f2f0ef;cursor:pointer" href="https://w00ngja.tistory.com/108">프로젝트 회고</a></td>
-  
+    <td style="display:flex;align-items:center;gap:6px"><b>Frontend</b><a href="https://github.com/w00ngja">w00ngja</a> <a style="background-color:#352e29;border-radius:20px;font-size:10px;padding:2px 6px;color:#f2f0ef;cursor:pointer" href="https://w00ngja.tistory.com/108">(프로젝트 회고)</a></td>
   </tr>
   <tr>
-    <td style="display:flex;align-items:center;gap:6px"><img src="./project/src/img/profile2.png" style="width:30px;border-radius:50%"/><a href="https://github.com/hyeond0">정현도(hyenod0)</a> (BE)</td>  </tr>
+    <td style="display:flex;align-items:center;gap:6px"><b>Backend</b><a href="https://github.com/hyeond0">hyenod0</a></td>
+  </tr>
 </table>
 </center>
 
