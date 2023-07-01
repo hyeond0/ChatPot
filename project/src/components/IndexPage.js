@@ -13,6 +13,9 @@ import guide1 from "../img/iphone1.jpeg";
 import guide2 from "../img/iphone2.jpeg";
 import guide3 from "../img/iphone3.jpeg";
 import guide4 from "../img/iphone4.jpeg";
+import guide6 from "../img/android1.JPG";
+import guide5 from "../img/android2.JPG";
+import guide7 from "../img/android3.JPG";
 
 import profile1 from "../img/profile1.png";
 import profile2 from "../img/profile2.png";
@@ -483,7 +486,9 @@ function IndexPage(props) {
               아이콘을 클릭해주세요.
             </Text>
             <WImg src={guide3} />
-            <Text style={{ marginBottom: "30px" }}>3. 우측 상단의 "추가"를 클릭해주세요.</Text>
+            <Text style={{ marginBottom: "30px" }}>
+              3. 우측 상단의 <b>'추가'</b>를 클릭해주세요.
+            </Text>
             <WImg src={guide4} />
             <Text style={{ marginBottom: "30px" }}>4. 설치 완료!</Text>
           </WRow>
@@ -492,8 +497,18 @@ function IndexPage(props) {
             <FooterText style={{ fontWeight: "600", fontSize: "20px" }}>
               <BsAndroid /> 안드로이드폰에서 챗팟 이용하기
             </FooterText>
-            <Text style={{ fontSize: "40px" }}>🚧</Text>
-            <Text style={{ marginBottom: "30px", fontSize: "20px" }}>준비 중</Text>
+            <WImg src={guide5} />
+            <Text style={{ marginBottom: "30px" }}>
+              1. 챗팟(chatpot.co.kr)에 접속한 후,
+              <br /> <b>'홈 화면에 ChatPot 추가'</b> 푸쉬 알림을 클릭해주세요.
+            </Text>
+            <WImg src={guide6} />
+            <Text style={{ marginBottom: "30px" }}>
+              2. <b>'추가'</b>를 클릭해주세요.
+            </Text>
+
+            <WImg src={guide7} />
+            <Text style={{ marginBottom: "30px" }}>3. 설치 완료!</Text>
           </WRow>
         </WContainer>
 
