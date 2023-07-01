@@ -2,11 +2,11 @@
 
 # 🍯 <b>ChatPot</b>
 
-<img src="./project/screenHistory/overview.png" style="object-fit: cover" />
+<img align=center src="./project/screenHistory/overview.png" style="object-fit: cover" />
 
 <br>
 <center>
-<table>
+<table align=center>
   <tr>
     <th colspan="2" style="text-align:center">메뉴고민 즉시 해결, 챗팟</th>
   </tr>
@@ -37,7 +37,7 @@
 # <b>⚙️ Stack & Architecture</b>
 
 <center>
-
+<div  align=center>
 <p><b>Frontend</b></p>
 
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
@@ -53,45 +53,40 @@
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
 <br>
-
-<img src="./project/src/img/architecture.png">
+<img  align=center src="./project/src/img/architecture.png">
+</div>
 
 </center>
 
 <!-- Develop history -->
-<br>
+<br/>
+<br/>
 
 # 🖼️ <b>Preview</b>
 
-<center>
-<p><b>1. 메인페이지</b></p>
+<p><b>- 메인페이지</b></p>
 <span>서비스 시작 Navigator, <a href="https://www.typeitjs.com/docs/react/">typeit</a>을 활용한 메뉴 랜덤 출력<br/>
 모바일 설치 가이드와 서비스 정보</span>
 <img src="./project/screenHistory/s1.png">
 
 <br/>
-<p><b>2. 식재료 선택</b></p>
+<p><b>- 식재료 선택</b></p>
 <span></span>
 <img src="./project/screenHistory/s2.png">
 
 <br/>
-<p><b>2. 옵션 선택</b></p>
+<p><b>- 옵션 선택</b></p>
 <img src="./project/screenHistory/s3.png">
 
 <br/>
-<p><b>3. 추천 결과</b></p>
+<p><b>- 추천 결과</b></p>
 <span>추천 메뉴에 대한 간단한 소개와 식재료, 조리법<br/>
 레시피 다운로드, 동일한 옵션의 다른 메뉴 추천</span>
 <img src="./project/screenHistory/s5.png">
 
-<br/>
-<p><b>4. 레시피 다운로드</b></p>
-<img style="width:200px" src="./project/screenHistory/s7.png">
-
-<br/>
-<p><b>5. 모바일에서도 완벽하게</b></p>
-<br/>
-</center>
+<!-- <br/>
+<p><b>- 모바일에서도 완벽하게</b></p>
+<br/> -->
 
 # 📝 <b>Develop History</b>
 
