@@ -15,7 +15,7 @@
     <td>ChatGPT API 기반 사용자 맞춤형 메뉴 및 레시피 추천 서비스</td>
   </tr>
   <tr>
-    <td>도메인</td>
+    <td>주소</td>
     <td><a href="https://chatpot.co.kr">chatpot.co.kr</a></td>
   </tr>
   <tr >
@@ -24,7 +24,7 @@
   </tr>
   <tr>
     <td rowspan="2">팀원</td>
-    <td style="display:flex;align-items:center;gap:6px"><b>Frontend </b><a href="https://github.com/w00ngja">w00ngja</a> - <a style="background-color:#352e29;border-radius:20px;font-size:10px;padding:2px 6px;color:#f2f0ef;cursor:pointer" href="https://w00ngja.tistory.com/108">(프로젝트 회고)</a></td>
+    <td style="display:flex;align-items:center;gap:6px"><b>Frontend </b><a href="https://github.com/w00ngja">w00ngja</a> - <a style="background-color:#352e29;border-radius:20px;font-size:10px;padding:2px 6px;color:#f2f0ef;cursor:pointer" href="https://w00ngja.tistory.com/108">프로젝트 회고</a></td>
   </tr>
   <tr>
     <td style="display:flex;align-items:center;gap:6px"><b>Backend </b><a href="https://github.com/hyeond0">hyenod0</a></td>
