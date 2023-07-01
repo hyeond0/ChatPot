@@ -2,30 +2,105 @@
 
 # 🍯 <b>ChatPot</b>
 
-<img src="./project/screenHistory/overview.png" style="object-fit: cover" />
+<img align=center src="./project/screenHistory/overview.png" style="object-fit: cover" />
+
+<br>
+<center>
+<table align=center>
+  <tr>
+    <th colspan="2" style="text-align:center"><h4>메뉴고민 즉시 해결, 챗팟</h4></th>
+  </tr>
+  <tr>
+    <td>소개</td>
+    <td>ChatGPT API 기반 사용자 맞춤형 메뉴 및 레시피 추천 서비스</td>
+  </tr>
+  <tr>
+    <td>주소</td>
+    <td><a href="https://chatpot.co.kr">chatpot.co.kr</a></td>
+  </tr>
+  <tr >
+    <td>진행기간</td>
+    <td>2023.05.07 ~ 2023.06.27</td>
+  </tr>
+  <tr>
+    <td rowspan="2">팀원</td>
+    <td style="display:flex;align-items:center;gap:6px"><b>Frontend </b><a href="https://github.com/w00ngja">w00ngja</a> - <a style="background-color:#352e29;border-radius:20px;font-size:10px;padding:2px 6px;color:#f2f0ef;cursor:pointer" href="https://w00ngja.tistory.com/108">프로젝트 회고</a></td>
+  </tr>
+  <tr>
+    <td style="display:flex;align-items:center;gap:6px"><b>Backend </b><a href="https://github.com/hyeond0">hyenod0</a></td>
+  </tr>
+</table>
+</center>
 
 <br>
 
-<img src="./project/src/img/architecture.png">
+# <b>⚙️ Stack & Architecture</b>
+
+<center>
+<div  align=center>
+<p><b>Frontend</b></p>
+
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white)
+![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+
+<p><b>Backend</b></p>
+
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+
+<br>
+<img  align=center src="./project/src/img/architecture.png">
+</div>
+
+</center>
 
 <!-- Develop history -->
+<br/>
+<br/>
 
-# 📝 <b>개발로그</b>
+# 🖼️ <b>Preview</b>
+
+<p><b>- 메인페이지</b></p>
+<span>서비스 시작 Navigator, <a href="https://www.typeitjs.com/docs/react/">typeit</a>을 활용한 메뉴 랜덤 출력<br/>
+모바일 설치 가이드와 서비스 정보</span>
+<img src="./project/screenHistory/s1.png">
+
+<br/>
+<p><b>- 식재료 선택</b></p>
+<span></span>
+<img src="./project/screenHistory/s2.png">
+
+<br/>
+<p><b>- 옵션 선택</b></p>
+<img src="./project/screenHistory/s3.png">
+
+<br/>
+<p><b>- 추천 결과</b></p>
+<span>추천 메뉴에 대한 간단한 소개와 식재료, 조리법<br/>
+레시피 다운로드, 동일한 옵션의 다른 메뉴 추천</span>
+<img src="./project/screenHistory/s5.png">
+
+<!-- <br/>
+<p><b>- 모바일에서도 완벽하게</b></p>
+<br/> -->
+
+# 📝 <b>Develop History</b>
 
 <details>
 <summary><b>2023/06/30 (재웅,FE)</b></summary>
 
 <h2><b>✅ Done</b></h2>
 
-- 모바일 환경 터치 이슈 해결
+- 모바일 환경 터치 이슈 해결
 
 <br>
 <h2><b>📚 Next</b></h2>
 
 - 프로젝트 정리
-
-<br>
-<h2><b>🖼️ Preview</b></h2>
 
 <br>
 </details>
@@ -38,13 +113,13 @@
 - 모바일 가이드
 - 서비스 정보 (크레딧)
 - 그 외 폰트 사이즈 조절 등
-  
+
 <br>
 <h2><b>📚 Next</b></h2>
 
 - 임시적으로 Display:none 지정해준 요소들 확인 후, 복구
-    - 모바일 환경에서 옵션 선택되지 않는 문제
-    - 모바일 환경에서 선택한 식재료 제거되지 않는 문제
+  - 모바일 환경에서 옵션 선택되지 않는 문제
+  - 모바일 환경에서 선택한 식재료 제거되지 않는 문제
 - 코드 정리 및 리팩터링
 
 <br>
@@ -58,7 +133,7 @@
 - AWS Route53, 로드 밸런서를 이용한 https 배포
 - 도메인 구매 후 적용
   - https://chatpot.co.kr
-  
+
 <br>
 <h2><b>📚 Next</b></h2>
 
@@ -74,7 +149,7 @@
 
 - AWS EC2, pm2를 이용한 임시 버전 배포
 - 현재 구현된 모든 기능 테스트
-  
+
 <br>
 <h2><b>📚 Next</b></h2>
 
