@@ -62,7 +62,7 @@ function OptionTest(props) {
     setLoading(true);
 
     const ingredients = State.selected;
-    const option = State.selectedOption;
+    let option = State.selectedOption;
 
     if (State.selectedOption.length === 0) {
       option = ["아무"];
