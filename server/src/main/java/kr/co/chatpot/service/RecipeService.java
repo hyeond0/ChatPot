@@ -47,12 +47,9 @@ public class RecipeService {
         array.add(promptObject);
 
 
-        log.info("array: {}", array);
         String response = chatgptService.sendMessage(array);
-        log.info("response: {}", response);
 
         RecipeDto recipeDto = recipeParser.parseRecipe(response);
-        log.info("recipeDto: {}", recipeDto);
 
         return recipeDto;
     }
@@ -72,10 +69,8 @@ public class RecipeService {
         object.put("content", "다른 레시피를 같은 옵션으로 하나만 추천해 줘.");
 
         String response = chatgptService.sendMessage(array);
-        log.info("response: {}", response);
 
         RecipeDto recipeDto = recipeParser.parseRecipe(response);
-        log.info("recipeDto: {}", recipeDto);
 
         return recipeDto;
     }
