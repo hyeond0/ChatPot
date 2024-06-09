@@ -1,6 +1,10 @@
 package kr.co.chatpot.service;
 
+import java.util.List;
+import kr.co.chatpot.dto.Message;
 import kr.co.chatpot.dto.RecipeDto;
+import kr.co.chatpot.dto.request.OptionRequest;
+import kr.co.chatpot.dto.request.ReRecipeRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -14,7 +18,9 @@ public class RecipeService {
     private final RecipeParser recipeParser;
     private final ChatGPTService chatgptService;
 
-    public RecipeDto recommendRecipe(String ingredients, String option) {
+    public RecipeDto recommendRecipe(OptionRequest request) {
+        String ingredients = String.join(", ", request.getIngredients());
+        String option = String.join(", ", request.getOption());
         String prompt = String.format(
             "%s를 이용한 %s요리를 한가지만 추천해 줘. 답변은, 요리명 : {요리명 }, 재료 : {내용1,내용2,...}, 레시피 순서 : {1. , 2. , ...}, 소개 : {해당 요리에 관한 간단한 소개} 형태를 맞춰 답변해줘. 레시피 순서를 알려줄 땐 각 문장의 끝에 /를 붙여서 답변해줘. 요리명, 재료, 레시피 순서, 소개 내용들을 {} 중괄호 안에 넣어서 답변해줘. 재료는 양(amount)도 함께 알려 줘. 다른 멘트는 안해도 돼.",
             ingredients, option);
@@ -42,6 +48,29 @@ public class RecipeService {
 
 
         log.info("array: {}", array);
+        String response = chatgptService.sendMessage(array);
+        log.info("response: {}", response);
+
+        RecipeDto recipeDto = recipeParser.parseRecipe(response);
+        log.info("recipeDto: {}", recipeDto);
+
+        return recipeDto;
+    }
+
+    public RecipeDto retryRecommend(ReRecipeRequest request) {
+        List<Message> messages = request.getMessages();
+        JSONArray array = new JSONArray();
+        for (Message message : messages) {
+            JSONObject object = new JSONObject();
+            object.put("role", message.getRole());
+            object.put("content", message.getContent());
+            array.add(object);
+        }
+
+        JSONObject object = new JSONObject();
+        object.put("role", "user");
+        object.put("content", "다른 레시피를 같은 옵션으로 하나만 추천해 줘.");
+
         String response = chatgptService.sendMessage(array);
         log.info("response: {}", response);
 

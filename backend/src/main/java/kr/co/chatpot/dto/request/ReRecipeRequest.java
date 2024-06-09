@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatGPTRequest {
-    private String model;
+public class ReRecipeRequest {
     private List<Message> messages;
 }

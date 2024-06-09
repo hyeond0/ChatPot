@@ -1,5 +1,6 @@
 package kr.co.chatpot.dto.request;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OptionRequest {
-    private String ingredients;
-    private String option;
+    private List<String> ingredients;
+    private List<String> option;
 }
