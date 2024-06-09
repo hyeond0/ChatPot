@@ -37,7 +37,7 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-def frontendDir = project.file("../project").absolutePath
+def frontendDir = new File(System.getProperty("user.dir")).parentFile.toPath().resolve("project").toString()
 
 sourceSets {
     main {
