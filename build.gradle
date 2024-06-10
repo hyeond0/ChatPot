@@ -37,12 +37,12 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-def frontendDir = new File(rootProject.projectDir, "../project").absolutePath
+def frontendDir = "$projectDir/src/main/frontend/project"
 
 sourceSets {
     main {
         resources {
-            srcDirs = ["src/main/resources"]
+            srcDirs = ["$projectDir/src/main/resources"]
         }
     }
 }
