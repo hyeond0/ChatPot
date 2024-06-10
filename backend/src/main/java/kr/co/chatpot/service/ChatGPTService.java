@@ -34,8 +34,6 @@ public class ChatGPTService {
         body.put("top_p", 1);
         body.put("max_tokens", 2048);
 
-        log.info(body.toString());
-
         HttpEntity<String> request = new HttpEntity<>(body.toString(), headers);
 
         ResponseEntity<String> response =
