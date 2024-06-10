@@ -37,8 +37,7 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-def projectRoot = rootDir.parentFile.absolutePath
-def frontendDir = "$projectRoot/project"
+def frontendDir = "/project"
 
 sourceSets {
     main {

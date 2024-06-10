@@ -1,39 +1,37 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-# dependencies
-project/node_modules
-project/.pnp
-project/.pnp.js
-project/.env
-project/# testing
-project/coverage
-project/# production
-project/build
-project/# misc
-project/.DS_Store
-project/.env.local
-project/.env.development.local
-project/.env.test.local
-project/.env.production.local
-project/npm-debug.log*
-project/yarn-debug.log*
-project/yarn-error.log*
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
 
-server/node_modules
-server/.pnp
-server/.pnp.js
-server/.env
-server/# testing
-server/coverage
-server/# production
-server/build
-server/# misc
-server/.DS_Store
-server/.env.local
-server/.env.development.local
-server/.env.test.local
-server/.env.production.local
-server/npm-debug.log*
-server/yarn-debug.log*
-server/yarn-error.log*
-server/ecosystem.config.js
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
