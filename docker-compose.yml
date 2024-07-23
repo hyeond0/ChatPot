@@ -1,0 +1,22 @@
+version: '3'
+services:
+  backend:
+    image: hyeond0/chatpot-legacy-be
+    ports:
+      - "8000:8000"
+    networks:
+      - network
+    env_file:
+      - .env
+
+  frontend:
+    image: hyeond0/chatpot-legacy-fe
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - network
+
+networks:
+  network:

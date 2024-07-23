@@ -60,7 +60,7 @@ function RecipePage(props) {
     setLoading(true);
 
     axios
-      .post("/recipe", sendData)
+      .post("/api/recipe", sendData)
       .then((res) => {
         const respond = res.data;
         console.log(respond);
