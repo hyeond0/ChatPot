@@ -6,5 +6,6 @@ import kr.co.chatpot.dto.request.ReRecipeRequest;
 
 public interface RecipeService {
     RecipeDto recommendRecipe(OptionRequest request);
+
     RecipeDto retryRecommend(ReRecipeRequest request);
 }
