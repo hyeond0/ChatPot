@@ -71,7 +71,7 @@ function OptionTest(props) {
     const sendData = { ingredients, option };
 
     axios
-      .post("/selectOption", sendData)
+      .post("/api/selectOption", sendData)
       .then((res) => {
         const respond = res.data;
         console.log(respond);
