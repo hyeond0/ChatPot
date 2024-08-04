@@ -1,21 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
-import { pushOption, removeOption, AddOption, setReceiveData, initOption, initSelected } from "../store.js";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import {
+  pushOption,
+  removeOption,
+  AddOption,
+  setReceiveData,
+  initOption,
+  initSelected,
+} from '../store.js';
 
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-import styled, { createGlobalStyle, css } from "styled-components";
-import { Container, Row, Col } from "react-bootstrap";
+import styled, { createGlobalStyle, css } from 'styled-components';
+import { Container, Row, Col } from 'react-bootstrap';
 
-import { BiListPlus } from "react-icons/bi";
-import { BsArrowLeft, BsArrowRepeat, BsFillXCircleFill } from "react-icons/bs";
+import { BiListPlus } from 'react-icons/bi';
+import { BsArrowLeft, BsArrowRepeat, BsFillXCircleFill } from 'react-icons/bs';
 
-import Lottie from "react-lottie";
-import loadingAnimation from "../lottie/loading.json";
-import emptyAnimatiion from "../lottie/empty.json";
-import * as Error from "../lottie/error.json";
+import Lottie from 'react-lottie';
+import loadingAnimation from '../lottie/loading.json';
+import emptyAnimatiion from '../lottie/empty.json';
+import * as Error from '../lottie/error.json';
+
+const API_ENDPOINT = process.env.REACT_APP_API_URL;
 
 function OptionTest(props) {
   const { register, handleSubmit, reset } = useForm();
@@ -65,20 +74,20 @@ function OptionTest(props) {
     let option = State.selectedOption;
 
     if (State.selectedOption.length === 0) {
-      option = ["아무"];
+      option = ['아무'];
     }
 
     const sendData = { ingredients, option };
 
     axios
-      .post("/api/selectOption", sendData)
+      .post(`${API_ENDPOINT}/selectOption`, sendData)
       .then((res) => {
         const respond = res.data;
         console.log(respond);
         dispatch(setReceiveData(respond));
 
         setLoading(false);
-        Navigate("/recipe", { state: { direction: "right" } });
+        Navigate('/recipe', { state: { direction: 'right' } });
       })
       .catch((error) => {
         setLoading(false);
@@ -93,11 +102,11 @@ function OptionTest(props) {
       setViewportWidth(window.innerWidth);
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     // 컴포넌트가 언마운트될 때 리사이즈 이벤트 리스너를 제거
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -117,12 +126,15 @@ function OptionTest(props) {
 
       <SContainer>
         <Title>2. 옵션을 선택하세요</Title>
-        <Context>선택을 원하지 않는다면, {viewportWidth < 768 && <br />}바로 제작 버튼을 눌러도 좋아요</Context>
+        <Context>
+          선택을 원하지 않는다면, {viewportWidth < 768 && <br />}바로 제작
+          버튼을 눌러도 좋아요
+        </Context>
         <button
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
           onClick={(e) => {
             e.preventDefault();
-            dispatch(pushOption("옵션옵션"));
+            dispatch(pushOption('옵션옵션'));
           }}
         >
           추가
@@ -153,17 +165,23 @@ function OptionTest(props) {
             }
           })}
         >
-          <CustomInput type="text" placeholder="옵션 직접 추가" {...register("option")} />
+          <CustomInput
+            type="text"
+            placeholder="옵션 직접 추가"
+            {...register('option')}
+          />
           <BtnSubmit type="submit">
             <StyledBiListPlus />
           </BtnSubmit>
         </OptionWrite>
         <ButtonNavigate
           onClick={() => {
-            Navigate("/selectIngredients", { state: { direction: "left" } });
+            Navigate('/selectIngredients', { state: { direction: 'left' } });
           }}
         >
-          <BsArrowLeft style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowLeft>
+          <BsArrowLeft
+            style={{ fontSize: '25px', color: '#f2f0ef' }}
+          ></BsArrowLeft>
         </ButtonNavigate>
 
         {loading ? (
@@ -171,7 +189,7 @@ function OptionTest(props) {
             <Loading>
               <div>
                 <Lottie
-                  style={{ cursor: "default" }}
+                  style={{ cursor: 'default' }}
                   options={LoadingAnimation}
                   height={400}
                   width={400}
@@ -180,7 +198,7 @@ function OptionTest(props) {
                   isClickToPauseDisabled={true}
                 />
               </div>
-              <div style={{ fontSize: "145%" }}>
+              <div style={{ fontSize: '145%' }}>
                 <b>챗팟</b>이 맛있는 레시피를<br></br> 추천해드릴게요
               </div>
             </Loading>
@@ -205,7 +223,9 @@ function OptionTest(props) {
             dispatch(initSelected());
           }}
         >
-          <BsArrowRepeat style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowRepeat>
+          <BsArrowRepeat
+            style={{ fontSize: '25px', color: '#f2f0ef' }}
+          ></BsArrowRepeat>
         </ButtonNavigate>
       </Footer>
 
@@ -215,7 +235,7 @@ function OptionTest(props) {
             <AlertContainer>
               <AlertDiv>
                 <Lottie
-                  style={{ width: "70%" }}
+                  style={{ width: '70%' }}
                   options={errorLottie}
                   height={300}
                   isPaused={false}
@@ -233,7 +253,11 @@ function OptionTest(props) {
               <AlertDiv>
                 <BsFillXCircleFill
                   onClick={() => setWrongAlert(false)}
-                  style={{ fontSize: "30px", color: "lightgray", cursor: "pointer" }}
+                  style={{
+                    fontSize: '30px',
+                    color: 'lightgray',
+                    cursor: 'pointer',
+                  }}
                 />
               </AlertDiv>
             </AlertContainer>
@@ -249,7 +273,7 @@ function OptionTest(props) {
             <AlertContainer>
               <AlertDiv>
                 <Lottie
-                  style={{ width: "70%" }}
+                  style={{ width: '70%' }}
                   options={EmptyAnimation}
                   height={300}
                   isPaused={false}
@@ -263,7 +287,11 @@ function OptionTest(props) {
               <AlertDiv>
                 <BsFillXCircleFill
                   onClick={() => setEmptyAlert(false)}
-                  style={{ fontSize: "30px", color: "lightgray", cursor: "pointer" }}
+                  style={{
+                    fontSize: '30px',
+                    color: 'lightgray',
+                    cursor: 'pointer',
+                  }}
                 />
               </AlertDiv>
             </AlertContainer>

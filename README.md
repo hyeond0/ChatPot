@@ -2,7 +2,7 @@
 
 # 🍯 <b>ChatPot</b>
 
-<img align=center src="./project/screenHistory/overview.png" style="object-fit: cover" />
+![chatpot_overview](https://github.com/user-attachments/assets/2a443f53-cba2-4a18-9016-58b498c4b7ea)
 
 <br>
 <center>
@@ -20,14 +20,18 @@
   </tr>
   <tr >
     <td>진행기간</td>
-    <td>2023.05.07 ~ 2023.06.27</td>
+    <td>2023.05 ~ 2023.06</td>
+  </tr>
+    <tr >
+    <td><b>리팩토링</b></td>
+    <td>2024.07 ~ (진행 중)</td>
   </tr>
   <tr>
     <td rowspan="2">팀원</td>
-    <td style="display:flex;align-items:center;gap:6px"><b>Frontend </b><a href="https://github.com/w00ngja">w00ngja</a> - <a style="background-color:#352e29;border-radius:20px;font-size:10px;padding:2px 6px;color:#f2f0ef;cursor:pointer" href="https://w00ngja.tistory.com/108">프로젝트 회고</a></td>
+    <td style="display:flex;align-items:center;gap:6px"><b>Frontend </b><a href="https://github.com/Jaeppetto">황재웅</a> - <a style="background-color:#352e29;border-radius:20px;font-size:10px;padding:2px 6px;color:#f2f0ef;cursor:pointer" href="https://w00ngja.tistory.com/entry/ReactJS-%EB%A9%94%EB%89%B4-%EA%B3%A0%EB%AF%BC-%EC%A6%89%EC%8B%9C-%ED%95%B4%EA%B2%B0-%EC%B1%97%ED%8C%9F-Chatpot">프로젝트 회고</a></td>
   </tr>
   <tr>
-    <td style="display:flex;align-items:center;gap:6px"><b>Backend </b><a href="https://github.com/hyeond0">hyenod0</a></td>
+    <td style="display:flex;align-items:center;gap:6px"><b>Backend </b><a href="https://github.com/hyeond0">정현도</a></td>
   </tr>
 </table>
 </center>
@@ -49,11 +53,8 @@
 <p><b>Backend</b></p>
 
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
-![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
-<br>
-<img  align=center src="./project/src/img/architecture.png">
 </div>
 
 </center>
