@@ -10,7 +10,6 @@ import kr.co.chatpot.dto.respons.RecipeResponse;
 import kr.co.chatpot.service.RecipeParser;
 import kr.co.chatpot.service.RecipeService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -19,7 +18,6 @@ import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class GeminiRecipeService implements RecipeService {
@@ -29,45 +27,67 @@ public class GeminiRecipeService implements RecipeService {
     @Value("${chat.system.message}")
     private String sysMessage;
 
-
+    @Override
     public RecipeResponse recommendRecipe(OptionRequest request) {
-        String ingredients = String.join(", ", request.getIngredients());
-        String option = String.join(", ", request.getOption());
-        String message = String.format(
-                "%s를 이용한 %s요리를 한가지만 추천해 줘. 답변은, 요리명 : {요리명 }, 재료 : {내용1,내용2,...}, 레시피 순서 : {1. , 2. , ...}, 소개 : {해당 요리에 관한 간단한 소개} 형태를 맞춰 답변해줘. 레시피 순서를 알려줄 땐 각 문장의 끝에 /를 붙여서 답변해줘. 요리명, 재료, 레시피 순서, 소개 내용들을 {} 중괄호 안에 넣어서 답변해줘. 재료는 양(amount)도 함께 알려 줘. 다른 멘트는 안해도 돼.",
-                ingredients, option);
+        String userMessageContent = createUserMessageContent(request.getIngredients(), request.getOption());
+        Prompt prompt = createPrompt(sysMessage, userMessageContent);
 
-        SystemMessage systemMessage = new SystemMessage(sysMessage);
-        UserMessage userMessage = new UserMessage(message);
+        String responseContent = getChatResponseContent(prompt);
+        RecipeDto recipeDto = recipeParser.parseRecipe(responseContent);
 
-        Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
-
-        ChatResponse response = chatModel.call(prompt);
-        String result = response.getResult().getOutput().getContent();
-
-        RecipeDto recipeDto = recipeParser.parseRecipe(result);
-        List<ChatMessage> chatMessages =
-                List.of(new ChatMessage("system", sysMessage), new ChatMessage("user", message),
-                        new ChatMessage("assistant", result));
-
+        List<ChatMessage> chatMessages = createChatMessages(sysMessage, userMessageContent, responseContent);
         return RecipeResponse.of(recipeDto, chatMessages);
     }
 
+    @Override
     public RecipeResponse retryRecommend(ReRecipeRequest request) {
         List<ChatMessage> chatHistory = request.getMessages();
-        chatHistory.forEach(message -> log.info("{} : {}", message.getRole(), message.getContent()));
-        List<String> dishes = new ArrayList<>();
-        chatHistory.stream().filter(message -> message.getRole().equals("assistant"))
-                .forEach(message -> dishes.add(recipeParser.parseRecipe(message.getContent()).getDishName()));
-        SystemMessage systemMessage = new SystemMessage(sysMessage);
-        UserMessage userMessage = new UserMessage(chatHistory.get(1).getContent() + String.join(", ", dishes) + "을 제외하고 다른 요리 추천해 줘.");
-        Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
 
-        ChatResponse response = chatModel.call(prompt);
-        String result = response.getResult().getOutput().getContent();
+        List<String> excludedDishes = extractDishNames(chatHistory);
+        String userMessageContent =
+                chatHistory.get(1).getContent() + String.join(", ", excludedDishes) + "을 제외하고 다른 요리 추천해 줘.";
+        Prompt prompt = createPrompt(sysMessage, userMessageContent);
 
-        RecipeDto recipeDto = recipeParser.parseRecipe(result);
-        chatHistory.add(new ChatMessage("assistant", result));
+        String responseContent = getChatResponseContent(prompt);
+        RecipeDto recipeDto = recipeParser.parseRecipe(responseContent);
+
+        chatHistory.add(new ChatMessage("assistant", responseContent));
         return RecipeResponse.of(recipeDto, chatHistory);
+    }
+
+    private String createUserMessageContent(List<String> ingredients, List<String> options) {
+        return String.format(
+                "%s를 이용한 %s요리를 한가지만 추천해 줘. 답변은, 요리명 : {요리명 }, 재료 : {내용1,내용2,...}, 레시피 순서 : {1. , 2. , ...}, 소개 : {해당 요리에 관한 간단한 소개} 형태를 맞춰 답변해줘. 레시피 순서를 알려줄 땐 각 문장의 끝에 /를 붙여서 답변해줘. 요리명, 재료, 레시피 순서, 소개 내용들을 {} 중괄호 안에 넣어서 답변해줘. 재료는 양(amount)도 함께 알려 줘. 다른 멘트는 안해도 돼.",
+                String.join(", ", ingredients),
+                String.join(", ", options)
+        );
+    }
+
+    private Prompt createPrompt(String sysMessage, String userMessageContent) {
+        SystemMessage systemMessage = new SystemMessage(sysMessage);
+        UserMessage userMessage = new UserMessage(userMessageContent);
+        return new Prompt(List.of(systemMessage, userMessage));
+    }
+
+    private String getChatResponseContent(Prompt prompt) {
+        ChatResponse response = chatModel.call(prompt);
+        return response.getResult().getOutput().getContent();
+    }
+
+    private List<ChatMessage> createChatMessages(String sysMessage, String userMessageContent,
+                                                 String assistantMessageContent) {
+        return List.of(
+                new ChatMessage("system", sysMessage),
+                new ChatMessage("user", userMessageContent),
+                new ChatMessage("assistant", assistantMessageContent)
+        );
+    }
+
+    private List<String> extractDishNames(List<ChatMessage> chatHistory) {
+        List<String> dishes = new ArrayList<>();
+        chatHistory.stream()
+                .filter(message -> "assistant".equals(message.getRole()))
+                .forEach(message -> dishes.add(recipeParser.parseRecipe(message.getContent()).getDishName()));
+        return dishes;
     }
 }
