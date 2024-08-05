@@ -163,6 +163,7 @@ const Title = styled.div`
   margin: 20px 0px 0px 0px;
   color: #352e29;
   font-weight: 600;
+  user-select: none;
 
   display: flex;
   justify-content: center;

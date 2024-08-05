@@ -64,8 +64,8 @@ function RecipePage(props) {
     setLoading(true);
 
     axios
-      .post(`${API_ENDPOINT}/recipe`, sendData)
-      // .post('/api/recipe', sendData)
+      // .post(`${API_ENDPOINT}/recipe`, sendData)
+      .post('/api/recipe', sendData)
       .then((res) => {
         const respond = res.data;
 
@@ -336,7 +336,6 @@ function RecipePage(props) {
           </FooterCol>
         </FooterRow>
       </StyledContainer>
-      {/* chatpot.co.kr */}
 
       <Wrapper className={unShown ? 'show' : ''}>
         <CaptureBtnArea>

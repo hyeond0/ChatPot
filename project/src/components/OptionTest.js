@@ -80,8 +80,8 @@ function OptionTest(props) {
     // }
 
     axios
-      .post(`${API_ENDPOINT}/selectOption`, sendData)
-      // .post('/api/selectOption', sendData)
+      // .post(`${API_ENDPOINT}/selectOption`, sendData)
+      .post('/api/selectOption', sendData)
       .then((res) => {
         const respond = res.data;
 
@@ -179,12 +179,12 @@ function OptionTest(props) {
 
       <Footer>
         <OptionWrite
-          // onSubmit={handleSubmit((data) => {
-          //   if (data.option.length) {
-          //     addOption(data.option);
-          //     reset();
-          //   }
-          // })}
+        // onSubmit={handleSubmit((data) => {
+        //   if (data.option.length) {
+        //     addOption(data.option);
+        //     reset();
+        //   }
+        // })}
         >
           <CustomInput
             type="text"

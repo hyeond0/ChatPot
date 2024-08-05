@@ -16,7 +16,7 @@
   </tr>
   <tr>
     <td>주소</td>
-    <td><a href="https://chatpot.co.kr">chatpot.co.kr</a></td>
+    <td><a href="https://chatpot.site/">chatpot.site</a></td>
   </tr>
   <tr >
     <td>진행기간</td>
@@ -133,7 +133,7 @@
 
 - AWS Route53, 로드 밸런서를 이용한 https 배포
 - 도메인 구매 후 적용
-  - https://chatpot.co.kr
+  - https://chatpot.site/
 
 <br>
 <h2><b>📚 Next</b></h2>
@@ -733,7 +733,7 @@
 - Node.js 서버와 chatGPT API 연동
 - cors 예외 처리
   ```javascript
-  var cors = require("cors");
+  var cors = require('cors');
   app.use(cors());
   ```
 - API_KEY 환경변수 처리

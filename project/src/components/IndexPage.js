@@ -471,7 +471,7 @@ function IndexPage(props) {
             </FooterText>
             <WImg src={guide1} />
             <Text style={{ marginBottom: '30px' }}>
-              1. 챗팟(chatpot.co.kr)에 접속한 후,
+              1. 챗팟(https://chatpot.site/)에 접속한 후,
               <br /> 우측 상단의 공유{' '}
               <BsBoxArrowUp
                 style={{
@@ -512,7 +512,7 @@ function IndexPage(props) {
             </FooterText>
             <WImg src={guide5} />
             <Text style={{ marginBottom: '30px' }}>
-              1. 챗팟(chatpot.co.kr)에 접속한 후,
+              1. 챗팟(https://chatpot.site/)에 접속한 후,
               <br /> <b>'홈 화면에 ChatPot 추가'</b> 푸쉬 알림을 클릭해주세요.
             </Text>
             <WImg src={guide6} />
@@ -541,9 +541,9 @@ function IndexPage(props) {
               🍯 About
             </FooterText>
             <Text>
-              <b>챗팟(www.chatpot.co.kr)</b>은 ChatGPT API를 이용한 사용자 맞춤
-              메뉴 및 레시피 추천 서비스입니다. 프로젝트에 관한 자세한 정보와
-              개발 로그는{' '}
+              <b>챗팟(https://chatpot.site/)</b>은 ChatGPT API를 이용한 사용자
+              맞춤 메뉴 및 레시피 추천 서비스입니다. 프로젝트에 관한 자세한
+              정보와 개발 로그는{' '}
               <b
                 style={{ textDecoration: 'underLine', cursor: 'pointer' }}
                 onClick={() => {

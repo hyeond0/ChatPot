@@ -33,22 +33,6 @@ function OptionJest() {
     initSelected,
   } = useStore();
 
-  // const option = [
-  //   '한식',
-  //   '중식',
-  //   '일식',
-  //   '양식',
-  //   '디저트',
-  //   '간편식',
-  //   '저렴한',
-  //   '매콤한',
-  //   '비건식',
-  //   '파티음식',
-  //   '오이 안들어간',
-  //   '추운 날 먹기 좋은',
-  //   '비 오는 날 먹기 좋은',
-  // ];
-
   const [isEmpty, setEmpty] = useState(true);
   const [emptyAlert, setEmptyAlert] = useState(false);
   const [isWrongAlert, setWrongAlert] = useState(false);
@@ -57,7 +41,6 @@ function OptionJest() {
     selected && selected.length === 0 ? setEmpty(true) : setEmpty(false);
   }, [selected]);
 
-  // Post & Loading
   const [loading, setLoading] = useState(false);
   const LoadingAnimation = {
     loop: true,
@@ -80,8 +63,6 @@ function OptionJest() {
     rendererSettings: {},
   };
 
-  // 버튼 클릭 시 Loading -> Post -> Get -> Navigate 처리
-  // 해당 과정은 이전 단계가 성공해야 연쇄적으로 처리가 가능함
   const handleClick = () => {
     setLoading(true);
 
@@ -95,8 +76,8 @@ function OptionJest() {
     const sendData = { ingredients, option };
 
     axios
-      .post(`${API_ENDPOINT}/selectOption`, sendData)
-      // .post('/api/selectOption', sendData)
+      // .post(`${API_ENDPOINT}/selectOption`, sendData)
+      .post('/api/selectOption', sendData)
       .then((res) => {
         const respond = res.data;
         setReceiveData(respond);
@@ -119,7 +100,6 @@ function OptionJest() {
 
     window.addEventListener('resize', handleResize);
 
-    // 컴포넌트가 언마운트될 때 리사이즈 이벤트 리스너를 제거
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -370,6 +350,7 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: start;
+  user-select: none;
 
   @media (min-width: 768px) {
     font-size: 180%;
@@ -380,6 +361,7 @@ const Title = styled.div`
 const Context = styled.div`
   font-size: 90%;
   margin: 10px 0px 20px 0px;
+  user-select: none;
 `;
 
 const SContainer = styled(Container)`
