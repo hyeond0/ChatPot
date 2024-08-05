@@ -15,8 +15,6 @@ import {
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import { setReceiveData, initOption, initSelected } from '../store.js';
-
 import Lottie from 'react-lottie';
 import * as Error from '../lottie/error.json';
 import * as Process from '../lottie/loading.json';
@@ -24,14 +22,12 @@ import * as Result from '../lottie/result1.json';
 
 import html2canvas from 'html2canvas';
 import logoBM from '../img/logoBM.png';
+import useStore from '../useStore.js';
+
+const API_ENDPOINT = process.env.REACT_APP_API_URL;
 
 function RecipePage(props) {
   let Navigate = useNavigate();
-  let dispatch = useDispatch();
-  let State = useSelector((state) => {
-    return state;
-  });
-
   var now = new Date();
   var hours = now.getHours();
   var meal = '';
@@ -47,12 +43,13 @@ function RecipePage(props) {
   const [isWrongAlert, setWrongAlert] = useState(false);
   const [loading, setLoading] = useState(false);
   const [unShown, setUnshown] = useState(false);
+  const { setReceiveData, receiveData, initOption, initSelected } = useStore();
 
   const captureHTML = async () => {
     const element = document.getElementById('captureElement'); // 캡처할 HTML 요소의 ID 또는 Ref를 사용
     const canvas = await html2canvas(element);
     const image = canvas.toDataURL('image/png'); // 이미지 데이터 얻기 (PNG 형식)
-    const recipeName = State.receiveData.dishName;
+    const recipeName = receiveData.dishName;
 
     const link = document.createElement('a');
     link.href = image;
@@ -62,17 +59,17 @@ function RecipePage(props) {
   };
 
   const handleClick = () => {
-    const messages = State.receiveData.messages;
+    const messages = receiveData.messages;
     const sendData = { messages };
     setLoading(true);
 
     axios
-      // .post(`${API_ENDPOINT}/recipe`, sendData)
-      .post('/api/recipe', sendData)
+      .post(`${API_ENDPOINT}/recipe`, sendData)
+      // .post('/api/recipe', sendData)
       .then((res) => {
         const respond = res.data;
 
-        dispatch(setReceiveData(respond));
+        setReceiveData(respond);
 
         setLoading(false);
         Navigate('/recipe');
@@ -84,7 +81,7 @@ function RecipePage(props) {
   };
 
   useEffect(() => {
-    const response = State.receiveData;
+    const response = receiveData;
     // 받아온 모든 데이터가 비어있을 경우 (페이지 새로고침 등)
     // 결과가 존재하지 않습니다.
     if (
@@ -207,9 +204,8 @@ function RecipePage(props) {
               <AlertDiv style={{ height: '100px', overflowY: 'auto' }}>
                 <h4>
                   {
-                    State.receiveData.messages[
-                      State.receiveData.messages.length - 1
-                    ].content
+                    receiveData.messages[receiveData.messages.length - 1]
+                      .content
                   }
                 </h4>
               </AlertDiv>
@@ -247,7 +243,7 @@ function RecipePage(props) {
             <JustRow>
               <Header>오늘 {meal},</Header>
               <Header>
-                <b>{State.receiveData.dishName} </b>
+                <b>{receiveData.dishName} </b>
                 어떠세요?
               </Header>
             </JustRow>
@@ -259,7 +255,7 @@ function RecipePage(props) {
                   fontSize: '17px',
                 }}
               >
-                {State.receiveData.introduction}
+                {receiveData.introduction}
               </SubHeader>
             </JustRow>
           </StyledCol>
@@ -276,8 +272,8 @@ function RecipePage(props) {
               <b>식재료</b>
             </CardHeader>
             <Divider />
-            {State.receiveData.elements !== undefined &&
-              State.receiveData.elements.map(function (item, i) {
+            {receiveData.elements !== undefined &&
+              receiveData.elements.map(function (item, i) {
                 return (
                   <div key={i} style={{ marginTop: '5px' }}>
                     - {item}
@@ -296,8 +292,8 @@ function RecipePage(props) {
             </CardHeader>
             <Divider />
 
-            {State.receiveData.recipeSteps !== undefined &&
-              State.receiveData.recipeSteps.map(function (item, i) {
+            {receiveData.recipeSteps !== undefined &&
+              receiveData.recipeSteps.map(function (item, i) {
                 return (
                   <div key={i} style={{ marginTop: '5px' }}>
                     {item}
@@ -329,8 +325,8 @@ function RecipePage(props) {
           <FooterCol md={4}>
             <Button
               onClick={() => {
-                dispatch(initOption());
-                dispatch(initSelected());
+                initOption();
+                initSelected();
                 Navigate('/');
               }}
             >
@@ -345,7 +341,7 @@ function RecipePage(props) {
       <Wrapper className={unShown ? 'show' : ''}>
         <CaptureBtnArea>
           <div>
-            <b style={{ fontSize: '180%' }}>{State.receiveData.dishName}</b>
+            <b style={{ fontSize: '180%' }}>{receiveData.dishName}</b>
             <br></br> 레시피를 저장하시겠어요?
           </div>
           <div
@@ -373,12 +369,12 @@ function RecipePage(props) {
         <Row>
           <CapturedArea id="captureElement">
             <CapturedRow style={{ fontSize: '30px', fontWeight: '900' }}>
-              {State.receiveData.dishName}
+              {receiveData.dishName}
             </CapturedRow>
             <CapturedContext style={{ textAlign: 'start' }}>
               <h5 style={{ fontWeight: '600' }}>식재료</h5> <Divider />
-              {State.receiveData.elements !== undefined &&
-                State.receiveData.elements.map(function (item, i) {
+              {receiveData.elements !== undefined &&
+                receiveData.elements.map(function (item, i) {
                   return (
                     <div key={i} style={{ marginTop: '5px' }}>
                       - {item}
@@ -388,8 +384,8 @@ function RecipePage(props) {
             </CapturedContext>
             <CapturedContext style={{ textAlign: 'start' }}>
               <h5 style={{ fontWeight: '600' }}>레시피</h5> <Divider />
-              {State.receiveData.recipeSteps !== undefined &&
-                State.receiveData.recipeSteps.map(function (item, i) {
+              {receiveData.recipeSteps !== undefined &&
+                receiveData.recipeSteps.map(function (item, i) {
                   return (
                     <div key={i} style={{ marginTop: '5px' }}>
                       {item}
@@ -403,7 +399,7 @@ function RecipePage(props) {
             >
               <Divider />
 
-              {State.receiveData.introduction}
+              {receiveData.introduction}
             </CapturedRow>
             <CapturedRow>
               <img alt="logo" style={{ height: '40px' }} src={logoBM} />

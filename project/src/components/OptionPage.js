@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import {
-  pushOption,
-  removeOption,
-  AddOption,
-  setReceiveData,
-  initOption,
-  initSelected,
-} from '../store.js';
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -23,24 +14,48 @@ import Lottie from 'react-lottie';
 import loadingAnimation from '../lottie/loading.json';
 import emptyAnimatiion from '../lottie/empty.json';
 import * as Error from '../lottie/error.json';
+import useStore from '../useStore.js';
 
 const API_ENDPOINT = process.env.REACT_APP_API_URL;
 
-function OptionTest(props) {
+function OptionJest() {
   const { register, handleSubmit, reset } = useForm();
   let Navigate = useNavigate();
-  let dispatch = useDispatch();
-  let State = useSelector((state) => {
-    return state;
-  });
+  const {
+    selected,
+    selectedOption,
+    setReceiveData,
+    removeOption,
+    option,
+    addOption,
+    pushOption,
+    initOption,
+    initSelected,
+  } = useStore();
+
+  // const option = [
+  //   '한식',
+  //   '중식',
+  //   '일식',
+  //   '양식',
+  //   '디저트',
+  //   '간편식',
+  //   '저렴한',
+  //   '매콤한',
+  //   '비건식',
+  //   '파티음식',
+  //   '오이 안들어간',
+  //   '추운 날 먹기 좋은',
+  //   '비 오는 날 먹기 좋은',
+  // ];
 
   const [isEmpty, setEmpty] = useState(true);
   const [emptyAlert, setEmptyAlert] = useState(false);
   const [isWrongAlert, setWrongAlert] = useState(false);
 
   useEffect(() => {
-    State.selected.length === 0 ? setEmpty(true) : setEmpty(false);
-  }, [State.selected]);
+    selected && selected.length === 0 ? setEmpty(true) : setEmpty(false);
+  }, [selected]);
 
   // Post & Loading
   const [loading, setLoading] = useState(false);
@@ -70,21 +85,21 @@ function OptionTest(props) {
   const handleClick = () => {
     setLoading(true);
 
-    const ingredients = State.selected;
-    let option = State.selectedOption;
+    const ingredients = selected;
+    let option = selectedOption;
 
-    if (State.selectedOption.length === 0) {
+    if (selectedOption.length === 0) {
       option = ['아무'];
     }
 
     const sendData = { ingredients, option };
 
     axios
-      // .post(`${API_ENDPOINT}/selectOption`, sendData)
-      .post('/api/selectOption', sendData)
+      .post(`${API_ENDPOINT}/selectOption`, sendData)
+      // .post('/api/selectOption', sendData)
       .then((res) => {
         const respond = res.data;
-        dispatch(setReceiveData(respond));
+        setReceiveData(respond);
 
         setLoading(false);
         Navigate('/recipe', { state: { direction: 'right' } });
@@ -113,10 +128,10 @@ function OptionTest(props) {
   function handleOptionClick(e) {
     e.preventDefault();
     const selectedValue = e.currentTarget.innerText;
-    if (State.selectedOption.includes(selectedValue)) {
-      dispatch(removeOption(selectedValue));
+    if (selectedOption && selectedOption.includes(selectedValue)) {
+      removeOption(selectedValue);
     } else {
-      dispatch(pushOption(selectedValue));
+      addOption(selectedValue);
     }
   }
 
@@ -134,19 +149,18 @@ function OptionTest(props) {
           style={{ display: 'none' }}
           onClick={(e) => {
             e.preventDefault();
-            dispatch(pushOption('옵션옵션'));
+            addOption('옵션옵션');
           }}
         >
           추가
         </button>
         <SRow>
-          {State.option.map(function (item, i) {
+          {option.map(function (item, i) {
             return (
               <>
                 <OptionList
-                  clicked={State.selectedOption.includes(item)}
+                  clicked={selectedOption && selectedOption.includes(item)}
                   onClick={handleOptionClick}
-                  // onTouchStart={handleOptionClick}
                 >
                   {item}
                 </OptionList>
@@ -160,7 +174,7 @@ function OptionTest(props) {
         <OptionWrite
           onSubmit={handleSubmit((data) => {
             if (data.option.length) {
-              dispatch(AddOption(data.option));
+              pushOption(data.option);
               reset();
             }
           })}
@@ -219,8 +233,8 @@ function OptionTest(props) {
 
         <ButtonNavigate
           onClick={() => {
-            dispatch(initOption());
-            dispatch(initSelected());
+            initOption();
+            initSelected();
           }}
         >
           <BsArrowRepeat
@@ -623,4 +637,4 @@ const AlertDiv = styled.div`
   width: 100%;
 `;
 
-export default OptionTest;
+export default OptionJest;

@@ -1,22 +1,20 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { styled, createGlobalStyle, css, keyframes } from "styled-components";
-import { Container, Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { styled, createGlobalStyle, css, keyframes } from 'styled-components';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-import { pushSelected, removeSelected } from "../store.js";
-import { BiX, BiListPlus } from "react-icons/bi";
-import { BsHouseFill, BsArrowRight } from "react-icons/bs";
-import { useForm } from "react-hook-form";
+import { BiX, BiListPlus } from 'react-icons/bi';
+import { BsHouseFill, BsArrowRight } from 'react-icons/bs';
+import { useForm } from 'react-hook-form';
+import useStore from '../useStore.js';
 
 function SelectPage() {
   const { register, handleSubmit, reset } = useForm();
-  let dispatch = useDispatch();
-  let State = useSelector((state) => {
-    return state;
-  });
+
   const Navigate = useNavigate();
+  const { select, selected, removeSelected, addSelected } = useStore();
 
   return (
     <>
@@ -26,19 +24,20 @@ function SelectPage() {
         <SRow>
           <SCol md={7}>
             <SelectContainer>
-              {State.select.map(function (item, i) {
+              {select.map(function (item, i) {
                 return (
                   <>
                     <SelectItem
-                      clicked={State.selected.includes(item.type)}
+                      clicked={selected.includes(item.type)}
                       onClick={(e) => {
                         e.preventDefault();
-                        const selectedValue = e.currentTarget.children[1].innerText;
+                        const selectedValue =
+                          e.currentTarget.children[1].innerText;
 
-                        if (State.selected.includes(selectedValue)) {
-                          dispatch(removeSelected(selectedValue));
+                        if (selected.includes(selectedValue)) {
+                          removeSelected(selectedValue);
                         } else {
-                          dispatch(pushSelected(selectedValue));
+                          addSelected(selectedValue);
                         }
                       }}
                     >
@@ -52,7 +51,7 @@ function SelectPage() {
           </SCol>
           <SCol md={5}>
             <SelectedContainer>
-              {State.selected.map(function (item, i) {
+              {selected.map(function (item, i) {
                 return (
                   <>
                     <SelectedItem id="selectedList">
@@ -60,8 +59,9 @@ function SelectPage() {
                       <BtnBackground
                         onClick={(e) => {
                           e.stopPropagation();
-                          const selectedValue = e.currentTarget.closest("#selectedList").innerText;
-                          dispatch(removeSelected(selectedValue));
+                          const selectedValue =
+                            e.currentTarget.closest('#selectedList').innerText;
+                          removeSelected(selectedValue);
                         }}
                       >
                         <StyledBiX></StyledBiX>
@@ -69,11 +69,11 @@ function SelectPage() {
                     </SelectedItem>
                   </>
                 );
-              })}{" "}
+              })}
               <SelectedWrite
                 onSubmit={handleSubmit((data) => {
                   if (data.ingredients.length) {
-                    dispatch(pushSelected(data.ingredients));
+                    addSelected(data.ingredients);
                     reset();
                   }
                 })}
@@ -81,7 +81,7 @@ function SelectPage() {
                 <CustomInput
                   type="text"
                   placeholder="원하는 식재료를 직접 추가해보세요!"
-                  {...register("ingredients")}
+                  {...register('ingredients')}
                 />
                 <BtnSubmit type="submit">
                   <StyledBiListPlus />
@@ -90,22 +90,26 @@ function SelectPage() {
             </SelectedContainer>
           </SCol>
         </SRow>
-      </SContainer>{" "}
+      </SContainer>{' '}
       <Footer>
         <ButtonNavigate
           onClick={() => {
-            Navigate("/", { state: { direction: "left" } });
+            Navigate('/', { state: { direction: 'left' } });
           }}
         >
-          <BsHouseFill style={{ fontSize: "25px", color: "#f2f0ef" }}></BsHouseFill>
+          <BsHouseFill
+            style={{ fontSize: '25px', color: '#f2f0ef' }}
+          ></BsHouseFill>
         </ButtonNavigate>
 
         <ButtonNavigate
           onClick={() => {
-            Navigate("/selectOption", { state: { direction: "right" } });
+            Navigate('/selectOption', { state: { direction: 'right' } });
           }}
         >
-          <BsArrowRight style={{ fontSize: "25px", color: "#f2f0ef" }}></BsArrowRight>
+          <BsArrowRight
+            style={{ fontSize: '25px', color: '#f2f0ef' }}
+          ></BsArrowRight>
         </ButtonNavigate>
       </Footer>
     </>

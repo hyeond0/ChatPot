@@ -44,7 +44,7 @@ let selected = createSlice({
   // initialState: ["대파", "양파", "저민 돼지고기", "대파"],
   initialState: [],
   reducers: {
-    pushSelected(state, item) {
+    addSelected(state, item) {
       state.push(item.payload);
     },
     removeSelected(state, item) {
@@ -145,8 +145,8 @@ export default configureStore({
   },
 });
 
-export let { setToggle } = inputClick.actions;
-export let { pushSelected, removeSelected, initSelected } = selected.actions;
+// export let { setToggle } = inputClick.actions;
+export let { addSelected, removeSelected, initSelected } = selected.actions;
 export let { pushOption, removeOption, initOption } = selectedOption.actions;
 export let { AddOption } = option.actions;
 export let { setReceiveData } = receiveData.actions;

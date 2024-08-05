@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import {
-  pushOption,
-  removeOption,
-  AddOption,
-  setReceiveData,
-  initOption,
-  initSelected,
-} from '../store.js';
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -23,23 +14,34 @@ import Lottie from 'react-lottie';
 import loadingAnimation from '../lottie/loading.json';
 import emptyAnimatiion from '../lottie/empty.json';
 import * as Error from '../lottie/error.json';
+import useStore from '../useStore.js';
+
+const API_ENDPOINT = process.env.REACT_APP_API_URL;
 
 function OptionTest(props) {
   const { register, handleSubmit, reset } = useForm();
   let Navigate = useNavigate();
-  let dispatch = useDispatch();
-  let State = useSelector((state) => {
-    return state;
-  });
 
   const [isEmpty, setEmpty] = useState(true);
   const [emptyAlert, setEmptyAlert] = useState(false);
   const [targetValue, setTargetValue] = useState('');
   const [isWrongAlert, setWrongAlert] = useState(false);
 
+  const {
+    selected,
+    selectedOption,
+    setReceiveData,
+    removeOption,
+    pushOption,
+    option,
+    addOption,
+    initOption,
+    initSelected,
+  } = useStore();
+
   useEffect(() => {
-    State.selected.length === 0 ? setEmpty(true) : setEmpty(false);
-  }, [State.selected]);
+    selected.length === 0 ? setEmpty(true) : setEmpty(false);
+  }, [selected]);
 
   // Post & Loading
   const [loading, setLoading] = useState(false);
@@ -69,21 +71,21 @@ function OptionTest(props) {
   const handleClick = () => {
     setLoading(true);
 
-    const ingredients = State.selected;
-    const option = State.selectedOption;
+    const ingredients = selected;
+    const option = selectedOption;
     const sendData = { ingredients, option };
 
-    if (State.selectedOption.length === 0) {
-      const option = ['아무'];
-    }
+    // if (selectedOption.length === 0) {
+    //   const option = ['아무'];
+    // }
 
     axios
-      // .post(`${API_ENDPOINT}/selectOption`, sendData)
-      .post('/api/selectOption', sendData)
+      .post(`${API_ENDPOINT}/selectOption`, sendData)
+      // .post('/api/selectOption', sendData)
       .then((res) => {
         const respond = res.data;
 
-        dispatch(setReceiveData(respond));
+        setReceiveData(respond);
 
         setLoading(false);
         Navigate('/recipe', { state: { direction: 'right' } });
@@ -112,10 +114,10 @@ function OptionTest(props) {
   function handleOptionClick(e) {
     e.preventDefault();
     const selectedValue = e.currentTarget.innerText;
-    if (State.selectedOption.includes(selectedValue)) {
-      dispatch(removeOption(selectedValue));
+    if (selectedOption.includes(selectedValue)) {
+      removeOption(selectedValue);
     } else {
-      dispatch(pushOption(selectedValue));
+      pushOption(selectedValue);
     }
     setTargetValue(selectedValue);
   }
@@ -153,17 +155,17 @@ function OptionTest(props) {
           style={{ display: 'none' }}
           onClick={(e) => {
             e.preventDefault();
-            dispatch(pushOption('옵션옵션'));
+            pushOption('옵션옵션');
           }}
         >
           추가
         </button>
         <SRow style={{ marginBottom: '180px' }}>
-          {State.option.map(function (item, i) {
+          {/* {option.map(function (item, i) {
             return (
               <>
                 <OptionList
-                  clicked={State.selectedOption.includes(item)}
+                  clicked={selectedOption.includes(item)}
                   onClick={handleOptionClick}
                   // onTouchStart={handleOptionClick}
                 >
@@ -171,18 +173,18 @@ function OptionTest(props) {
                 </OptionList>
               </>
             );
-          })}
+          })} */}
         </SRow>
       </SContainer>
 
       <Footer>
         <OptionWrite
-          onSubmit={handleSubmit((data) => {
-            if (data.option.length) {
-              dispatch(AddOption(data.option));
-              reset();
-            }
-          })}
+          // onSubmit={handleSubmit((data) => {
+          //   if (data.option.length) {
+          //     addOption(data.option);
+          //     reset();
+          //   }
+          // })}
         >
           <CustomInput
             type="text"
@@ -238,8 +240,8 @@ function OptionTest(props) {
 
         <ButtonNavigate
           onClick={() => {
-            dispatch(initOption());
-            dispatch(initSelected());
+            initOption();
+            initSelected();
           }}
         >
           <BsArrowRepeat

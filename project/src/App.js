@@ -1,11 +1,18 @@
-import React from "react";
-import styled from "styled-components";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import { NavBar, RecipePage, OptionPage, SelectPage, IndexPage, OptionTest } from "./Components";
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React from 'react';
+import styled from 'styled-components';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import {
+  NavBar,
+  RecipePage,
+  OptionPage,
+  SelectPage,
+  IndexPage,
+  OptionTest,
+} from './Components';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 // 1. #f2f0ef
 // 2. #e5dcd5
@@ -33,16 +40,17 @@ function App() {
     overflow-y: none;
 
     @font-face {
-      font-family: "NanumSquareNeo-Variable";
-      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2")
-        format("woff2");
+      font-family: 'NanumSquareNeo-Variable';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+        format('woff2');
       font-weight: normal;
       font-style: normal;
     }
 
     @font-face {
-      font-family: "Pretendard-Regular";
-      src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
+      font-family: 'Pretendard-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+        format('woff');
       font-weight: 400;
       font-style: normal;
     }
@@ -58,16 +66,16 @@ function App() {
       <TransitionGroup className="transitions-wrapper">
         <CSSTransition
           key={location.pathname}
-          classNames={location.state?.direction === "left" ? "left" : "right"}
+          classNames={location.state?.direction === 'left' ? 'left' : 'right'}
           timeout={300}
         >
-          <App style={{ fontFamily: "NanumSquareNeo-Variable" }}>
+          <App style={{ fontFamily: 'NanumSquareNeo-Variable' }}>
             <Routes location={location}>
               <Route
                 path="/"
                 element={
                   <>
-                    <IndexPage style={{ position: "absolute" }}></IndexPage>
+                    <IndexPage style={{ position: 'absolute' }}></IndexPage>
                   </>
                 }
               />
@@ -75,7 +83,7 @@ function App() {
                 path="/selectIngredients"
                 element={
                   <>
-                    <SelectPage style={{ position: "absolute" }}></SelectPage>
+                    <SelectPage style={{ position: 'absolute' }}></SelectPage>
                   </>
                 }
               />
@@ -84,7 +92,7 @@ function App() {
                 path="/selectOption"
                 element={
                   <>
-                    <OptionPage style={{ position: "absolute" }}></OptionPage>
+                    <OptionPage style={{ position: 'absolute' }}></OptionPage>
                   </>
                 }
               />
@@ -93,7 +101,7 @@ function App() {
                 path="/recipe"
                 element={
                   <>
-                    <RecipePage style={{ position: "absolute" }}></RecipePage>
+                    <RecipePage style={{ position: 'absolute' }}></RecipePage>
                   </>
                 }
               />
@@ -102,7 +110,7 @@ function App() {
                 path="/test"
                 element={
                   <>
-                    <OptionTest style={{ position: "absolute" }}></OptionTest>
+                    <OptionTest style={{ position: 'absolute' }}></OptionTest>
                   </>
                 }
               />
