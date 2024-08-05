@@ -1,22 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import styled, { createGlobalStyle, css } from "styled-components";
-import { Container, Row, Col, Nav } from "react-bootstrap";
-import { BiExport, BiRevision, BiHomeAlt2, BiDownload, BiLandscape, BiWindowClose } from "react-icons/bi";
+import styled, { createGlobalStyle, css } from 'styled-components';
+import { Container, Row, Col, Nav } from 'react-bootstrap';
+import {
+  BiExport,
+  BiRevision,
+  BiHomeAlt2,
+  BiDownload,
+  BiLandscape,
+  BiWindowClose,
+} from 'react-icons/bi';
 
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-import { setReceiveData, initOption, initSelected } from "../store.js";
+import { setReceiveData, initOption, initSelected } from '../store.js';
 
-import Lottie from "react-lottie";
-import * as Error from "../lottie/error.json";
-import * as Process from "../lottie/loading.json";
-import * as Result from "../lottie/result1.json";
+import Lottie from 'react-lottie';
+import * as Error from '../lottie/error.json';
+import * as Process from '../lottie/loading.json';
+import * as Result from '../lottie/result1.json';
 
-import html2canvas from "html2canvas";
-import logoBM from "../img/logoBM.png";
+import html2canvas from 'html2canvas';
+import logoBM from '../img/logoBM.png';
 
 function RecipePage(props) {
   let Navigate = useNavigate();
@@ -27,14 +34,14 @@ function RecipePage(props) {
 
   var now = new Date();
   var hours = now.getHours();
-  var meal = "";
+  var meal = '';
 
-  if (6 <= hours && hours < 11) meal = "아침 식사";
-  else if (11 <= hours && hours < 14) meal = "점심 식사";
-  else if (14 <= hours && hours < 17) meal = "늦은 점심";
-  else if (17 <= hours && hours < 21) meal = "저녁 식사";
-  else if (21 <= hours && hours < 22) meal = "늦은 저녁";
-  else if (22 <= hours || hours < 6) meal = "야식";
+  if (6 <= hours && hours < 11) meal = '아침 식사';
+  else if (11 <= hours && hours < 14) meal = '점심 식사';
+  else if (14 <= hours && hours < 17) meal = '늦은 점심';
+  else if (17 <= hours && hours < 21) meal = '저녁 식사';
+  else if (21 <= hours && hours < 22) meal = '늦은 저녁';
+  else if (22 <= hours || hours < 6) meal = '야식';
 
   const [isEmptyAlert, setEmptyAlert] = useState(false);
   const [isWrongAlert, setWrongAlert] = useState(false);
@@ -42,12 +49,12 @@ function RecipePage(props) {
   const [unShown, setUnshown] = useState(false);
 
   const captureHTML = async () => {
-    const element = document.getElementById("captureElement"); // 캡처할 HTML 요소의 ID 또는 Ref를 사용
+    const element = document.getElementById('captureElement'); // 캡처할 HTML 요소의 ID 또는 Ref를 사용
     const canvas = await html2canvas(element);
-    const image = canvas.toDataURL("image/png"); // 이미지 데이터 얻기 (PNG 형식)
+    const image = canvas.toDataURL('image/png'); // 이미지 데이터 얻기 (PNG 형식)
     const recipeName = State.receiveData.dishName;
 
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = image;
     link.download = `${recipeName}.png`;
     link.click();
@@ -60,15 +67,15 @@ function RecipePage(props) {
     setLoading(true);
 
     axios
-      .post("/api/recipe", sendData)
+      // .post(`${API_ENDPOINT}/recipe`, sendData)
+      .post('/api/recipe', sendData)
       .then((res) => {
         const respond = res.data;
-        console.log(respond);
 
         dispatch(setReceiveData(respond));
 
         setLoading(false);
-        Navigate("/recipe");
+        Navigate('/recipe');
       })
       .catch((error) => {
         setLoading(false);
@@ -95,7 +102,6 @@ function RecipePage(props) {
       response.introduction.length === 0 &&
       !(response.messages[response.messages.length - 1].content.length === 0)
     ) {
-      console.log("State :", State.receiveData);
       setWrongAlert(true);
     } else {
       setWrongAlert(false);
@@ -132,7 +138,7 @@ function RecipePage(props) {
           <Loading>
             <div>
               <Lottie
-                style={{ cursor: "default" }}
+                style={{ cursor: 'default' }}
                 options={LoadingAnimation}
                 height={400}
                 width={400}
@@ -141,7 +147,7 @@ function RecipePage(props) {
                 isClickToPauseDisabled={true}
               />
             </div>
-            <div style={{ fontSize: "145%" }}>
+            <div style={{ fontSize: '145%' }}>
               동일한 옵션의
               <br />
               다른 메뉴를 추천해드릴게요
@@ -158,7 +164,7 @@ function RecipePage(props) {
             <AlertContainer>
               <AlertDiv>
                 <Lottie
-                  style={{ width: "70%", cursor: "default" }}
+                  style={{ width: '70%', cursor: 'default' }}
                   options={errorLottie}
                   height={300}
                   isPaused={false}
@@ -171,9 +177,9 @@ function RecipePage(props) {
               </AlertDiv>
               <h5
                 onClick={() => {
-                  Navigate("/selectIngredients");
+                  Navigate('/selectIngredients');
                 }}
-                style={{ textDecoration: "underline", cursor: "pointer" }}
+                style={{ textDecoration: 'underline', cursor: 'pointer' }}
               >
                 홈 화면으로
               </h5>
@@ -190,7 +196,7 @@ function RecipePage(props) {
             <AlertContainer>
               <AlertDiv>
                 <Lottie
-                  style={{ width: "70%" }}
+                  style={{ width: '70%' }}
                   options={errorLottie}
                   height={300}
                   isPaused={false}
@@ -198,14 +204,20 @@ function RecipePage(props) {
                   isClickToPauseDisabled={true}
                 />
               </AlertDiv>
-              <AlertDiv style={{ height: "100px", overflowY: "auto" }}>
-                <h4>{State.receiveData.messages[State.receiveData.messages.length - 1].content}</h4>
+              <AlertDiv style={{ height: '100px', overflowY: 'auto' }}>
+                <h4>
+                  {
+                    State.receiveData.messages[
+                      State.receiveData.messages.length - 1
+                    ].content
+                  }
+                </h4>
               </AlertDiv>
               <h5
                 onClick={() => {
-                  Navigate("/selectIngredients");
+                  Navigate('/selectIngredients');
                 }}
-                style={{ textDecoration: "underline", cursor: "pointer" }}
+                style={{ textDecoration: 'underline', cursor: 'pointer' }}
               >
                 홈 화면으로
               </h5>
@@ -217,10 +229,14 @@ function RecipePage(props) {
       )}
 
       <StyledContainer>
-        <StyledRow backgroundColor="#ffffff" height="" style={{ marginTop: "5px" }}>
+        <StyledRow
+          backgroundColor="#ffffff"
+          height=""
+          style={{ marginTop: '5px' }}
+        >
           <StyledCol md={6} justifyContent="center" alignItems="center">
             <Lottie
-              style={{ zIndex: "0", width: "100%" }}
+              style={{ zIndex: '0', width: '100%' }}
               options={resultLottie}
               isPaused={false}
               isStopped={false}
@@ -236,7 +252,13 @@ function RecipePage(props) {
               </Header>
             </JustRow>
             <JustRow>
-              <SubHeader style={{ marginTop: "30px", padding: "0px 15%", fontSize: "17px" }}>
+              <SubHeader
+                style={{
+                  marginTop: '30px',
+                  padding: '0px 15%',
+                  fontSize: '17px',
+                }}
+              >
                 {State.receiveData.introduction}
               </SubHeader>
             </JustRow>
@@ -244,7 +266,11 @@ function RecipePage(props) {
         </StyledRow>
 
         {/* 식재료, 레시피 안내 */}
-        <StyledRow backgroundColor="#ffffff" height="" style={{ minHeight: "200px", padding: "30px 20px" }}>
+        <StyledRow
+          backgroundColor="#ffffff"
+          height=""
+          style={{ minHeight: '200px', padding: '30px 20px' }}
+        >
           <StyledCol md={3} justifyContent="start" alignItems="start">
             <CardHeader>
               <b>식재료</b>
@@ -253,13 +279,18 @@ function RecipePage(props) {
             {State.receiveData.elements !== undefined &&
               State.receiveData.elements.map(function (item, i) {
                 return (
-                  <div key={i} style={{ marginTop: "5px" }}>
+                  <div key={i} style={{ marginTop: '5px' }}>
                     - {item}
                   </div>
                 );
               })}
           </StyledCol>
-          <StyledCol md={9} justifyContent="start" alignItems="start" style={{ textAlign: "start" }}>
+          <StyledCol
+            md={9}
+            justifyContent="start"
+            alignItems="start"
+            style={{ textAlign: 'start' }}
+          >
             <CardHeader>
               <b>레시피</b>
             </CardHeader>
@@ -268,7 +299,7 @@ function RecipePage(props) {
             {State.receiveData.recipeSteps !== undefined &&
               State.receiveData.recipeSteps.map(function (item, i) {
                 return (
-                  <div key={i} style={{ marginTop: "5px" }}>
+                  <div key={i} style={{ marginTop: '5px' }}>
                     {item}
                   </div>
                 );
@@ -300,7 +331,7 @@ function RecipePage(props) {
               onClick={() => {
                 dispatch(initOption());
                 dispatch(initSelected());
-                Navigate("/");
+                Navigate('/');
               }}
             >
               <BiHomeAlt2></BiHomeAlt2>
@@ -311,13 +342,20 @@ function RecipePage(props) {
       </StyledContainer>
       {/* chatpot.co.kr */}
 
-      <Wrapper className={unShown ? "show" : ""}>
+      <Wrapper className={unShown ? 'show' : ''}>
         <CaptureBtnArea>
           <div>
-            <b style={{ fontSize: "180%" }}>{State.receiveData.dishName}</b>
+            <b style={{ fontSize: '180%' }}>{State.receiveData.dishName}</b>
             <br></br> 레시피를 저장하시겠어요?
           </div>
-          <div style={{ display: "flex", justifyContent: "cente", alignItems: "center", gap: "12px" }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'cente',
+              alignItems: 'center',
+              gap: '12px',
+            }}
+          >
             <CaptureBtn onClick={captureHTML}>
               <BiLandscape></BiLandscape>저장
             </CaptureBtn>
@@ -334,37 +372,41 @@ function RecipePage(props) {
 
         <Row>
           <CapturedArea id="captureElement">
-            <CapturedRow style={{ fontSize: "30px", fontWeight: "900" }}>{State.receiveData.dishName}</CapturedRow>
-            <CapturedContext style={{ textAlign: "start" }}>
-              <h5 style={{ fontWeight: "600" }}>식재료</h5> <Divider />
+            <CapturedRow style={{ fontSize: '30px', fontWeight: '900' }}>
+              {State.receiveData.dishName}
+            </CapturedRow>
+            <CapturedContext style={{ textAlign: 'start' }}>
+              <h5 style={{ fontWeight: '600' }}>식재료</h5> <Divider />
               {State.receiveData.elements !== undefined &&
                 State.receiveData.elements.map(function (item, i) {
                   return (
-                    <div key={i} style={{ marginTop: "5px" }}>
+                    <div key={i} style={{ marginTop: '5px' }}>
                       - {item}
                     </div>
                   );
                 })}
             </CapturedContext>
-            <CapturedContext style={{ textAlign: "start" }}>
-              <h5 style={{ fontWeight: "600" }}>레시피</h5> <Divider />
+            <CapturedContext style={{ textAlign: 'start' }}>
+              <h5 style={{ fontWeight: '600' }}>레시피</h5> <Divider />
               {State.receiveData.recipeSteps !== undefined &&
                 State.receiveData.recipeSteps.map(function (item, i) {
                   return (
-                    <div key={i} style={{ marginTop: "5px" }}>
+                    <div key={i} style={{ marginTop: '5px' }}>
                       {item}
                     </div>
                   );
                 })}
             </CapturedContext>
 
-            <CapturedRow style={{ fontSize: "15px", fontWeight: "300", color: "#b2b2b2" }}>
+            <CapturedRow
+              style={{ fontSize: '15px', fontWeight: '300', color: '#b2b2b2' }}
+            >
               <Divider />
 
               {State.receiveData.introduction}
             </CapturedRow>
             <CapturedRow>
-              <img alt="logo" style={{ height: "40px" }} src={logoBM} />
+              <img alt="logo" style={{ height: '40px' }} src={logoBM} />
             </CapturedRow>
           </CapturedArea>
         </Row>
