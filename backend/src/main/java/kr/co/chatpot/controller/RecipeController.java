@@ -1,8 +1,8 @@
 package kr.co.chatpot.controller;
 
-import kr.co.chatpot.dto.RecipeDto;
 import kr.co.chatpot.dto.request.OptionRequest;
 import kr.co.chatpot.dto.request.ReRecipeRequest;
+import kr.co.chatpot.dto.respons.RecipeResponse;
 import kr.co.chatpot.service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,13 +19,13 @@ public class RecipeController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/selectOption")
-    public RecipeDto selectOption(@RequestBody OptionRequest request) {
+    public RecipeResponse selectOption(@RequestBody OptionRequest request) {
         return recipeService.recommendRecipe(request);
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/recipe")
-    public RecipeDto recipe(@RequestBody ReRecipeRequest request) {
+    public RecipeResponse recipe(@RequestBody ReRecipeRequest request) {
         return recipeService.retryRecommend(request);
     }
 }

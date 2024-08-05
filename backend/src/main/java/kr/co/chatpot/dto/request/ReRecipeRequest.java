@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReRecipeRequest {
-    private List<ChatMessage> chatMessages;
+    private List<ChatMessage> messages;
 }
