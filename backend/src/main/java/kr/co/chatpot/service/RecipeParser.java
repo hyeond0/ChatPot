@@ -15,11 +15,10 @@ public class RecipeParser {
 
         String elementsString = extractContent(recipeString, "재료\\s*:\\s*\\{([^}]*)}");
         List<String> elements = elementsString.isEmpty() ? new ArrayList<>() :
-            Arrays.asList(elementsString.split(",\\s*"));
-
+                Arrays.asList(elementsString.split("\\|\\s*"));
         String recipeStepsString = extractContent(recipeString, "레시피\\s*순서\\s*:\\s*\\{([^}]*)}");
         List<String> recipeSteps = recipeStepsString.isEmpty() ? new ArrayList<>() :
-            Arrays.asList(recipeStepsString.split("\\s*/\\s*"));
+                Arrays.asList(recipeStepsString.split("\\s*/\\s*"));
 
         String introduction = extractContent(recipeString, "소개\\s*:\\s*\\{([^}]*)}");
 
