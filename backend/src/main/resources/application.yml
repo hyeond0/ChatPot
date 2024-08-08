@@ -5,16 +5,15 @@ spring:
     name: chatpot
   ai:
     openai:
-      api-key: ${OPENAI_API_KEY}
-      model: gpt-3.5-turbo
-
+      api-key: ${OPEN_API_KEY}
+      chat:
+        options:
+          model: gpt-4o-mini
     vertex:
       ai:
         gemini:
           project-id: ${GEMINI_PROJECT_ID}
           location: asia-northeast3
-          options:
-            model: gemini-1.5-flash-001
 chat:
   system:
     message: ${CHAT_SYSTEM_MESSAGE}

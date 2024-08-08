@@ -1,5 +1,6 @@
 package kr.co.chatpot.service.impl;
 
+import io.grpc.StatusRuntimeException;
 import java.util.ArrayList;
 import java.util.List;
 import kr.co.chatpot.dto.RecipeDto;
@@ -10,19 +11,26 @@ import kr.co.chatpot.dto.respons.RecipeResponse;
 import kr.co.chatpot.service.RecipeParser;
 import kr.co.chatpot.service.RecipeService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.retry.RetryCallback;
+import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-public class GeminiRecipeService implements RecipeService {
+public class RecipeServiceImpl implements RecipeService {
     private final RecipeParser recipeParser;
-    private final VertexAiGeminiChatModel chatModel;
+    private final VertexAiGeminiChatModel geminiChatModel;
+    private final OpenAiChatModel gptChatModel;
+    private final RetryTemplate retryTemplate;
 
     @Value("${chat.system.message}")
     private String sysMessage;
@@ -70,8 +78,13 @@ public class GeminiRecipeService implements RecipeService {
     }
 
     private String getChatResponseContent(Prompt prompt) {
-        ChatResponse response = chatModel.call(prompt);
-        return response.getResult().getOutput().getContent();
+        return retryTemplate.execute((RetryCallback<String, StatusRuntimeException>) context -> {
+            ChatResponse response = geminiChatModel.call(prompt);
+            return response.getResult().getOutput().getContent();
+        }, context -> {
+            ChatResponse response = gptChatModel.call(prompt);
+            return response.getResult().getOutput().getContent();
+        });
     }
 
     private List<ChatMessage> createChatMessages(String sysMessage, String userMessageContent,
