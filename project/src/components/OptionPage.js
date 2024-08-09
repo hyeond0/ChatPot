@@ -77,7 +77,7 @@ function OptionJest() {
 
     axios
       // .post(`${API_ENDPOINT}/selectOption`, sendData)
-      .post('http://localhost:8000/api/selectOption', sendData)
+      .post('/api/selectOption', sendData)
       .then((res) => {
         const respond = res.data;
         setReceiveData(respond);
